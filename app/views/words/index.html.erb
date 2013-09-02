@@ -1,0 +1,9 @@
+<h1><%= header_text @length, @first_letter %></h1>
+
+<%= link_to 'Back', "/" %>
+
+<% alfabet().each do |letter| %>
+<%= words_starting_with(letter) %>
+<% end %>
+
+<%= link_to 'Back', "/" %>
