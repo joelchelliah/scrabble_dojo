@@ -9,4 +9,17 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-ScrabbleDojo::Application.config.secret_key_base = '66efcb06634e7ccd354cfc28a094daa3e105c98aa2de971d7b5406badf3c07cf1cf3209f3492db3f4dcb19f6a60fd792ea43e418d397ea2cfdb7edec362a654f'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    File.read(token_file).chomp
+  else
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+ScrabbleDojo::Application.config.secret_key_base = secure_token
