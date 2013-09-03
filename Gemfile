@@ -7,11 +7,20 @@ gem 'rails', '4.0.0'
 group :development, :test do
   gem 'sqlite3', '1.3.7'
   gem 'rspec-rails', '2.13.1'
+  gem 'guard-rspec', '2.5.0'
+
+  # Spork stuff
+  gem 'spork-rails', github: 'sporkrb/spork-rails'
+  gem 'guard-spork', '1.5.0'
+  gem 'childprocess', '0.3.6'
 end
 
 group :test do
-  gem 'selenium-webdriver', '2.0.0'
+  gem 'selenium-webdriver', '~> 2.35.1'
   gem 'capybara', '2.1.0'
+
+  # Used by guard
+  gem 'growl', '1.0.3'
 end
 
 group :production do
