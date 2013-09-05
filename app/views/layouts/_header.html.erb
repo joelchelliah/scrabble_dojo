@@ -1,0 +1,16 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "Scrabble Dojo", home_path, id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "Bingotrener", '#' %></li>
+          <li><%= link_to "Ord med 2 bokstaver", controller: "words", action: "index", length: 2 %></li>
+          <li><%= link_to "Ord med 3 bokstaver", controller: "words", action: "index", length: 3 %></li>
+          <li><%= link_to "Ord med 4 bokstaver", controller: "words", action: "index", length: 4 %></li>
+          <li><%= link_to "Puggelister", '#' %></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
