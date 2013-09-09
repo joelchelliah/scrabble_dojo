@@ -1,6 +1,13 @@
 @import "bootstrap";
 
 $grayMediumLight: #eaeaea;
+$grayVeryLight: #eeeeee;
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 /* universal */
 
@@ -10,6 +17,10 @@ html {
 
 body {
 	padding-top: 60px;
+}
+
+container {
+	width: 1024px;
 }
 
 section {
@@ -26,6 +37,11 @@ textarea {
 		margin-bottom: 10px;
 	}
 }
+
+.btn-success:visited, .btn-primary:visited, .btn-warning:visited, .btn-danger:visited {
+  color: $grayVeryLight !important;
+}
+
 
 
 /* typography */
@@ -105,4 +121,44 @@ footer {
 			}
 		}
 	}
+}
+
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100% !important;
+  padding: 10px;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+textarea {
+  height: 200px !important;
+}
+
+.field_with_errors {
+  display: block !important;
+}
+
+
+/* tables */
+
+table tr td.right-column {
+  text-align: right;
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
 }

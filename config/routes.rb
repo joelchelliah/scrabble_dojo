@@ -1,5 +1,7 @@
 ScrabbleDojo::Application.routes.draw do
+  
   resources :words
+  resources :memos
 
   match '/home', to: 'dojo#home', via: 'get'
 

@@ -1,0 +1,33 @@
+<%= form_for(@memo) do |f| %>
+  <% if @memo.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@memo.errors.count, "error") %> prohibited this memo from being saved:</h2>
+    <ul>
+    <% @memo.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+    <div class="row">
+      <div class="span5">
+    <%= f.label :navn %>
+    <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span5">
+        <%= f.label :hint %>
+        <%= f.text_area :hints, placeholder: "Hints"%>
+      </div>
+      <div class="span5">
+        <%= f.label :ordliste %>
+        <%= f.text_area :word_list %>
+      </div>
+     </div>
+     <div class="row">
+      <div class="span2">
+        <%= f.submit "Lagre", class: "btn btn-primary" %>
+      </div>
+    </div>
+<% end %>

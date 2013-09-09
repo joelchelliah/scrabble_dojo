@@ -14,8 +14,9 @@ module WordsHelper
    end
 
   def words_starting_with(x)
-    filtered = @words.select { |w| w.text[0] == x}
-    filtered = filtered.map { |w| w.text}.join(" ")
+    filtered = @words.inject("") do |result, w|
+      if w.text[0] == x then "#{result} #{w.text}" else result end
+    end
     "<h3>#{x}</h3>#{filtered}<hr/>".html_safe
   end
 end

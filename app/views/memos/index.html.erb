@@ -1,0 +1,28 @@
+<div class="hero-unit">
+  <h1>Memo</h1>
+  <hr/>
+  <div class="btn-group">
+    <%= link_to 'Lag nytt Memo', new_memo_path, class: "btn btn-success" %>
+    <%= link_to 'Sorter etter navn', '#', class: "btn" %>
+    <%= link_to 'Sorter etter helse', '#', class: "btn" %>
+    <%= link_to 'Sorter etter antall ord', '#', class: "btn" %>
+  </div>
+  <hr/>
+
+  <table class="table table-striped table-condensed table-hover">
+    <% @memos.each do |memo| %>
+      <tr>
+        <td><%= link_to memo.name, memo, class: "btn btn-primary" %></td>
+        <td width="300px"><%= show_health(memo) %></td>
+        <td class="word-column"><%= show_num_words(memo) %></td>
+        <td class="right-column">
+          <div class="btn-group">
+            <%= link_to 'Rediger', edit_memo_path(memo), class: "btn" %>
+            <%= link_to '<b>&times;</b>'.html_safe, memo, method: :delete, data: { confirm: 'Er du sikker?' }, class: "btn btn-danger" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

@@ -1,0 +1,12 @@
+<div class="hero-unit">
+	<h1>Rediger Memo</h1>
+	<hr/>
+	<%= render 'form' %>
+	<hr/>
+	<div class="row">
+		<div class="span2">
+     	<%= link_to "Vis", @memo, class: "btn" %>
+      <%= link_to 'Tilbake', memos_path, class: "btn" %>
+    </div>
+  </div>
+</div>
