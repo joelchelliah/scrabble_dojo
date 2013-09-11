@@ -1,7 +1,7 @@
 module MemosHelper
 
 	def show_health(memo)
-		health = 100 - ((Time.now - memo.updated_at) / 1.day).to_i
+		health = 100 - (3 * (Time.now - memo.health_decay) / 1.day).to_i
 		health = 1 if health < 1
 		color = "success"
 		color = "warning" if health <= 75
@@ -10,7 +10,7 @@ module MemosHelper
 	end
 
 	def show_num_words(memo)
-		"#{memo.word_list.split.count} ord"
+		"#{memo.word_list.split.count} words"
 	end
 
 	def show_hints

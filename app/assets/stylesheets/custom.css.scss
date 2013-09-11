@@ -1,5 +1,6 @@
 @import "bootstrap";
 
+$grayMediumDark: #434343;
 $grayMediumLight: #eaeaea;
 $grayVeryLight: #eeeeee;
 
@@ -17,10 +18,18 @@ html {
 
 body {
 	padding-top: 60px;
+  background-color: #333 !important;
 }
 
 container {
 	width: 1024px;
+}
+
+.hero-unit {
+  padding: 40px;
+  -moz-box-shadow: 5px 5px 25px 5px #111;
+  -webkit-box-shadow: 5px 5px 25px 5px #111;
+  box-shadow: 5px 5px 25px 5px #111;
 }
 
 section {
@@ -36,6 +45,10 @@ textarea {
 	h1 {
 		margin-bottom: 10px;
 	}
+}
+
+.btn:visited {
+  color: $grayMediumDark !important;
 }
 
 .btn-success:visited, .btn-primary:visited, .btn-warning:visited, .btn-danger:visited {
@@ -96,7 +109,7 @@ p {
 footer {
   margin-top: 15px;
   padding-top: 5px;
-  border-top: 1px solid $grayMediumLight;
+  border-top: 1px solid $gray;
   color: $grayLight;
   a {
   	color: $gray;
