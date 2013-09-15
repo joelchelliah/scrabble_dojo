@@ -1,14 +1,25 @@
 class MemosController < ApplicationController
   before_action :set_memo, only: [:show, :edit, :update, :destroy, :practice, :results]
 
-  # GET /memos
-  # GET /memos.json
   def index
-    @memos = Memo.all
+    sort_attr = (flash[:sort_by] or :name)
+    if sort_attr == :count
+      @memos = Memo.all.sort_by { |m| m.word_list.size }
+    else
+      @memos = Memo.all.sort_by { |m| m.send sort_attr }
+    end
   end
 
-  # GET /memos/1
-  # GET /memos/1.json
+  def by_health
+    flash[:sort_by] = :health_decay
+    redirect_to memos_path
+  end
+
+  def by_word_count
+    flash[:sort_by] = :count
+    redirect_to memos_path
+  end
+
   def show
   end
 

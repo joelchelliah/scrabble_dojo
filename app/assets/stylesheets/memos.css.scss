@@ -86,6 +86,13 @@ div.progress {
 	height: 500px !important;
 }
 
+#memo-form {
+	.btn {
+		width: 80%;
+		padding-left: 10px;
+	}
+}
+
 #memo-results {
 	div.progress {
 		width: 100%;

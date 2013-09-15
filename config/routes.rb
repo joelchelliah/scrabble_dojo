@@ -2,6 +2,10 @@ ScrabbleDojo::Application.routes.draw do
   
   resources :words
   resources :memos do
+    collection do
+      get 'by_health'
+      get 'by_word_count'
+    end
     member do
       get 'results'
       patch 'practice'
