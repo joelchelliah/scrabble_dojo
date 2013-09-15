@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/rails/activerecord-session_store.git
+  revision: 022d45b4ae9b7e862ee92ea8871c9bf4c2d93106
+  specs:
+    activerecord-session_store (0.0.1)
+      actionpack (>= 4.0.0.beta, < 5)
+      activerecord (>= 4.0.0.beta, < 5)
+      railties (>= 4.0.0.beta, < 5)
+
+GIT
   remote: git://github.com/sporkrb/spork-rails.git
   revision: 3224f84d8c31fcb0894e9a43f6c3ac67e3aa0d71
   specs:
@@ -199,6 +208,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-session_store!
   bootstrap-sass (= 2.3.2.1)
   capybara (= 2.1.0)
   childprocess (= 0.3.6)
