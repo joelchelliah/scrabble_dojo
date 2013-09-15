@@ -10,6 +10,12 @@ $grayVeryLight: #eeeeee;
   box-sizing: border-box;
 }
 
+@mixin box_shadows {
+  -moz-box-shadow: 5px 5px 25px 5px #111;
+  -webkit-box-shadow: 5px 5px 25px 5px #111;
+  box-shadow: 5px 5px 25px 5px #111;
+}
+
 /* universal */
 
 html {
@@ -27,9 +33,7 @@ container {
 
 .hero-unit {
   padding: 40px;
-  -moz-box-shadow: 5px 5px 25px 5px #111;
-  -webkit-box-shadow: 5px 5px 25px 5px #111;
-  box-shadow: 5px 5px 25px 5px #111;
+  @include box_shadows;
 }
 
 section {

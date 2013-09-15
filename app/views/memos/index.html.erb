@@ -1,8 +1,14 @@
 <div class="hero-unit">
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
   <h1>Memo</h1>
+  <h2>Overview</h2>
   <hr/>
   <div class="row">
-    <div class="span8 right-border">
+    <div class="span8">
       <div class="btn-toolbar">
         <span class="btn-group">
           <%= link_to 'New memo', new_memo_path, class: "btn btn-bold" %>
@@ -16,12 +22,12 @@
         <% @memos.each do |memo| %>
           <tr>
             <td><%= link_to memo.name, memo, class: "btn btn-primary" %></td>
-            <td><%= show_health(memo) %></td>
+            <td><%= health_bar(memo) %></td>
             <td class="word-column"><%= show_num_words(memo) %></td>
             <td class="right-column">
               <div class="btn-group">
                 <%= link_to 'Edit', edit_memo_path(memo), class: "btn" %>
-                <%= link_to '&times;'.html_safe, memo, method: :delete, data: { confirm: 'Er du sikker?' }, class: "btn btn-danger btn-bold" %>
+                <%= link_to '&times;'.html_safe, memo, method: :delete, data: { confirm: 'Delete this memo?' }, class: "btn btn-danger btn-bold" %>
               </div>
             </td>
           </tr>
@@ -32,7 +38,7 @@
     <div class="offset8">
       <div class="btn-toolbar center">
         <span class="btn-group">
-          <%= link_to 'Revise weakest memo', '#', class: "btn btn-bold btn-primary" %>
+          <%= link_to 'Revise weakest memo', '#', class: "btn btn-primary" %>
         </span>
       </div>
       <div class="well">
@@ -40,7 +46,7 @@
           Create, view and revise memos containing collections of words and useful hints.
         </p>
         <p>
-          The health bar next to each memo visualizes the amount of time passed since the last revision. The bars shrink daily, and can be replenished by revising!
+          The health bar next to each memo shows the amount of time passed since the last revision.
         </p>
         <div class="clearfix progress-info-box">
           <div class="pull-left">
@@ -56,6 +62,10 @@
             </div>
           </div>
         </div>
+
+        <p>
+          <br>The bars shrink daily, and can only be replenished by practicing.
+        </p>
       </div>
     </div>
     

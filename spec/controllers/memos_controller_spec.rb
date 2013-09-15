@@ -77,7 +77,7 @@ describe MemosController do
 
       it "redirects to the created memo" do
         post :create, {:memo => valid_attributes}, valid_session
-        response.should redirect_to(Memo.last)
+        response.should redirect_to memos_path
       end
     end
 
@@ -119,7 +119,7 @@ describe MemosController do
       it "redirects to the memo" do
         memo = Memo.create! valid_attributes
         put :update, {:id => memo.to_param, :memo => valid_attributes}, valid_session
-        response.should redirect_to(memo)
+        response.should redirect_to memos_path
       end
     end
 

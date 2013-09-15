@@ -1,36 +1,64 @@
 <div class="hero-unit">
-	<p id="notice"><%= notice %></p>
-
-	<h3><%= @memo.name %></h3>
-	<hr/>
-	<span class="btn-group">
-		<%= link_to 'Edit', edit_memo_path(@memo), class: "btn" %>
-		<%= link_to 'Back', memos_path, class: "btn" %>
-		</span>
-	<span class="btn-group">
-		<%= link_to 'Toggle hints', '#', id: "btn-hints", class: "btn"%>
-		<%= link_to 'Toggle word list', '#', id: "btn-words", class: "btn"%>
-		<%= link_to 'Revise', '#', id: "btn-revise", class: "btn btn-primary btn-bold"%>
-	</span>
-	<hr/>
-	
-	<div class="row">
-		<div id="box-hints" class="span4">
-			<p><b>Hints</b></p>
-	  	<div class="word-box"> <%= show_hints %> </div>
-		</div>
-		<div id="box-words" class ="span3">
-	  	<p><b>Ordliste</b></p>
-	  	<div class="word-box"><%= show_word_list %></div>
-		</div>
-	</div>
+	<h1>Memo</h1>
+  <h2>Revise</h2>
 	<hr/>
 	<div class="row">
-		<div class="span10">
-			<span class="btn-group">
-				<%= link_to 'Edit', edit_memo_path(@memo), class: "btn" %>
-				<%= link_to 'Back', memos_path, class: "btn" %>
-			</span>
+    <div class="span8">
+      <div class="btn-toolbar">
+				<span class="btn-group">
+					<%= link_to 'Back', memos_path, class: "btn" %>
+					<%= link_to 'Show hints', '#', id: "btn-hints", class: "btn"%>
+					<%= link_to 'Hide words', '#', id: "btn-words", class: "btn"%>
+					<%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold"%>
+				</span>
+			</div>
+			
+			<div class="row">
+				<div id="box-hints" class="span4">
+			  	<div class="word-box">
+			  		<p><b>Hints</b></p>
+			  		<%= show_word_list(@memo.hints) %>
+			  	</div>
+				</div>
+				<div id="box-words" class ="span8">
+			  	<div class="word-box">
+			  		<p><b>Words</b></p>
+			  		<%= @memo.word_list %>
+			  	</div>
+				</div>
+			</div>
+			<div id="box-practice">
+				<div class="row">
+					<div class="span8">
+						<%= form_tag({controller: "memos", action: "practice"}, method: "patch") do %>
+							<%= hidden_field_tag(:id, @memo.id) %>
+							<div class="row">
+      					<div class="span4">
+									<%= text_area_tag(:message, "", placeholder: "One word per line") %>
+								</div>
+								<div class="span4">
+									<div id="box-words-solutions" class="word-box"><%= show_word_list(@memo.word_list) %></div>
+								</div>
+							</div>
+							<div class="row">
+      					<div class="span2">
+      						<%= submit_tag"Done", class: "btn btn-primary btn-bold" %>
+      					</div>
+      				</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="offset8">
+			<div class="memo-status">
+			<%= health_bar(@memo) %>
+			<div class="well">
+				<%= render 'memo_status' %>
+				<p>Health is replenished according to the results of the practice session.</p>
+				<p>Find all the words without making any mistakes to fully replenish the bar.</p>
+			</div>
+		</div>
 		</div>
 	</div>
 </div>

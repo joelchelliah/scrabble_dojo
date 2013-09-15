@@ -11,23 +11,20 @@
 <% end %>
     <div class="row">
       <div class="span5">
-    <%= f.label :navn %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, placeholder: "Name" %>
       </div>
     </div>
     <div class="row">
       <div class="span5">
-        <%= f.label :hint %>
-        <%= f.text_area :hints, placeholder: "Hints"%>
+        <%= f.text_area :hints, placeholder: "Hints" %>
       </div>
       <div class="span5">
-        <%= f.label :ordliste %>
-        <%= f.text_area :word_list %>
+        <%= f.text_area :word_list, placeholder: "One word per line" %>
       </div>
      </div>
      <div class="row">
       <div class="span2">
-        <%= f.submit "Lagre", class: "btn btn-primary" %>
+        <%= f.submit "Save", class: "btn btn-primary" %>
       </div>
     </div>
 <% end %>

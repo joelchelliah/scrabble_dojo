@@ -1,7 +1,12 @@
 ScrabbleDojo::Application.routes.draw do
   
   resources :words
-  resources :memos
+  resources :memos do
+    member do
+      get 'results'
+      patch 'practice'
+    end
+  end
 
   match '/home', to: 'dojo#home', via: 'get'
 
