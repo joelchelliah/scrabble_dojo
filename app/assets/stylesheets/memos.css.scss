@@ -83,7 +83,7 @@ div.progress {
 }
 
 #box-practice textarea {
-	height: 500px !important;
+	height: 150px !important;
 }
 
 #memo-form {
@@ -106,6 +106,9 @@ div.progress {
 			text-align: center;
 			color: #373;
 			letter-spacing: -1px;
+			.text-danger {
+				color: #733;
+			}
 		}
 	}
 	.btn-group{

@@ -55,6 +55,7 @@ ready = ->
 			$('#btn-hints').attr('disabled', true)
 			$('#btn-words').attr('disabled', true)
 			$('#box-practice').show('fast')
+			$('#practice-text-area').focus()
 		else
 			$('#btn-practice').text("Practice").removeClass('btn-danger').addClass('btn-primary')
 			show_hints()

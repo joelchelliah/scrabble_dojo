@@ -8,9 +8,7 @@
 				<div class="span8 health-update">
 						<span id="prev-health" style="display: none;"><%= @prev_health %></span>
 						<%= health_bar(@memo) %>
-						<div class="text">
-							<b>Regained <%= show_regained_health %>% health!</b>
-						</div>
+						<%= show_regained_health %>
 				</div>
 			</div>
 			<div class="row">
@@ -21,29 +19,29 @@
 			</div>
 			<% unless @missed_words.blank? and @wrong_words.blank? %>
 				<div class="row">
-					<div class="span8">
-				  	<div class="word-box wrong">
-							<% if @missed_words %>
-								<div class="span4">
-					  			<p><b>Missed words</b></p>
-					  			<%= @missed_words.join(" ") %>
-					  			</div>
-						  <% end %>
-						  <% if @wrong_words %>
-						  	<div class="span4">
-					  			<p><b>Wrong words</b></p>
-					  			<%= @wrong_words.join(" ") %>
-						  	</div>
-						  <% end %>
-						</div>
-					</div>
-		  	</div>
+					<% unless @missed_words.blank? %>
+						<div class="span4">
+							<div class="word-box wrong">
+						  	<p><b>Missed (<%=  @missed_words.count %>)</b></p>
+						  	<%= @missed_words.join(" ") %>
+					  	</div>
+					  </div>
+					<% end %>
+				  <% unless @wrong_words.blank? %>
+				  	<div class="span4">
+				  		<div class="word-box wrong">
+				  			<p><b>Wrong (<%=  @wrong_words.count %>)</b></p>
+				  			<%= @wrong_words.join(" ") %>
+			  			</div>
+				  	</div>
+				  <% end %>
+				</div>
 		  	<br/>
 		  	<div class="row">
 		  		<div class="span4">
 				  	<div class="word-box">
 				  		<p><b>Words</b></p>
-				  		<%= @form_words.join(" ") if @form_words %>
+				  		<%= @form_words.join(" ") unless @form_words.blank? %>
 				  	</div>
 				  </div>
 		  		<div class="span4">

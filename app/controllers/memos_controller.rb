@@ -20,6 +20,10 @@ class MemosController < ApplicationController
     redirect_to memos_path
   end
 
+  def revise_weakest
+    redirect_to Memo.all.sort_by { |m| m.health_decay }.first
+  end
+
   def show
   end
 
@@ -76,16 +80,19 @@ class MemosController < ApplicationController
 
   # PATCH /memos/1/practice
   def practice
-    form_words = params[:message].split(/\r?\n/).uniq.map {|w| w.upcase.tr 'å-ü', 'Å-Ü' }
+    form_words = parse_form_words
     memo_words = @memo.word_list.split(/\r?\n/).uniq
 
     missed_words = memo_words - form_words
     wrong_words = form_words - memo_words
     
-    previous_health = 100 - (3 * (Time.now - @memo.health_decay) / 1.day).to_i
-    health_inc = ((Time.now - @memo.health_decay) / (1 + missed_words.count + wrong_words.count).day)
+    decay_diff = (Time.now - @memo.health_decay) / 1.day
+    num_errors = missed_words.count + wrong_words.count
 
-    if @memo.update_attribute(:health_decay, @memo.health_decay + health_inc.day)
+    previous_health = 100 - (3 * decay_diff ).to_i
+    health_inc = (decay_diff / (1 + num_errors)).to_i                         # converting to integer to round it down
+
+    if @memo.update_attribute(:health_decay, @memo.health_decay + health_inc.day) # converting back to day before adding
       respond_to do |format|
         flash[:from_practice] = true
         flash[:form_words] = form_words
@@ -131,6 +138,15 @@ class MemosController < ApplicationController
   end
 
   private
+
+    def parse_form_words
+      params[:message].tr(" ", "\n")
+                      .tr("å-ü", "Å-Ü")
+                      .split(/\r?\n/)
+                      .uniq
+                      .map {|w| w.upcase }
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_memo
       @memo = Memo.find(params[:id])

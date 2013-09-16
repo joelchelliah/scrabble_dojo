@@ -3,6 +3,7 @@ module MemosHelper
 	def health(memo)
 		health = 100 - (3 * (Time.now - memo.health_decay) / 1.day).to_i
 		health = 1 if health < 1
+		health = 100 if health > 100
 		health
 	end
 
@@ -23,6 +24,18 @@ module MemosHelper
 	end
 
 	def show_regained_health()
-		health(@memo) - @prev_health
+		regained = health(@memo) - @prev_health
+
+		show = "<div class='text'>"
+		if @prev_health == 100
+			show << "<b> Your health is already at 100% </b>"
+		else
+			show << "<span class='text-danger'>" if regained.zero?
+			show << "<b>Regained #{regained}% health!</b>"
+			show << "<p><b>You made too many mistakes.</b></p>" if regained.zero?
+			show << "</span>" if regained.zero?
+		end
+		show <<	"</div>"
+		show.html_safe
 	end
 end

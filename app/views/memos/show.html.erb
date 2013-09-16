@@ -33,11 +33,8 @@
 						<%= form_tag({controller: "memos", action: "practice"}, method: "patch") do %>
 							<%= hidden_field_tag(:id, @memo.id) %>
 							<div class="row">
-      					<div class="span4">
-									<%= text_area_tag(:message, "", placeholder: "One word per line") %>
-								</div>
-								<div class="span4">
-									<div id="box-words-solutions" class="word-box"><%= show_word_list(@memo.word_list) %></div>
+      					<div class="span8">
+									<%= text_area_tag(:message, "", placeholder: "Seperate words by space or new line", id: "practice-text-area") %>
 								</div>
 							</div>
 							<div class="row">

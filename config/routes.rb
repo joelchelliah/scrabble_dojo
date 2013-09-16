@@ -5,6 +5,7 @@ ScrabbleDojo::Application.routes.draw do
     collection do
       get 'by_health'
       get 'by_word_count'
+      get 'revise_weakest'
     end
     member do
       get 'results'

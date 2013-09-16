@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20130915131152) do
     t.text     "word_list"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "health_decay", default: '2013-09-11 18:28:56'
+    t.datetime "health_decay", default: '2013-09-11 18:53:18'
   end
 
   add_index "memos", ["name"], name: "index_memos_on_name", unique: true
