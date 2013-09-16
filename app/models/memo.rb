@@ -1,7 +1,6 @@
 class Memo < ActiveRecord::Base
 	before_validation :prepare_fields
 	validates :name, presence: true, uniqueness: true
-	validates :health_decay, presence: true
 	validates :word_list, presence: true, format: { with: /\A([ÆØÅæøåA-Za-z]+\r?\n)*([ÆØÅæøåA-Za-z]+)?\z/ }
 
 	def prepare_fields

@@ -29,17 +29,6 @@ describe "Memos" do
 			end
 		end
 
-		describe "with invalid word list" do
-			before do
-				fill_in "memo_name", with: "A3"
-				fill_in "memo_word_list", with: "ABC ADL"
-			end
-			
-			it "should not create a memo" do
-				expect {click_button submit }.not_to change(Memo, :count)
-			end
-		end
-
 		describe "with valid information" do
 			before do
 				fill_in "memo_name", with: "A3"

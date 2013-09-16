@@ -41,6 +41,7 @@ class MemosController < ApplicationController
   def create
     @memo = Memo.new(memo_params)
     @memo.health_decay = Time.now - 10.day unless @memo.health_decay
+    @memo.word_list = parse_form_words(@memo.word_list).join("\n") if @memo.word_list
 
     respond_to do |format|
       if @memo.save
@@ -57,6 +58,7 @@ class MemosController < ApplicationController
   # PATCH/PUT /memos/1
   # PATCH/PUT /memos/1.json
   def update
+    @memo.word_list = parse_form_words(@memo.word_list).join("\n") if @memo.word_list
     respond_to do |format|
       if @memo.update(memo_params)
         flash[:notice] = "Updated memo: #{@memo.name}."
@@ -81,7 +83,7 @@ class MemosController < ApplicationController
 
   # PATCH /memos/1/practice
   def practice
-    form_words = parse_form_words
+    form_words = parse_form_words params[:message]
     memo_words = @memo.word_list.split(/\r?\n/).uniq
 
     missed_words = memo_words - form_words
@@ -95,8 +97,8 @@ class MemosController < ApplicationController
 
     @memo.health_decay += health_inc.day                 # converting back to day before adding
     @memo.num_practices += 1
-    if @memo.save
-      respond_to do |format|
+    respond_to do |format|
+      if @memo.save
         flash[:from_practice] = true
         flash[:form_words] = form_words
         flash[:missed_words] = missed_words
@@ -104,11 +106,11 @@ class MemosController < ApplicationController
         flash[:prev_health] = previous_health
         format.html { redirect_to results_memo_path @memo }
         format.json { head :no_content }
+      else
+        flash[:notice] = "Something went wrong."
+        format.html { redirect_to memos_path }
+        format.json { render json: @memo.errors, status: :unprocessable_entity }
       end
-    else
-      flash[:notice] = "Something went wrong."
-      format.html { redirect_to memos_path }
-      format.json { render json: @memo.errors, status: :unprocessable_entity }
     end
   end
 
@@ -142,12 +144,12 @@ class MemosController < ApplicationController
 
   private
 
-    def parse_form_words
-      params[:message].tr(" ", "\n")
-                      .tr("å-ü", "Å-Ü")
-                      .split(/\r?\n/)
-                      .uniq
-                      .map {|w| w.upcase }
+    def parse_form_words(form_words)
+      form_words.tr(" ", "\n")
+                .tr("å-ü", "Å-Ü")
+                .split(/\r?\n/)
+                .uniq
+                .map {|w| w.upcase }
     end
 
     # Use callbacks to share common setup or constraints between actions.
