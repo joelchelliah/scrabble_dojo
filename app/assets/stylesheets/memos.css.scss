@@ -61,35 +61,23 @@ div.progress {
 	@include dark_well;
 }
 
-.word-box.solution {
-		background-color: #ded;
-		border: 1px solid rgba(0, 100, 0, 0.15);
-		color: #242;
-}
-
-.word-box.wrong {
-		background-color: #edd;
-		border: 1px solid rgba(100, 0, 0, 0.15);
-		color: #422;
-}
-
-
-.memo-status {
-	padding-top: 66px;
-	.progress {
-		height: 16px;
-		margin-bottom: 10px;
+#memo-form {
+	.btn {
+		width: 100%;
+		padding-left: -1px;
 	}
 }
 
-#box-practice textarea {
-	height: 150px !important;
-}
-
-#memo-form {
-	.btn {
-		width: 80%;
-		padding-left: 10px;
+#memo-revise {
+	div.progress {
+		height: 30px;
+		margin-top: 10px;
+	}
+	.memo-status {
+		padding-top: 19px;
+	}
+	#box-practice textarea {
+		height: 150px !important;
 	}
 }
 
@@ -111,8 +99,21 @@ div.progress {
 			}
 		}
 	}
+	.memo-status {
+	padding-top: 66px;
+	}
 	.btn-group{
 		padding-top: 20px;
 		padding-bottom: 30px;
+	}
+	.word-box.solution {
+		background-color: #ded;
+		border: 1px solid rgba(0, 100, 0, 0.15);
+		color: #242;
+	}
+	.word-box.wrong {
+			background-color: #edd;
+			border: 1px solid rgba(100, 0, 0, 0.15);
+			color: #422;
 	}
 }

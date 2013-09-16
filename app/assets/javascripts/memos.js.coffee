@@ -66,9 +66,13 @@ ready = ->
 
 
 	# Results page
-
-	prev_health = "-" + (527 - $('#prev-health').text() * 527 / 100) + "px"
-	$('.health-update .progress .bar').css("left", prev_health)
+	max = 620
+	prev_health = $('#prev-health').text() * max / 100
+	current_health = $('.health-update .progress .bar').width()
+	move_left = (prev_health - current_health) + "px"
+	#alert "prev_health in % : " + $('#prev-health').text() + "prev_health : " + prev_health + "current_health: " + current_health
+	
+	$('.health-update .progress .bar').css("left", move_left)
 	$('.health-update .progress .bar').animate({left: '0'}, 2000)
 
 

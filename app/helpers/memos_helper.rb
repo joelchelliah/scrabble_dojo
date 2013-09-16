@@ -1,7 +1,8 @@
 module MemosHelper
 
 	def health(memo)
-		health = 100 - (3 * (Time.now - memo.health_decay) / 1.day).to_i
+		decay_diff = ((Time.now - memo.health_decay) / 1.day).to_i
+		health = 100 - 3 * decay_diff
 		health = 1 if health < 1
 		health = 100 if health > 100
 		health

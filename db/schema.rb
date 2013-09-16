@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130915131152) do
+ActiveRecord::Schema.define(version: 20130916121328) do
 
   create_table "memos", force: true do |t|
     t.string   "name"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20130915131152) do
     t.text     "word_list"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "health_decay", default: '2013-09-11 18:53:18'
+    t.datetime "health_decay"
   end
 
   add_index "memos", ["name"], name: "index_memos_on_name", unique: true

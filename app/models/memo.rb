@@ -8,6 +8,6 @@ class Memo < ActiveRecord::Base
 		name.upcase!
 		word_list.upcase!
 		hints.upcase! if hints
-		health_decay = Time.now unless health_decay
+		health_decay = Time.now - 10.day unless health_decay
 	end
 end

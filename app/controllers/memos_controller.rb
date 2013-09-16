@@ -40,6 +40,7 @@ class MemosController < ApplicationController
   # POST /memos.json
   def create
     @memo = Memo.new(memo_params)
+    @memo.health_decay = Time.now - 10.day unless @memo.health_decay
 
     respond_to do |format|
       if @memo.save
@@ -86,11 +87,14 @@ class MemosController < ApplicationController
     missed_words = memo_words - form_words
     wrong_words = form_words - memo_words
     
-    decay_diff = (Time.now - @memo.health_decay) / 1.day
+    decay_diff = ((Time.now - @memo.health_decay) / 1.day).to_i
+    puts "decay_diff #{decay_diff}"
     num_errors = missed_words.count + wrong_words.count
 
-    previous_health = 100 - (3 * decay_diff ).to_i
+    previous_health = 100 - (3 * decay_diff)
+    puts "previous_health #{previous_health}"
     health_inc = (decay_diff / (1 + num_errors)).to_i                         # converting to integer to round it down
+    puts "health_inc #{health_inc}"
 
     if @memo.update_attribute(:health_decay, @memo.health_decay + health_inc.day) # converting back to day before adding
       respond_to do |format|
