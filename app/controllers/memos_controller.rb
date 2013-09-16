@@ -88,15 +88,14 @@ class MemosController < ApplicationController
     wrong_words = form_words - memo_words
     
     decay_diff = ((Time.now - @memo.health_decay) / 1.day).to_i
-    puts "decay_diff #{decay_diff}"
     num_errors = missed_words.count + wrong_words.count
 
     previous_health = 100 - (3 * decay_diff)
-    puts "previous_health #{previous_health}"
-    health_inc = (decay_diff / (1 + num_errors)).to_i                         # converting to integer to round it down
-    puts "health_inc #{health_inc}"
+    health_inc = (decay_diff / (1 + num_errors)).to_i    # converting to integer to round it down
 
-    if @memo.update_attribute(:health_decay, @memo.health_decay + health_inc.day) # converting back to day before adding
+    @memo.health_decay += health_inc.day                 # converting back to day before adding
+    @memo.num_practices += 1
+    if @memo.save
       respond_to do |format|
         flash[:from_practice] = true
         flash[:form_words] = form_words
