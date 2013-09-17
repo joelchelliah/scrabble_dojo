@@ -1,3 +1,7 @@
+$statusTextGreen: #383;
+$statusTextYellow: #AA2;
+$statusTextRed: #833;
+
 @mixin box_sizing {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -13,6 +17,10 @@
 	border-radius: 4px;
 	@include box_sizing;
 }
+
+
+
+// General
 
 table tr td.word-column {
   text-align: right;
@@ -30,18 +38,6 @@ div.progress {
 
 .progress-short {
 	width: 50px !important;
-}
-
-.progress-info-box {
-	@include dark_well;
-	.progress-info {
-		padding-top: 5px;
-		padding-right: 5px;
-		p {
-			font-size:12px;
-			line-height: 16px;
-		}
-	}
 }
 
 .btn-bold {
@@ -68,18 +64,52 @@ div.progress {
 	}
 }
 
+.memo-status {
+	color: #555;
+	.text-green { color: $statusTextGreen !important}
+	.text-yellow { color: $statusTextYellow !important }
+	.text-red { color: $statusTextRed !important }
+}
+
+// Index page
+
+#memo-overview {
+	.memo-status {
+		padding-top: 0;
+		.progress-info-box {
+			margin-left: -4px;
+			padding-top: 4px;
+			@include dark_well;
+			.progress-info {
+				padding-top: 5px;
+				padding-right: 5px;
+				p {
+					color: #333;
+					font-size:12px;
+					line-height: 16px;
+				}
+			}
+		}
+	}
+}
+
+
+// Show page 
+
 #memo-revise {
 	div.progress {
 		height: 30px;
 		margin-top: 10px;
 	}
-	.memo-status {
-		padding-top: 19px;
-	}
+	.memo-status { padding-top: 19px }
 	#box-practice textarea {
 		height: 150px !important;
 	}
 }
+
+
+
+// Results page
 
 #memo-results {
 	div.progress {
@@ -92,16 +122,14 @@ div.progress {
 		.text {
 			padding-top: 10px;
 			text-align: center;
-			color: #373;
+			color: $statusTextGreen;
 			letter-spacing: -1px;
 			.text-danger {
-				color: #733;
+				color: $statusTextRed;
 			}
 		}
 	}
-	.memo-status {
-	padding-top: 66px;
-	}
+	.memo-status { padding-top: 66px }
 	.btn-group{
 		padding-top: 20px;
 		padding-bottom: 30px;

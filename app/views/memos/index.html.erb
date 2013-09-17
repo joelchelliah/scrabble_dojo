@@ -1,4 +1,4 @@
-<div class="hero-unit">
+<div id="memo-overview" class="hero-unit">
   <% if flash[:notice] %>
     <div class="alert alert-success">
       <%= flash[:notice] %>
@@ -23,7 +23,7 @@
           <tr>
             <td><%= link_to memo.name, memo, class: "btn btn-primary" %></td>
             <td><%= health_bar(memo) %></td>
-            <td class="word-column"><%= show_num_words(memo) %></td>
+            <td class="word-column"><%= show_word_count(memo) %> words</td>
             <td class="right-column">
               <div class="btn-group">
                 <%= link_to 'Edit', edit_memo_path(memo), class: "btn" %>
@@ -41,24 +41,24 @@
           <%= link_to 'Revise weakest memo', revise_weakest_memos_path, class: "btn btn-primary btn-bold" %>
         </span>
       </div>
-      <div class="well">
-        <p>
-          Create, view and revise memos containing collections of words and useful hints.
-        </p>
-        <p>
-          The health bar next to each memo shows the amount of time passed since the last revision.
-        </p>
-        <div class="clearfix progress-info-box">
-          <div class="pull-left">
-            <div class='progress progress-success progress-striped active progress-short'><div class='bar' style='width: 85%;'></div></div>
-            <div class='progress progress-warning progress-striped active progress-short'><div class='bar' style='width: 50%;'></div></div>
-            <div class='progress progress-danger progress-striped active progress-short'><div class='bar' style='width: 25%;'></div></div>
-          </div>
-          <div class="pull-right">
-            <div class="progress-info">
-            <p>Pretty good</p>
-            <p>Time to revise</p>
-            <p>Overdue</p>
+      <div class="memo-status">
+        <div class="well">
+          <%= render 'memo_overview_status' %>
+          <p>
+            The health bars show the amount of time passed since the last successful practice session.
+          </p>
+          <div class="clearfix progress-info-box">
+            <div class="pull-left">
+              <div class='progress progress-success progress-striped active progress-short'><div class='bar' style='width: 85%;'></div></div>
+              <div class='progress progress-warning progress-striped active progress-short'><div class='bar' style='width: 50%;'></div></div>
+              <div class='progress progress-danger progress-striped active progress-short'><div class='bar' style='width: 25%;'></div></div>
+            </div>
+            <div class="pull-right">
+              <div class="progress-info">
+              <p>Pretty good</p>
+              <p>Time to revise</p>
+              <p>Overdue</p>
+              </div>
             </div>
           </div>
         </div>

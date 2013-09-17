@@ -16,13 +16,13 @@
 			<div class="row">
 				<div id="box-hints" class="span4">
 			  	<div class="word-box">
-			  		<p><b>Hints</b></p>
+			  		<p><strong>Hints</strong></p>
 			  		<%= show_word_list(@memo.hints) %>
 			  	</div>
 				</div>
 				<div id="box-words" class ="span8">
 			  	<div class="word-box">
-			  		<p><b>Words</b></p>
+			  		<p><strong>Words</strong></p>
 			  		<%= @memo.word_list %>
 			  	</div>
 				</div>
@@ -50,11 +50,11 @@
 		<div class="offset8">
 			<%= health_bar(@memo) %>
 			<div class="memo-status">
-			<div class="well">
-				<%= render 'memo_status' %>
-				<p> Once you are done revising, choose practice mode to test your skills and replenish your health. </p>
+				<div class="well">
+					<%= render 'memo_status' %>
+					<p> Once you are done revising, choose practice mode to test your skills and replenish your health. </p>
+				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 </div>

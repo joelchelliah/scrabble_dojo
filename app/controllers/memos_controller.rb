@@ -45,7 +45,7 @@ class MemosController < ApplicationController
 
     respond_to do |format|
       if @memo.save
-        flash[:notice] = "Created memo: #{@memo.name}."
+        flash[:notice] = "Created a new memo: #{@memo.name}."
         format.html { redirect_to memos_path }
         format.json { render action: 'show', status: :created, location: @memo }
       else

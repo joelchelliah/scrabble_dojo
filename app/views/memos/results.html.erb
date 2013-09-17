@@ -22,7 +22,7 @@
 					<% unless @missed_words.blank? %>
 						<div class="span4">
 							<div class="word-box wrong">
-						  	<p><b>Missed (<%=  @missed_words.count %>)</b></p>
+						  	<p><strong>Missed (<%=  @missed_words.count %>)</strong></p>
 						  	<%= @missed_words.join(" ") %>
 					  	</div>
 					  </div>
@@ -30,7 +30,7 @@
 				  <% unless @wrong_words.blank? %>
 				  	<div class="span4">
 				  		<div class="word-box wrong">
-				  			<p><b>Wrong (<%=  @wrong_words.count %>)</b></p>
+				  			<p><strong>Wrong (<%=  @wrong_words.count %>)</strong></p>
 				  			<%= @wrong_words.join(" ") %>
 			  			</div>
 				  	</div>
@@ -40,13 +40,13 @@
 		  	<div class="row">
 		  		<div class="span4">
 				  	<div class="word-box">
-				  		<p><b>Words</b></p>
+				  		<p><strong>Words</strong></p>
 				  		<%= @form_words.join(" ") unless @form_words.blank? %>
 				  	</div>
 				  </div>
 		  		<div class="span4">
 				  	<div class="word-box solution">
-				  		<p><b>Solution</b></p>
+				  		<p><strong>Solution</strong></p>
 				  		<%= @memo.word_list %>
 				  	</div>
 				  </div>

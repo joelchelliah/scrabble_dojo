@@ -1,5 +1,10 @@
-<p><b><%= @memo.name %></b></p>
-<p>Health bar: <b><%= health(@memo) %>%</b></p>
-<p>Number of words: <b><%= @memo.word_list.split.count %></b></p>
-<p>Number of practices: <b><%= @memo.num_practices %></b></p>
+<p><strong><%= @memo.name %></strong></p>
+<div class="pull-left">
+	<p>Health: </p>
+	<p>Word count: </p>
+	<p>Practice count: &nbsp; </p>
+</div>
+<p><strong><%= show_health %></strong></p>
+<p><strong><%= @memo.word_list.split.count %></strong></p>
+<p><strong><%= @memo.num_practices %></strong></p>
 <hr/>
