@@ -23,7 +23,19 @@ show_words = ->
 
 ready = ->
 
-	# Index 
+	# Create
+
+	if $('h2').text() == "Create"
+		$('#memo_name').focus()
+
+
+	# Edit
+
+	if $('h2').text() == "Edit"
+		$('#memo_word_list').focus()
+
+
+	# Index
 
 	#$('.bar').css("left", "-300px")
 	#$('.bar').animate({ left: '0' }, 1500);
