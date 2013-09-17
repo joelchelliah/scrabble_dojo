@@ -12,7 +12,12 @@ gem 'coffee-rails', '4.0.0'
 gem 'jquery-rails', '2.2.1'
 gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '1.0.2'
+
+# for storing session info in activerecord
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+
+# for password encryption
+gem 'bcrypt-ruby', '3.0.1'
 
 group :development, :test do
   gem 'sqlite3', '1.3.7'
@@ -28,6 +33,9 @@ end
 group :test do
   gem 'selenium-webdriver', '~> 2.35.1'
   gem 'capybara', '2.1.0'
+
+  # For easily making model objects
+  gem 'factory_girl_rails', '4.2.1'
 
   # Used by guard
   gem 'growl', '1.0.3'

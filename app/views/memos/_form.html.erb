@@ -1,33 +1,24 @@
 <%= form_for(@memo) do |f| %>
-  <% if @memo.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@memo.errors.count, "error") %> prohibited this memo from being saved:</h2>
-    <ul>
-    <% @memo.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
+  <%= render 'shared/memo_error_messages' %>
+  <div class="row">
+    <div class="span5">
+  <%= f.text_field :name, placeholder: "Name" %>
+    </div>
   </div>
-<% end %>
-    <div class="row">
-      <div class="span5">
-    <%= f.text_field :name, placeholder: "Name" %>
-      </div>
+  <div class="row">
+    <div class="span5">
+      <%= f.text_area :hints, placeholder: "Hints" %>
     </div>
-    <div class="row">
-      <div class="span5">
-        <%= f.text_area :hints, placeholder: "Hints" %>
-      </div>
-      <div class="span5">
-        <%= f.text_area :word_list, placeholder: "Seperate words by space or new line" %>
-      </div>
-     </div>
-     <div class="row">
-      <div class="span2">
-        <%= f.submit "Save", class: "btn btn-primary" %>
-      </div>
-      <div class="span1">
-        <%= link_to 'Back', memos_path, class: "btn" %>
-      </div>
+    <div class="span5">
+      <%= f.text_area :word_list, placeholder: "Seperate words by space or new line" %>
     </div>
+   </div>
+   <div class="row">
+    <div class="span2">
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    </div>
+    <div class="span1">
+      <%= link_to 'Back', memos_path, class: "btn" %>
+    </div>
+  </div>
 <% end %>
