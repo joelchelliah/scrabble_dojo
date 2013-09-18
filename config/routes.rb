@@ -1,6 +1,7 @@
 ScrabbleDojo::Application.routes.draw do
   
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
   resources :words
   resources :memos do
     collection do
@@ -18,5 +19,7 @@ ScrabbleDojo::Application.routes.draw do
 
   match '/home',    to: 'dojo#home',  via: 'get'
   match '/signup',  to: 'users#new',  via: 'get'
+  match '/login',  to: 'sessions#new',  via: 'get'
+  match '/logout',  to: 'sessions#destroy',  via: 'delete'
 
 end

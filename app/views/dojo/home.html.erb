@@ -1,12 +1,15 @@
+<% provide(:title, 'Home') %>
 <div class="center hero-unit">
  	<h1>Scrabble Dojo</h1>
  	<h2>Practice makes perfect!</h2>
 	<hr/>
-	<div id="log-in">
-			<%= link_to "Log in", signup_path, class: "btn btn-primary" %>
-			<%= link_to "Sign up", signup_path, class: "btn" %>
-	</div>
-	<hr/>
+	<% unless logged_in? %>
+		<div id="log-in">
+				<%= link_to "Log in", login_path, class: "btn btn-primary" %>
+				<%= link_to "Sign up", signup_path, class: "btn" %>
+		</div>
+		<hr/>
+	<% end %>
 	<p>
 		Random bingo: <strong> <%= @word %> &nbsp; </strong>
 		<%= link_to "Next", home_path, class: "btn" %>

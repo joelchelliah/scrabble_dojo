@@ -6,9 +6,8 @@ describe "Memos" do
 	describe "create new memo" do
 		before { visit new_memo_path }
 
-		it { should have_title 'Scrabble Dojo' }
-		it { should have_selector 'h1', text: 'Memo' }
-		it { should have_selector 'h2', text: 'Create' }
+		it { should have_title 'New memo' }
+		it { should have_headings 'Memo', 'Create' }
 		it { should have_selector 'input' }
 		it { should have_selector 'textarea' }
 		it { should have_link 'Back', href: memos_path }
@@ -30,11 +29,7 @@ describe "Memos" do
 		end
 
 		describe "with valid information" do
-			before do
-				fill_in "memo_name", with: "A3"
-				fill_in "memo_word_list", with: "ABC\r\nADL\r\n"
-				fill_in "memo_hints", with: "ABC\r\nADL"
-			end
+			before { valid_memo }
 
 			it "should create a memo" do
 				expect {click_button submit }.to change(Memo, :count).by(1)
@@ -45,9 +40,8 @@ describe "Memos" do
 	describe "memo overview" do
 		before { visit memos_path }
 
-		it { should have_title 'Scrabble Dojo' }
-		it { should have_selector 'h1', text: 'Memo' }
-		it { should have_selector 'h2', text: 'Overview' }
+		it { should have_title 'Memos' }
+		it { should have_headings 'Memo', 'Overview' }
 		it { should have_link 'New memo', href: new_memo_path }
 		it { should have_link 'Sort by name', href: memos_path }
 		it { should have_link 'Sort by health', href: by_health_memos_path }
