@@ -13,12 +13,6 @@ def valid_signup()
   fill_in "user_password_confirmation", with: "foobar"
 end
 
-def valid_memo()
-	fill_in "memo_name", 			with: "A3"
-	fill_in "memo_word_list", with: "ABC\r\nADL\r\n"
-	fill_in "memo_hints", 		with: "ABC\r\nADL"
-end
-
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
     expect(page).to have_selector('div.alert.alert-error', text: message)

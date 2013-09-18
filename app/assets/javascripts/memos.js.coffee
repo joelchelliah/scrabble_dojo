@@ -23,29 +23,28 @@ show_words = ->
 
 ready = ->
 
-	# Create
+	# Create page
 
 	if $('h2').text() == "Create"
 		$('#memo_name').focus()
+		$('#memo-form-submit').attr('value', 'Create')
 
 
-	# Edit
+	# Edit page
 
 	if $('h2').text() == "Edit"
 		$('#memo_word_list').focus()
+		$('#memo-form-submit').attr('value', 'Update')
 
 
-	# Index
-
-	#$('.bar').css("left", "-300px")
-	#$('.bar').animate({ left: '0' }, 1500);
-
+	# Index page
+	#
+	#
 
 	# Show page
 
 	$('#box-hints').hide()
 	$('#box-practice').hide()
-	#$('#box-words-solutions').hide()
 
 	$('#btn-hints').click (e)->
 		e.preventDefault()
@@ -55,8 +54,7 @@ ready = ->
 	$('#btn-words').click (e)->
 		e.preventDefault()
 		if !$('#btn-words').attr('disabled')
-			if $('#btn-words').text() == "Show words" then show_words() else hide_words()
-				
+			if $('#btn-words').text() == "Show words" then show_words() else hide_words()		
 
 	$('#btn-practice').click (e)->
 		e.preventDefault()
@@ -78,11 +76,11 @@ ready = ->
 
 
 	# Results page
+
 	max = 620
 	prev_health = $('#prev-health').text() * max / 100
 	current_health = $('.health-update .progress .bar').width()
 	move_left = (prev_health - current_health) + "px"
-	#alert "prev_health in % : " + $('#prev-health').text() + "prev_health : " + prev_health + "current_health: " + current_health
 	
 	$('.health-update .progress .bar').css("left", move_left)
 	$('.health-update .progress .bar').animate({left: '0'}, 2000)

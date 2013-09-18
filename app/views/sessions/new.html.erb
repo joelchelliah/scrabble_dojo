@@ -3,16 +3,20 @@
 	<h1>Account</h1>
 	<h2>Log in</h2>
 	<hr/>
-	<div class="row">
-	  <div class="span6 offset3">
-	    <%= form_for(:session, url: sessions_path) do |f| %>
-	      <%= f.text_field :email, placeholder: "Email" %>
-	      <%= f.password_field :password, placeholder: "Password" %>
+  <%= form_for(:session, url: sessions_path) do |f| %>
+  	<fieldset>
+	    <div class="row"><div class="span5 offset3"><%= f.text_field :email, placeholder: "Email" %></div></div>
+	    <div class="row"><div class="span5 offset3"><%= f.password_field :password, placeholder: "Password" %></div></div>
 
-	      <%= f.submit "Log in", class: "btn btn-large btn-primary" %>
-	    <% end %>
-
-	    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+	    <div class="row">
+	    	<div class="span1 offset3"><%= f.submit "Log in", class: "btn btn-primary" %></div>
+	    	<div class="span1"><%= link_to "Cancel", home_path, class: "btn" %></div>
+	    </div>
+    </fieldset>
+  <% end %>
+  <div class="row">
+  	<div class="offset3">
+	    <p>New user? &nbsp; <%= link_to "Sign up now!", signup_path %></p>
 	  </div>
 	</div>
 </div>

@@ -42,10 +42,11 @@ class MemosController < ApplicationController
     @memo = Memo.new(memo_params)
     @memo.health_decay = Time.now - 10.day unless @memo.health_decay
     @memo.word_list = parse_form_words(@memo.word_list).join("\n") if @memo.word_list
+    @memo.hints = parse_form_hints(@memo.hints) if @memo.hints
 
     respond_to do |format|
       if @memo.save
-        flash[:notice] = "Created a new memo: #{@memo.name}."
+        flash[:success] = "Created a new memo: #{@memo.name}."
         format.html { redirect_to memos_path }
         format.json { render action: 'show', status: :created, location: @memo }
       else
@@ -59,9 +60,11 @@ class MemosController < ApplicationController
   # PATCH/PUT /memos/1.json
   def update
     @memo.word_list = parse_form_words(@memo.word_list).join("\n") if @memo.word_list
+    @memo.hints = parse_form_hints(@memo.hints) if @memo.hints
+    
     respond_to do |format|
       if @memo.update(memo_params)
-        flash[:notice] = "Updated memo: #{@memo.name}."
+        flash[:success] = "Updated memo: #{@memo.name}."
         format.html { redirect_to memos_path }
         format.json { head :no_content }
       else
@@ -121,19 +124,6 @@ class MemosController < ApplicationController
       @missed_words = flash[:missed_words]
       @wrong_words = flash[:wrong_words]
       @prev_health = flash[:prev_health]
-
-      # puts "----------------------------------"
-      # puts "DEBUG"
-      # puts "in results"
-      # puts "entered words: #{@form_words}"
-      # puts "number of missed words: #{@missed_words.count}"
-      # puts "number of wrong words: #{@wrong_words.count}"
-      
-      # puts "previous health : #{@prev_health}"
-      # puts "new health decay: #{@memo.health_decay}"
-
-      # puts "----------------------------------"
-
     else
       respond_to do |format|
         format.html { redirect_to @memo }
@@ -149,7 +139,11 @@ class MemosController < ApplicationController
                 .tr("å-ü", "Å-Ü")
                 .split(/\r?\n/)
                 .uniq
-                .map {|w| w.upcase }
+                .map { |w| w.upcase }
+    end
+
+    def parse_form_hints(form_hints)
+      form_hints.tr("å-ü", "Å-Ü").upcase
     end
 
     # Use callbacks to share common setup or constraints between actions.
