@@ -1,17 +1,53 @@
 <% provide(:title, 'Home') %>
-<div class="center hero-unit">
+<div class="hero-unit">
  	<h1>Scrabble Dojo</h1>
  	<h2>Practice makes perfect!</h2>
 	<hr/>
-	<% unless logged_in? %>
-		<div id="log-in">
-				<%= link_to "Log in", login_path, class: "btn btn-primary" %>
-				<%= link_to "Sign up", signup_path, class: "btn" %>
+	<section>
+		<div class="row">
+	    <div class="span8">
+				<section>
+					<h4>Welcome to Scrabble Dojo.</h4>
+					<p>
+						This website is a hobby project that I'm currently working on, and will contain a collection of tools and hints for improving your Scrabble skills. Most of the features will be available without having a user account, however some the more advanced tools will require that you are
+						<%= if logged_in? then "logged in" else link_to "logged in", login_path end %>.
+					</p>
+					<p>
+						All tools that require a dictionary look-up currently only have access to the Norwegian dictionary (NSF-ordliste). Support for other languages will be available in the future.
+					</p>
+					<p>
+						<strong> features that are currently available: </strong>
+						<ul>
+							<li> <%= link_to "Memo", memos_path %> (requires a user account)</li>
+						</ul>
+					</p>
+					<p>
+						<strong> features in progress: </strong>
+						<ul>
+							<li> Word Judge </li>
+							<li> Word / Anagram Search </li>
+							<li> Bingo Trainer (requires a user account)</li>
+						</ul>
+					</p>
+				</section>
+				<section>
+					<h4>Disclaimer</h4>
+					<p>
+						The use of these tools are purely meant for the purpose of improving your skills. They should not be used to cheat in Scrabble or other word-based games.
+					</p>
+				</section>
+			</div>
+			<div class="offset8">
+				<div class="well">
+					<p>
+						Random bingo:
+						<br/>
+						<strong> <%= @word %> </strong>
+						<br/>
+						<%= link_to "Next", home_path, class: "btn" %>
+					</p>
+				</div>
+			</div>
 		</div>
-		<hr/>
-	<% end %>
-	<p>
-		Random bingo: <strong> <%= @word %> &nbsp; </strong>
-		<%= link_to "Next", home_path, class: "btn" %>
-		</p>
+	</section>
 </div>
