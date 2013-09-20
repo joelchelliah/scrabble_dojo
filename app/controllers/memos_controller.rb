@@ -40,10 +40,6 @@ class MemosController < ApplicationController
   # POST /memos.json
   def create
     @memo = Memo.new(memo_params)
-    @memo.health_decay = Time.now - 10.day unless @memo.health_decay
-    @memo.word_list = parse_form_words(@memo.word_list).join("\n") if @memo.word_list
-    @memo.hints = parse_form_hints(@memo.hints) if @memo.hints
-
     respond_to do |format|
       if @memo.save
         flash[:success] = "Created a new memo: #{@memo.name}."
@@ -59,11 +55,8 @@ class MemosController < ApplicationController
   # PATCH/PUT /memos/1
   # PATCH/PUT /memos/1.json
   def update
-    @memo.word_list = parse_form_words(@memo.word_list).join("\n") if @memo.word_list
-    @memo.hints = parse_form_hints(@memo.hints) if @memo.hints
-    
     respond_to do |format|
-      if @memo.update(memo_params)
+      if @memo.update_attributes(memo_params)
         flash[:success] = "Updated memo: #{@memo.name}."
         format.html { redirect_to memos_path }
         format.json { head :no_content }
@@ -86,7 +79,7 @@ class MemosController < ApplicationController
 
   # PATCH /memos/1/practice
   def practice
-    form_words = parse_form_words params[:message]
+    form_words = parse_form_words
     memo_words = @memo.word_list.split(/\r?\n/).uniq
 
     missed_words = memo_words - form_words
@@ -134,16 +127,13 @@ class MemosController < ApplicationController
 
   private
 
-    def parse_form_words(form_words)
-      form_words.tr(" ", "\n")
-                .tr("å-ü", "Å-Ü")
-                .split(/\r?\n/)
-                .uniq
-                .map { |w| w.upcase }
-    end
-
-    def parse_form_hints(form_hints)
-      form_hints.tr("å-ü", "Å-Ü").upcase
+    def parse_form_words()
+      params[:message].upcase
+                      .tr(" ", "\n")
+                      .tr("å-ü", "Å-Ü")
+                      .split(/\r?\n/)
+                      .uniq
+                      .reject { |w| w == "" }
     end
 
     # Use callbacks to share common setup or constraints between actions.

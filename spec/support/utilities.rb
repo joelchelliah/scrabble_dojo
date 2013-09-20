@@ -1,16 +1,28 @@
 include ApplicationHelper
 
-def valid_login(user)
-  fill_in "Email",    with: user.email
-  fill_in "Password", with: user.password
-  click_button "Log in"
-end
-
 def valid_signup()
   fill_in "user_name",                  with: "Example User"
   fill_in "user_email",                 with: "user@example.com"
   fill_in "Password",                   with: "foobar"
   fill_in "user_password_confirmation", with: "foobar"
+end
+
+def log_in(user, options={})
+  if options[:no_capybara]
+    # Sign in when not using Capybara.
+    remember_token = User.new_remember_token
+    cookies[:remember_token] = remember_token
+    user.update_attribute(:remember_token, User.encrypt(remember_token))
+  else
+    visit login_path
+    valid_login user
+  end
+end
+
+def valid_login(user)
+  fill_in "Email",    with: user.email
+  fill_in "Password", with: user.password
+  click_button "Log in"
 end
 
 RSpec::Matchers.define :have_error_message do |message|
@@ -19,9 +31,21 @@ RSpec::Matchers.define :have_error_message do |message|
   end
 end
 
+RSpec::Matchers.define :have_notice_message do |message|
+  match do |page|
+    expect(page).to have_selector('div.alert.alert-notice', text: message)
+  end
+end
+
 RSpec::Matchers.define :have_success_message do |message|
   match do |page|
     expect(page).to have_selector('div.alert.alert-success', text: message)
+  end
+end
+
+RSpec::Matchers.define :have_flash_message_of_type do |type|
+  match do |page|
+    expect(page).to have_selector("div.alert.alert-#{type}")
   end
 end
 

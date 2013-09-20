@@ -6,28 +6,16 @@
         <ul class="nav pull-left">
           <li><%= link_to "<i class='icon-home icon-white'></i> <strong>Home</strong>".html_safe, home_path %></li>
           <% if logged_in? %>
-            <li><%= link_to "Users", '#' %></li>
-            <li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Profile", current_user %></li>
-                <li><%= link_to "Settings", '#' %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "Log out", logout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "Log in", login_path %></li>
+            <li><%= link_to "<i class='icon-file icon-white'></i> Memo".html_safe, memos_path %></li>            
           <% end %>
-          <!-- <li><%= link_to "Bingotrener", '#' %></li> -->
-          <!-- <li><%= link_to "Ord med 2 bokstaver", controller: "words", action: "index", length: 2 %></li>
+          <!-- <li><%= link_to "Bingotrener", '#' %></li>
+          <li><%= link_to "Ord med 2 bokstaver", controller: "words", action: "index", length: 2 %></li>
           <li><%= link_to "Ord med 3 bokstaver", controller: "words", action: "index", length: 3 %></li>
           <li><%= link_to "Ord med 4 bokstaver", controller: "words", action: "index", length: 4 %></li> -->
-          <li><%= link_to "<i class='icon-file icon-white'></i> Memo".html_safe, memos_path %></li>
+        </ul>
+        <ul class="nav pull-right">
+          <%= render 'layouts/dropdowns/admin_bar' %>
+          <%= render 'layouts/dropdowns/account_bar' %>
         </ul>
       </nav>
     </div>

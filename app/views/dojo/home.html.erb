@@ -9,8 +9,9 @@
 				<section>
 					<h4>Welcome to Scrabble Dojo.</h4>
 					<p>
-						This website is a hobby project that I'm currently working on, and will contain a collection of tools and hints for improving your Scrabble skills. Most of the features will be available without having a user account, however some the more advanced tools will require that you are
-						<%= if logged_in? then "logged in" else link_to "logged in", login_path end %>.
+						This website is a hobby project that I'm currently working on, and will contain a collection of tools for practicing and improving your Scrabble skills. You need a 
+						<%= if logged_in? then "user account" else link_to "user account", login_path end %>
+						to gain access to all the features.
 					</p>
 					<p>
 						All tools that require a dictionary look-up currently only have access to the Norwegian dictionary (NSF-ordliste). Support for other languages will be available in the future.
@@ -39,13 +40,13 @@
 			</div>
 			<div class="offset8">
 				<div class="well">
-					<p>
+					<!-- <p>
 						Random bingo:
 						<br/>
 						<strong> <%= @word %> </strong>
 						<br/>
 						<%= link_to "Next", home_path, class: "btn" %>
-					</p>
+					 </p>-->
 				</div>
 			</div>
 		</div>

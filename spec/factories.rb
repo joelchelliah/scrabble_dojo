@@ -1,16 +1,19 @@
 FactoryGirl.define do
   factory :user do
-    name     "Joel Chelliah"
-    email    "jc@gmail.com"
+    sequence(:name)  { |n| "Person #{n}" }
+    sequence(:email) { |n| "person_#{n}@scrabble.com"}
     password "foobar"
     password_confirmation "foobar"
+
+    factory :admin do
+      admin true
+    end
   end
 
   factory :memo do
-    name     			"A3"
+    sequence(:name)  { |n| "Memo #{n}" }
     word_list    	"ABC\nADL\nAGA\nAGE\nAGG"
     hints 				"some hints"
-    health_decay 	10.days.ago
-    num_practices	3
+    num_practices	0
   end
 end

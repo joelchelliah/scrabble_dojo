@@ -2,18 +2,14 @@
 <div id="sign-up" class="hero-unit">
 	<h1>Account</h1>
 	<h2>Sign up</h2>
-	<hr/>	
-  <%= form_for(@user) do |f| %>
-  	<fieldset>
-			<%= render 'shared/user_error_messages' %>
-			<div class="row"><div class="span5 offset3"><%= f.text_field :name, placeholder: "Name" %></div></div>
-	    <div class="row"><div class="span5 offset3"><%= f.text_field :email, placeholder: "Email address" %></div></div>
-	    <div class="row"><div class="span5 offset3"><%= f.password_field :password, placeholder: "Password" %></div></div>
-	    <div class="row"><div class="span5 offset3"><%= f.password_field :password_confirmation, placeholder: "Password confirmation" %></div></div>
-	    <div class="row">
-	    	<div class="span2 offset3"><%= f.submit "Create my account", class: "btn btn-primary" %></div>
-	    	<div class="span1"><%= link_to "Cancel", home_path, class: "btn" %></div>
-	    </div>
-  	</fieldset>
-  <% end %>
+	<hr/>
+	<%= form_for(@user) do |f| %>
+		<fieldset>
+	  	<%= render 'fields', f: f, password_placeholder: "Password" %>
+	  	<div class="row">
+		    <div class="span2 offset3"><%= f.submit "Create my account", class: "btn btn-primary" %></div>
+		    <div class="span1"><%= link_to "Cancel", home_path, class: "btn" %></div>
+		  </div>
+		</fieldset>
+	<% end %>
 </div>

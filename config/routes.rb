@@ -1,6 +1,6 @@
 ScrabbleDojo::Application.routes.draw do
   
-  resources :users
+  resources :users, except: :show
   resources :sessions, only: [:new, :create, :destroy]
   resources :words
   resources :memos do

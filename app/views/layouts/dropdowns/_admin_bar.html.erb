@@ -1,0 +1,10 @@
+<% if logged_in_as_admin? %>
+    <li id="fat-menu" class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <i class='icon-exclamation-sign icon-white'></i> Admin <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+      <li><%= link_to "Browse users", users_path %></li>
+    </ul>
+  </li>
+<% end %>

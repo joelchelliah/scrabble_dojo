@@ -27,14 +27,12 @@ ready = ->
 
 	if $('h2').text() == "Create"
 		$('#memo_name').focus()
-		$('#memo-form-submit').attr('value', 'Create')
 
 
 	# Edit page
 
 	if $('h2').text() == "Edit"
 		$('#memo_word_list').focus()
-		$('#memo-form-submit').attr('value', 'Update')
 
 
 	# Index page

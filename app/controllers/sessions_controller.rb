@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 	  if user && user.authenticate(params[:session][:password])
 	  	log_in user
 	  	flash[:success] = "Welcome to Scrabble Dojo!"
-      redirect_to home_path
+      redirect_back_or home_path
 	  else
 	    flash.now[:error] = 'Invalid email/password combination'
 	    render 'new'

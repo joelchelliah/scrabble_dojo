@@ -32,16 +32,45 @@ describe Memo do
   end
 
   describe "when word list is valid" do
-  	["a", "a\nb\nc\nd", "a\nb\nc\nd\n", "abc\r\nadl", "abc\r\nadl\r\n", "æøå"].each do |valid_list|
+  	["a", "a\r\nb\r\nc", "a\nb\nc\n", "abc adl aga", "abc adl\r\n", "æøå"].each do |valid_list|
   		before { @memo.word_list = valid_list }
   		it { should be_valid }
   	end
   end
 
   describe "when word list is invalid" do
-  	["a,b,c,d,e,f,g", "a b c d e f g", "a\nb\nc d\ne\nf", "a\rb"].each do |invalid_list|
+  	["a,b,c,d,e,f,g", "123 456 789", "a\nb\nc\nd\n1", "a\rb"].each do |invalid_list|
   		before { @memo.word_list = invalid_list }
   		it { should_not be_valid }
   	end
+  end
+
+  describe "after saving a memo with lowercase fields" do
+    before do
+      @memo.name = "b4 æøå"
+      @memo.word_list = "baht bøkl bægj   \r\nbåen båer båst"
+      @memo.hints = "båt\r\nbæ - dj"
+      @memo.save
+    end
+
+    its(:name) { should eq "B4 ÆØÅ"}
+    its(:word_list) { should eq "BAHT\nBØKL\nBÆGJ\nBÅEN\nBÅER\nBÅST"}
+    its(:hints) { should eq "BÅT\r\nBÆ - DJ"}
+  end
+
+  describe "after saving a memo with no health decay" do
+    before do
+      @memo.health_decay = nil
+      @memo.save
+    end
+
+    its(:health_decay) { should < Time.now - 9.day}
+    its(:health_decay) { should > Time.now - 11.day}
+  end
+
+  describe "after saving a brand new memo" do
+    before { @memo.save }
+
+    its(:num_practices) { should eq 0 }
   end
 end
