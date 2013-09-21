@@ -27,3 +27,6 @@ doc/
 
 # Ignore output file of word list seed data genereator
 /ordliste/db-seeds.txt
+
+# Ignore assets manifest file so that heroku compiles stuff by itself
+/public/assets/manifest*.json
