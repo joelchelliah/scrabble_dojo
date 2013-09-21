@@ -9,12 +9,17 @@
 				<section>
 					<h4>Welcome</h4>
 					<p>
-						This website is a hobby project that I've been working on since August 2013, and contains a collection of tools for practicing and improving your Scrabble skills. You need a 
-						<%= if logged_in? then "user account" else link_to "user account", login_path end %>
-						to gain access to all the features.
+						This website is a hobby project that I've been working on since August 2013, and contains a collection of tools for improving your Scrabble skills.
+						<% unless logged_in? %>
+							<p>
+								You need a 
+								<%= if logged_in? then "user account" else link_to "user account", login_path end %>
+								to access most of the features.
+							</p>
+						<% end %>
 					</p>
 					<p>
-						All tools that require a dictionary look-up currently only have access to the Norwegian dictionary (NSF-ordliste). Support for other languages will be available in the future.
+						All tools that require a dictionary look-up currently only have access to the Norwegian dictionary (NSF-ordliste). Support for other languages may be available in the future.
 					</p>
 					<!-- <p>
 						<strong> features that are currently available: </strong>
