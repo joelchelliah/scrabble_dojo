@@ -15,5 +15,6 @@ FactoryGirl.define do
     word_list    	"ABC\nADL\nAGA\nAGE\nAGG"
     hints 				"some hints"
     num_practices	0
+    user
   end
 end

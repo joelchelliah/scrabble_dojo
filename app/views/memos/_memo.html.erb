@@ -1,0 +1,9 @@
+<li>
+	<span class="content">
+	  <span class="name"><%= memo.name %></span>
+	  <span class="word-count"><%= memo.word_list.split(/\r?\n/).count %> words.</span>
+	</span>
+  <span class="timestamp">
+    Created <%= time_ago_in_words(memo.created_at) %> ago.
+  </span>
+</li>

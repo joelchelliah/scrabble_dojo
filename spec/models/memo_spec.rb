@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Memo do
-  before { @memo = Memo.new(name: "A2", hints: "", word_list: "AB\nAD\nAG\nAH\nAI\nAK\nAL\nAM\nAN\nAP\nAR\nAS\nAT\nAU\nAV") }
+
+  let(:user) { FactoryGirl.create(:user) }
+  before { @memo = user.memos.build(name: "A2", hints: "", word_list: "AB\nAD\nAG\nAH\nAI\nAK\nAL\nAM\nAN\nAP\nAR\nAS\nAT\nAU\nAV") }
   subject { @memo }
 
   it { should respond_to :name }
@@ -9,8 +11,24 @@ describe Memo do
   it { should respond_to :word_list }
   it { should respond_to :health_decay }
   it { should respond_to :num_practices }
+  it { should respond_to(:user_id) }
+  it { should respond_to(:user) }
+  its(:user) { should eq user }
 
   it { should be_valid }
+
+  describe "after saving a new memo" do
+    before { @memo.save }
+
+    its(:num_practices) { should eq 0 }
+    its(:health_decay) { should < Time.now - 9.day}
+    its(:health_decay) { should > Time.now - 11.day}
+  end
+
+  describe "when user_id is not present" do
+    before { @memo.user_id = nil }
+    it { should_not be_valid }
+  end
 
   describe "when name is not present" do
   	before { @memo.name = " " }
@@ -22,6 +40,7 @@ describe Memo do
   		copy = @memo.dup
   		copy.name.downcase!
   		copy.save
+      @memo.name.downcase!
   	end
   	it { should_not be_valid }
   end
@@ -56,21 +75,5 @@ describe Memo do
     its(:name) { should eq "B4 ÆØÅ"}
     its(:word_list) { should eq "BAHT\nBØKL\nBÆGJ\nBÅEN\nBÅER\nBÅST"}
     its(:hints) { should eq "BÅT\r\nBÆ - DJ"}
-  end
-
-  describe "after saving a memo with no health decay" do
-    before do
-      @memo.health_decay = nil
-      @memo.save
-    end
-
-    its(:health_decay) { should < Time.now - 9.day}
-    its(:health_decay) { should > Time.now - 11.day}
-  end
-
-  describe "after saving a brand new memo" do
-    before { @memo.save }
-
-    its(:num_practices) { should eq 0 }
   end
 end

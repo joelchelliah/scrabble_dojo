@@ -1,8 +1,7 @@
 ScrabbleDojo::Application.routes.draw do
   
-  resources :users, except: :show
   resources :sessions, only: [:new, :create, :destroy]
-  resources :words
+  resources :users
   resources :memos do
     collection do
       get 'by_health'
@@ -14,6 +13,7 @@ ScrabbleDojo::Application.routes.draw do
       patch 'practice'
     end
   end
+  resources :words
 
   root 'dojo#home'
 

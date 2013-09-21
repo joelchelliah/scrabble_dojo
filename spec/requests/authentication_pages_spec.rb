@@ -97,15 +97,22 @@ describe "Authentication" do
           it { should have_notice_message 'Log in to access this page'}
         end
 
-        describe "visiting the user index" do
-          before { visit users_path }
-          it { should have_title('Log in') }
-          it { should have_notice_message 'Log in to access this page'}
-        end
-
         describe "submitting to the update action" do
           before { patch user_path user }
           specify { expect(response).to redirect_to login_path }
+        end
+      end
+
+      describe "in the Memos controller" do
+
+        describe "submitting to the create action" do
+          before { post memos_path }
+          specify { expect(response).to redirect_to(login_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete memo_path(FactoryGirl.create(:memo)) }
+          specify { expect(response).to redirect_to(login_path) }
         end
       end
     end

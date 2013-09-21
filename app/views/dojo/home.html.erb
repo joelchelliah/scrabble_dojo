@@ -7,16 +7,16 @@
 		<div class="row">
 	    <div class="span8">
 				<section>
-					<h4>Welcome to Scrabble Dojo.</h4>
+					<h4>Welcome</h4>
 					<p>
-						This website is a hobby project that I'm currently working on, and will contain a collection of tools for practicing and improving your Scrabble skills. You need a 
+						This website is a hobby project that I've been working on since August 2013, and contains a collection of tools for practicing and improving your Scrabble skills. You need a 
 						<%= if logged_in? then "user account" else link_to "user account", login_path end %>
 						to gain access to all the features.
 					</p>
 					<p>
 						All tools that require a dictionary look-up currently only have access to the Norwegian dictionary (NSF-ordliste). Support for other languages will be available in the future.
 					</p>
-					<p>
+					<!-- <p>
 						<strong> features that are currently available: </strong>
 						<ul>
 							<li> <%= link_to "Memo", memos_path %> (requires a user account)</li>
@@ -29,7 +29,7 @@
 							<li> Word / Anagram Search </li>
 							<li> Bingo Trainer (requires a user account)</li>
 						</ul>
-					</p>
+					</p> -->
 				</section>
 				<section>
 					<h4>Disclaimer</h4>

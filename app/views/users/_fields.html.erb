@@ -1,4 +1,4 @@
-<%= render 'shared/user_error_messages' %>
+<%= render 'shared/error_messages', object: f.object %>
 <div class="row"><div class="span5 offset3"><%= f.text_field :name, placeholder: "Name" %></div></div>
 <div class="row"><div class="span5 offset3"><%= f.text_field :email, placeholder: "Email address" %></div></div>
 <div class="row"><div class="span5 offset3"><%= f.password_field :password, placeholder: "#{password_placeholder}" %></div></div>

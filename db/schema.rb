@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130920113545) do
+ActiveRecord::Schema.define(version: 20130921100753) do
 
   create_table "memos", force: true do |t|
     t.string   "name"
@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(version: 20130920113545) do
     t.datetime "updated_at"
     t.datetime "health_decay"
     t.integer  "num_practices", default: 0
+    t.integer  "user_id"
   end
 
-  add_index "memos", ["name"], name: "index_memos_on_name", unique: true
+  add_index "memos", ["user_id", "name"], name: "index_memos_on_user_id_and_name", unique: true
 
   create_table "sessions", force: true do |t|
     t.string   "session_id", null: false

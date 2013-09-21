@@ -1,83 +1,59 @@
 class MemosController < ApplicationController
-  before_action :set_memo, only: [:show, :edit, :update, :destroy, :practice, :results]
+  before_action :logged_in_user
+  before_action :correct_user, only: [:show, :edit, :update, :destroy, :practice, :results]
 
   def index
-    sort_attr = (flash[:sort_by] or :name)
-    if sort_attr == :count
-      @memos = Memo.all.sort_by { |m| m.word_list.size }
-    else
-      @memos = Memo.all.sort_by { |m| m.send sort_attr }
-    end
+    @memos = current_user.memos
   end
 
   def by_health
-    flash[:sort_by] = :health_decay
-    redirect_to memos_path
+    @memos = current_user.memos.by_health
+    render 'index'
   end
 
   def by_word_count
-    flash[:sort_by] = :count
-    redirect_to memos_path
+    @memos = current_user.memos.sort_by { |m| -m.word_list.size }
+    render 'index'
   end
 
   def revise_weakest
-    redirect_to Memo.all.sort_by { |m| m.health_decay }.first
+    redirect_to current_user.memos.weakest
   end
 
   def show
   end
 
-  # GET /memos/new
   def new
-    @memo = Memo.new
+    @memo = current_user.memos.build
   end
 
-  # GET /memos/1/edit
   def edit
   end
 
-  # POST /memos
-  # POST /memos.json
   def create
-    @memo = Memo.new(memo_params)
-    respond_to do |format|
-      if @memo.save
-        flash[:success] = "Created a new memo: #{@memo.name}."
-        format.html { redirect_to memos_path }
-        format.json { render action: 'show', status: :created, location: @memo }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @memo.errors, status: :unprocessable_entity }
-      end
+    @memo = current_user.memos.build(memo_params)
+    if @memo.save
+      flash[:success] = "Created memo: #{@memo.name}."
+      redirect_to memos_path
+    else
+      render 'new'
     end
   end
 
-  # PATCH/PUT /memos/1
-  # PATCH/PUT /memos/1.json
   def update
-    respond_to do |format|
-      if @memo.update_attributes(memo_params)
-        flash[:success] = "Updated memo: #{@memo.name}."
-        format.html { redirect_to memos_path }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @memo.errors, status: :unprocessable_entity }
-      end
+    if @memo.update_attributes(memo_params)
+      flash[:success] = "Updated memo: #{@memo.name}."
+      redirect_to memos_path
+    else
+      render 'edit'
     end
   end
 
-  # DELETE /memos/1
-  # DELETE /memos/1.json
   def destroy
     @memo.destroy
-    respond_to do |format|
-      format.html { redirect_to memos_url }
-      format.json { head :no_content }
-    end
+    redirect_to memos_url
   end
 
-  # PATCH /memos/1/practice
   def practice
     form_words = parse_form_words
     memo_words = @memo.word_list.split(/\r?\n/).uniq
@@ -93,24 +69,20 @@ class MemosController < ApplicationController
 
     @memo.health_decay += health_inc.day                 # converting back to day before adding
     @memo.num_practices += 1
-    respond_to do |format|
-      if @memo.save
-        flash[:from_practice] = true
-        flash[:form_words] = form_words
-        flash[:missed_words] = missed_words
-        flash[:wrong_words] = wrong_words
-        flash[:prev_health] = previous_health
-        format.html { redirect_to results_memo_path @memo }
-        format.json { head :no_content }
-      else
-        flash[:notice] = "Something went wrong."
-        format.html { redirect_to memos_path }
-        format.json { render json: @memo.errors, status: :unprocessable_entity }
-      end
+
+    if @memo.save
+      flash[:from_practice] = true
+      flash[:form_words] = form_words
+      flash[:missed_words] = missed_words
+      flash[:wrong_words] = wrong_words
+      flash[:prev_health] = previous_health
+      redirect_to results_memo_path @memo
+    else
+      flash[:error] = "Could not save results from practice session"
+      redirect_to memos_path
     end
   end
 
-  # GET /memos/1/results
   def results
     if flash[:from_practice]
       @form_words = flash[:form_words]
@@ -118,12 +90,10 @@ class MemosController < ApplicationController
       @wrong_words = flash[:wrong_words]
       @prev_health = flash[:prev_health]
     else
-      respond_to do |format|
-        format.html { redirect_to @memo }
-        format.json { head :no_content }
-      end
+      redirect_to @memo
     end
   end
+
 
   private
 
@@ -136,13 +106,15 @@ class MemosController < ApplicationController
                       .reject { |w| w == "" }
     end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_memo
-      @memo = Memo.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def memo_params
       params.require(:memo).permit(:name, :hints, :word_list)
+    end
+
+    def correct_user
+      @memo = current_user.memos.find_by(id: params[:id])
+      if @memo.nil?
+        flash[:error] = "Could not find memo"
+        redirect_to root_url
+      end
     end
 end

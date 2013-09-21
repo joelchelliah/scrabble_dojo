@@ -33,6 +33,13 @@ module SessionsHelper
     user == current_user
   end
 
+  def logged_in_user
+    unless logged_in?
+      store_location
+      redirect_to login_url, notice: "Log in to access this page"
+    end
+  end
+
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
     session.delete(:return_to)

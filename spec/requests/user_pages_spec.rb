@@ -5,49 +5,85 @@ describe "User pages" do
   subject { page }
 
   describe "index" do
-    let(:user) { FactoryGirl.create(:user) }
-    before(:each) do
-      log_in user
-      visit users_path
-    end
-
-    it { should have_title('Users') }
-    it { should have_headings 'User', 'Overview' }
-
-    describe "pagination" do
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
-      after(:all)  { User.delete_all }
-
-      it { should have_selector('div.pagination') }
-
-      it "should list each user" do
-        User.paginate(page: 1).each do |user|
-          expect(page).to have_selector('li', text: user.name)
-        end
+    describe "as a regular user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before(:each) do
+        log_in user
+        visit users_path
       end
+
+      it { should have_title('Home') }
+      it { should_not have_headings 'User', 'Overview' }
     end
 
-    describe "delete links" do
+    describe "as an admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      before(:each) do
+        log_in admin
+        visit users_path
+      end
 
-      it { should_not have_link('delete') }
+      it { should have_title('Users') }
+      it { should have_headings 'User', 'Overview' }
 
-      describe "as an admin user" do
-        let(:admin) { FactoryGirl.create(:admin) }
-        before do
-          log_in admin
-          visit users_path
+      describe "pagination" do
+        before(:all) { 30.times { FactoryGirl.create(:user) } }
+        after(:all)  { User.delete_all }
+
+        it { should have_selector('div.pagination') }
+
+        it "should list each user" do
+          User.paginate(page: 1).each do |user|
+            expect(page).to have_selector('li', text: user.name)
+          end
         end
-
-        it { should have_link('delete', href: user_path(User.first)) }
-        it "should be able to delete another user" do
-          expect do
-            click_link('delete', match: :first)
-          end.to change(User, :count).by(-1)
+      
+        describe "delete links" do
+          it { should_not have_link('delete', href: user_path(admin)) }
+          it { should have_link('delete', href: user_path(User.first)) }
+          it "should be able to delete another user" do
+            expect do
+              click_link('delete', match: :first)
+            end.to change(User, :count).by(-1)
+          end
+          it { should_not have_link('delete', href: user_path(admin)) }
         end
-        it { should_not have_link('delete', href: user_path(admin)) }
       end
     end
   end
+
+  describe "show" do
+    describe "as a regular user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before(:each) do
+        log_in user
+        visit user_path(user)
+      end
+
+      it { should have_title('Home') }
+      it { should_not have_headings 'User', 'Profile' }
+    end
+
+    describe "as an admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      let!(:m1) { FactoryGirl.create(:memo, user: admin, name: "A2") }
+      let!(:m2) { FactoryGirl.create(:memo, user: admin, name: "A3") }
+      before(:each) do
+        log_in admin
+        visit user_path(admin)
+      end
+
+      it { should have_title('Profile') }
+      it { should have_headings 'User', 'Profile' }
+
+      describe "list of user's memos" do
+        it { should have_content(m1.name) }
+        it { should have_content(m2.name) }
+        it { should have_content(admin.memos.count) }
+      end
+    end
+  end
+
 
   describe "signup" do
     before { visit signup_path }

@@ -14,6 +14,7 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:memos) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -120,5 +121,38 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "memo associations" do
+    before { @user.save }
+    let!(:memo_B3) { FactoryGirl.create(:memo, user: @user, name: "B3", health_decay: Time.now) }
+    let!(:memo_A3) { FactoryGirl.create(:memo, user: @user, name: "A3", health_decay: Time.now - 20.day) }
+    let!(:memo_C3) { FactoryGirl.create(:memo, user: @user, name: "C3", health_decay: Time.now - 10.day) }
+
+    it "should have the memos in the right order" do
+      expect(@user.memos.to_a).to eq [memo_A3, memo_B3, memo_C3]
+    end
+
+    describe "when getting memos according to health" do
+      it "should have the memos in the right order" do
+        expect(@user.memos.by_health.to_a).to eq [memo_A3, memo_C3, memo_B3]
+      end
+
+      it "should find the weakest memo" do
+        expect(@user.memos.weakest).to eq memo_A3
+      end
+    end
+
+
+    describe "when use is destroyed" do
+      it "should destroy associated memos" do
+        memos = @user.memos.to_a
+        @user.destroy
+        expect(memos).not_to be_empty
+        memos.each do |memo|
+          expect(Memo.where(id: memo.id)).to be_empty
+        end
+      end
+    end
   end
 end

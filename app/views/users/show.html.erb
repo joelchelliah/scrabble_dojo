@@ -1,14 +1,23 @@
 <% provide(:title, 'Profile') %>
 <div class="hero-unit">
-	<h1>Account</h1>
+	<h1>User</h1>
 	<h2>Profile</h2>
+	<hr/>
 	<div class="row">
   	<aside class="span4">
     	<section>
 				<%= gravatar_for @user %>
-				<%= @user.name %>
-				<%= @user.email %>
+				<strong><%= @user.name %></strong><br/>
 			</section>
 		</aside>
+		<div class="offset4">
+	    <% if @user.memos.any? %>
+	      <h4>Memos (<%= @user.memos.count %>)</h4>
+	      <ol class="memos">
+	        <%= render @memos %>
+	      </ol>
+	      <%= will_paginate @memos %>
+	    <% end %>
+	  </div>
 	</div>
 </div>

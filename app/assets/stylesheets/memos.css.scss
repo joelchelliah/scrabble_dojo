@@ -69,11 +69,19 @@ div.progress {
 	.text-green { color: $statusTextGreen !important}
 	.text-yellow { color: $statusTextYellow !important }
 	.text-red { color: $statusTextRed !important }
+	p {
+		font-size: 0.7em;
+	}
 }
 
 // Index page
 
 #memo-overview {
+	table {
+		tr {
+			td { font-size: 0.8em; }
+		}
+	}
 	.memo-status {
 		padding-top: 0;
 		.progress-info-box {
