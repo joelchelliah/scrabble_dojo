@@ -7,7 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-
 # run ordliste/gen-seed-date.rb to get seed data
 # and then paste it in here...
 
