@@ -1,5 +1,5 @@
 <% provide(:title, 'Home') %>
-<div class="hero-unit">
+<div id="dojo-home" class="hero-unit">
  	<h1>Scrabble Dojo</h1>
  	<h2>Practice makes perfect!</h2>
 	<hr/>
@@ -29,19 +29,15 @@
 					</p>
 				</section>
 			</div>
-			<div class="offset8">
+			<aside class="offset8">
 				<div class="well">
-					<section>
-						<h4> Word of the day </h4>
-						<p>
+					<section class="center">
+						<h6>- Word of the day -</h6>
+						
 						<strong> <%= @random_bingo %> </strong>
-						</p>
-						<p>
-						<%= link_to "Next", root_url, class: "btn" %>
-						</p>
 					</section>
 				</div>
-			</div>
+			</aside>
 		</div>
 	</section>
 </div>

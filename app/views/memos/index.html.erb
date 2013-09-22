@@ -4,62 +4,74 @@
   <h2>Overview</h2>
   <hr/>
   <div class="row">
-    <div class="span8">
-      <div class="btn-toolbar">
-        <span class="btn-group">
-          <%= link_to 'New memo', new_memo_path, class: "btn btn-bold" %>
-          <%= link_to 'Sort by name', memos_path, class: "btn" %>
-          <%= link_to 'Sort by health', by_health_memos_path, class: "btn" %>
-          <%= link_to 'Sort by word count', by_word_count_memos_path, class: "btn" %>
-        </span>
+    <% if @memos.blank? %>
+      <div class="span11 center">
+        <p>
+          A memo are list of words that you want to memorize, optionally accompanied by some hints to help you remember. Here you can create, edit and revise your own memos, and also get a some general statistics of your revisions.
+        </p>
+        <p>
+          Begin by creating your first memo.
+        </p>
+        <%= link_to 'Create memo', new_memo_path, class: "btn btn-primary" %>
+      </div>
+    <% else %>
+      <div class="span8">
+        <div class="btn-toolbar">
+          <span class="btn-group">
+            <%= link_to 'New memo', new_memo_path, class: "btn btn-bold" %>
+            <%= link_to 'Sort by name', memos_path, class: "btn" %>
+            <%= link_to 'Sort by health', by_health_memos_path, class: "btn" %>
+            <%= link_to 'Sort by word count', by_word_count_memos_path, class: "btn" %>
+          </span>
+        </div>
+
+        <table class="table table-striped table-condensed table-hover">
+          <% @memos.each do |memo| %>
+            <tr>
+              <td><%= link_to memo.name, memo, class: "btn btn-primary" %></td>
+              <td><%= health_bar(memo) %></td>
+              <td class="word-column"><%= show_word_count(memo) %> words</td>
+              <td class="right-column">
+                <div class="btn-group">
+                  <%= link_to 'Edit', edit_memo_path(memo), class: "btn" %>
+                  <%= link_to '&times;'.html_safe, memo, method: :delete, data: { confirm: 'Delete this memo?' }, class: "btn btn-danger btn-bold" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </table>
       </div>
 
-      <table class="table table-striped table-condensed table-hover">
-        <% @memos.each do |memo| %>
-          <tr>
-            <td><%= link_to memo.name, memo, class: "btn btn-primary" %></td>
-            <td><%= health_bar(memo) %></td>
-            <td class="word-column"><%= show_word_count(memo) %> words</td>
-            <td class="right-column">
-              <div class="btn-group">
-                <%= link_to 'Edit', edit_memo_path(memo), class: "btn" %>
-                <%= link_to '&times;'.html_safe, memo, method: :delete, data: { confirm: 'Delete this memo?' }, class: "btn btn-danger btn-bold" %>
+      <div class="offset8">
+        <div class="btn-toolbar center">
+          <span class="btn-group">
+            <%= link_to 'Revise weakest memo', revise_weakest_memos_path, class: "btn btn-primary btn-bold" %>
+          </span>
+        </div>
+        <div class="memo-status">
+          <div class="well">
+            <%= render 'memo_overview_status' %>
+            <p>
+              The health bars decrease over time and can be replenished by revising.
+            </p>
+            <div class="clearfix progress-info-box">
+              <div class="pull-left">
+                <div class='progress progress-success progress-striped active progress-short'><div class='bar' style='width: 85%;'></div></div>
+                <div class='progress progress-warning progress-striped active progress-short'><div class='bar' style='width: 50%;'></div></div>
+                <div class='progress progress-danger progress-striped active progress-short'><div class='bar' style='width: 25%;'></div></div>
               </div>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
-
-    <div class="offset8">
-      <div class="btn-toolbar center">
-        <span class="btn-group">
-          <%= link_to 'Revise weakest memo', revise_weakest_memos_path, class: "btn btn-primary btn-bold" %>
-        </span>
-      </div>
-      <div class="memo-status">
-        <div class="well">
-          <%= render 'memo_overview_status' %>
-          <p>
-            The health bars show the amount of time passed since the last successful practice session.
-          </p>
-          <div class="clearfix progress-info-box">
-            <div class="pull-left">
-              <div class='progress progress-success progress-striped active progress-short'><div class='bar' style='width: 85%;'></div></div>
-              <div class='progress progress-warning progress-striped active progress-short'><div class='bar' style='width: 50%;'></div></div>
-              <div class='progress progress-danger progress-striped active progress-short'><div class='bar' style='width: 25%;'></div></div>
-            </div>
-            <div class="pull-right">
-              <div class="progress-info">
-              <p>Pretty good</p>
-              <p>Time to revise</p>
-              <p>Overdue</p>
+              <div class="pull-right">
+                <div class="progress-info">
+                <p>Pretty good</p>
+                <p>Time to revise</p>
+                <p>Overdue</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
     
   </div>
 </div>
