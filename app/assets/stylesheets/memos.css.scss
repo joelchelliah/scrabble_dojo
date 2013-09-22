@@ -22,24 +22,6 @@ $statusTextRed: #833;
 
 // General
 
-table tr td.word-column {
-  text-align: right;
-  vertical-align: middle;
-  font-weight: bold;
-}
-
-div.progress {
-	margin: 5px;
-	width: 200px;
-	.bar {
-		position: relative;
-	}
-}
-
-.progress-short {
-	width: 50px !important;
-}
-
 .btn-bold {
 	font-weight: bold;
 }
@@ -87,7 +69,32 @@ div.progress {
 #memo-overview {
 	table {
 		tr {
-			td { font-size: 0.8em; }
+			td { 
+				font-size: 0.7em;
+				vertical-align: middle;
+				.progress {
+					margin: 5px;
+					width: 200px;
+					.bar {
+						position: relative;
+					}
+				}
+			}
+			.word-column {
+			  font-weight: bold;
+			  text-align: left;
+			  a {
+			  	display: inline-block;
+			    height: 100%;
+			    width: 100%;
+			  	color: #26C;
+			  	padding-top: 5px;
+			  }
+			}
+			.size-column {
+				font-weight: bold;
+			  text-align: right;
+			}
 		}
 	}
 	.memo-status {
@@ -96,6 +103,10 @@ div.progress {
 			margin-left: -4px;
 			padding-top: 4px;
 			height: 92px;
+			.progress-short {
+				margin: 5px;
+				width: 75px !important;
+			}
 			@include dark_well;
 			.progress-info {
 				padding-top: 5px;

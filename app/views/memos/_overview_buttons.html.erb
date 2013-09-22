@@ -1,0 +1,10 @@
+<div class="btn-toolbar">
+  <span class="btn-group">
+    <%= link_to 'New memo', new_memo_path, class: "btn btn-bold" %>
+  </span>
+  <span class="btn-group">
+    <%= link_to 'Sort by name', memos_path, class: "btn" %>
+    <%= link_to 'Sort by health', by_health_memos_path, class: "btn" %>
+    <%= link_to 'Sort by word count', by_word_count_memos_path, class: "btn" %>
+  </span>
+</div>
