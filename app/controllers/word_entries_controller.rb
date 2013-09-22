@@ -7,6 +7,7 @@ class WordEntriesController < ApplicationController
     @length = params[:len]
     if %w(2 3 4).include? @length
       @word_entries = WordEntry.word_length @length
+      @word_entries = sort_list_correctly_by_field(@word_entries, :word)
       render 'short_words'
     else
       redirect_to root_url
@@ -17,6 +18,7 @@ class WordEntriesController < ApplicationController
     @letter = params[:letter]
     if %w(c C w W q Q z Z x X).include? @letter
       @word_entries = WordEntry.short_words.select { |entry| entry.word.include? @letter.upcase }
+      @word_entries = sort_list_correctly_by_field(@word_entries, :word)
       render 'short_words'
     else
       redirect_to root_url

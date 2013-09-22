@@ -3,7 +3,7 @@ class MemosController < ApplicationController
   before_action :correct_user, only: [:show, :edit, :update, :destroy, :practice, :results_of]
 
   def index
-    @memos = current_user.memos
+    @memos = sort_list_correctly_by_field(current_user.memos, :name)
   end
 
   def by_health
@@ -117,4 +117,5 @@ class MemosController < ApplicationController
         redirect_to root_url
       end
     end
+
 end

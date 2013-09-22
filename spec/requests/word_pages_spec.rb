@@ -8,7 +8,7 @@ describe "Word pages" do
   	before do
   		FactoryGirl.create(:word_entry, word: "AB", length: 2, first_letter: "A")
   		FactoryGirl.create(:word_entry, word: "COR", length: 3, first_letter: "C")
-  		FactoryGirl.create(:word_entry, word: "WEBB", length: 4, first_letter: "W")
+      FactoryGirl.create(:word_entry, word: "WEBB", length: 4, first_letter: "W")
   	end
 
   	describe "of length 2" do
@@ -60,5 +60,31 @@ describe "Word pages" do
       it { should have_selector "h3", text:"W" }
   		it { should have_content "WEBB" }
   	end
+
+    describe "when words contain Norwegian characters" do
+      before do
+        FactoryGirl.create(:word_entry, word: "TACT", length: 4, first_letter: "T")
+        FactoryGirl.create(:word_entry, word: "TECT", length: 4, first_letter: "T")
+        FactoryGirl.create(:word_entry, word: "TÆCT", length: 4, first_letter: "T")
+        FactoryGirl.create(:word_entry, word: "TØCT", length: 4, first_letter: "T")
+        FactoryGirl.create(:word_entry, word: "TÅCT", length: 4, first_letter: "T")
+      end
+
+      describe "when retrieving words by length" do
+        before { visit word_length_path(4) }
+
+        it "should show the words in the correct order" do
+          expect(page).to have_content "TACT TECT TÆCT TØCT TÅCT"
+        end
+      end
+
+      # describe "when retrieving words by letter" do
+      #   before { visit short_words_with_path("C") }
+
+      #   it "should show the words in the correct order" do
+      #     expect(page).to have_content "TACT TECT TÆCT TØCT TÅCT"
+      #   end
+      # end
+    end
   end
 end

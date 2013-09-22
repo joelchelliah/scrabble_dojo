@@ -74,6 +74,8 @@ ready = ->
 	# Results page
 
 	if $('h2').text() == 'Results'
+		$('#btn-overview').focus()
+
 		max = 620
 		prev_health = $('#prev-health').text() * max / 100
 		current_health = $('.health-update .progress .bar').width()
