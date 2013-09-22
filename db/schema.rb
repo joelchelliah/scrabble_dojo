@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921100753) do
+ActiveRecord::Schema.define(version: 20130921174529) do
 
   create_table "memos", force: true do |t|
     t.string   "name"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20130921100753) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
-  create_table "words", force: true do |t|
-    t.string   "text"
+  create_table "word_entries", force: true do |t|
+    t.string   "word"
     t.string   "letters"
     t.integer  "length"
     t.string   "first_letter"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20130921100753) do
     t.datetime "updated_at"
   end
 
-  add_index "words", ["text"], name: "index_words_on_text", unique: true
+  add_index "word_entries", ["letters"], name: "index_word_entries_on_letters"
+  add_index "word_entries", ["word"], name: "index_word_entries_on_word", unique: true
 
 end

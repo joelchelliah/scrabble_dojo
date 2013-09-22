@@ -35,8 +35,8 @@ describe MemosController do
       patch("/memos/1/practice").should route_to "memos#practice", id: "1"
     end
 
-    it "routes to #results" do
-      get("/memos/1/results").should route_to "memos#results", id: "1"
+    it "routes to #results_of" do
+      get("/memos/1/results_of").should route_to "memos#results_of", id: "1"
     end
 
     it "routes to #by_health" do

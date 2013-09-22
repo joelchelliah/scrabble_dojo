@@ -1,6 +1,6 @@
 class MemosController < ApplicationController
   before_action :logged_in_user
-  before_action :correct_user, only: [:show, :edit, :update, :destroy, :practice, :results]
+  before_action :correct_user, only: [:show, :edit, :update, :destroy, :practice, :results_of]
 
   def index
     @memos = current_user.memos
@@ -76,14 +76,14 @@ class MemosController < ApplicationController
       flash[:missed_words] = missed_words
       flash[:wrong_words] = wrong_words
       flash[:prev_health] = previous_health
-      redirect_to results_memo_path @memo
+      redirect_to results_of_memo_path @memo
     else
       flash[:error] = "Could not save results from practice session"
       redirect_to memos_path
     end
   end
 
-  def results
+  def results_of
     if flash[:from_practice]
       @form_words = flash[:form_words]
       @missed_words = flash[:missed_words]

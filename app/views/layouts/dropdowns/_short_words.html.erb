@@ -1,0 +1,13 @@
+<li id="fat-menu" class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class='icon-file icon-white'></i> Short words <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to "2 letter words", word_length_path(2) %></li>
+    <li><%= link_to "3 letter words", word_length_path(3) %></li>
+    <li><%= link_to "4 letter words", word_length_path(4) %></li>
+    <li class="divider"></li>
+    <li><%= link_to 'Words with C', short_words_with_path("C") %></li>
+    <li><%= link_to 'Words with W', short_words_with_path("W") %></li>
+  </ul>
+</li>

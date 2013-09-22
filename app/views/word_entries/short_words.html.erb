@@ -1,0 +1,19 @@
+<% provide(:title, 'Short words') %>
+<div id="word-entries-words" class="hero-unit">
+	<h1>Words</h1>
+	<h2><%= header_text %></h2>
+	<hr/>
+	<div class="row">
+		<div class="span11">
+			<%= render 'short_words_buttons' %>
+			<div class="words">
+			<% for_each_letter_with_words do |letter| %>
+				<div class="word-row">
+					<%= show_words_starting_with(letter) %>
+				</div>
+			<% end %>
+			</div>
+			<%= link_to 'Top', '#word-entries-words' %>
+		</div>
+	</div>
+</div>

@@ -32,6 +32,11 @@ container {
 	width: 1024px;
 }
 
+.navbar .container {
+  width: auto;
+  padding: 0 15px;
+}
+
 .navbar-inner { 
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -76,15 +81,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
+  font-size: 3em !important;
+  letter-spacing: -3px !important;
   margin-bottom: 30px;
   text-align: center;
 }
 
 h2 {
   font-size: 1.2em;
-  letter-spacing: -1px;
+  letter-spacing: 0px;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
@@ -102,7 +107,7 @@ p {
 #logo {
  	float: left;
   margin-right: 10px;
-  font-size: 1.8em;
+  font-size: 1.5em;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -2px;
@@ -119,7 +124,8 @@ p {
 /* footer */
 
 footer {
-  margin-top: 15px;
+  margin-top: 25px;
+  font-size: 14px;
   padding-top: 5px;
   border-top: 1px solid $gray;
   color: $grayLight;

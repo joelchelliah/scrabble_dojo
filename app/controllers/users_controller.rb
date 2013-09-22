@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   def new
     if logged_in?
-      redirect_to home_path, notice: "You already have an account"
+      redirect_to root_url, notice: "You already have an account"
     else
   	 @user = User.new
     end
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to home_path
+      redirect_to root_url
     else
       render 'edit'
     end
@@ -34,13 +34,13 @@ class UsersController < ApplicationController
 
   def create
     if logged_in?
-      redirect_to home_path
+      redirect_to root_url
     else
       @user = User.new(user_params)
       if @user.save
         log_in @user
         flash[:success] = "Welcome to Scrabble Dojo!"
-        redirect_to home_path
+        redirect_to root_url
       else
         render 'new'
       end
@@ -70,9 +70,5 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       redirect_to root_url unless current_user?(@user)
-    end
-
-    def admin_user
-      redirect_to root_url unless current_user.admin?
     end
 end

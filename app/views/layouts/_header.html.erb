@@ -4,14 +4,10 @@
       <div id="logo">Scrabble Dojo</div>
       <nav>
         <ul class="nav pull-left">
-          <li><%= link_to "<i class='icon-home icon-white'></i> <strong>Home</strong>".html_safe, home_path %></li>
-          <% if logged_in? %>
-            <li><%= link_to "<i class='icon-file icon-white'></i> Memo".html_safe, memos_path %></li>            
-          <% end %>
-          <!-- <li><%= link_to "Bingotrener", '#' %></li>
-          <li><%= link_to "Ord med 2 bokstaver", controller: "words", action: "index", length: 2 %></li>
-          <li><%= link_to "Ord med 3 bokstaver", controller: "words", action: "index", length: 3 %></li>
-          <li><%= link_to "Ord med 4 bokstaver", controller: "words", action: "index", length: 4 %></li> -->
+          <li><%= link_to "<i class='icon-home icon-white'></i> <strong>Home</strong>".html_safe, root_url %></li>
+          <%= render 'layouts/dropdowns/short_words' %>
+          <li><%= link_to "<i class='icon-list icon-white'></i> Memo".html_safe, memos_path %></li>            
+          
         </ul>
         <ul class="nav pull-right">
           <%= render 'layouts/dropdowns/admin_bar' %>

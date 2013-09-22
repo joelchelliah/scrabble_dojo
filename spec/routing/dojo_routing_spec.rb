@@ -6,9 +6,5 @@ describe DojoController do
     it "matches thr root path to dojo#home" do
       get("/").should route_to "dojo#home"
     end
-
-    it "matches /home to dojo#home via get" do
-      get("/home").should route_to "dojo#home"
-    end
-	end
+  end
 end

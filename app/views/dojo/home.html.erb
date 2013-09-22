@@ -9,11 +9,11 @@
 				<section>
 					<h4>Welcome</h4>
 					<p>
-						This website is a hobby project that I've been working on since August 2013, and contains a collection of tools for improving your Scrabble skills.
+						This website is a hobby project that I've been working on since August 2013. It contains a collection of tools and resources for improving your Scrabble skills.
 						<% unless logged_in? %>
 							<p>
-								You need a 
-								<%= if logged_in? then "user account" else link_to "user account", login_path end %>
+								You need to 
+								<%= link_to "log in", login_path %>
 								to access most of the features.
 							</p>
 						<% end %>
@@ -21,20 +21,6 @@
 					<p>
 						All tools that require a dictionary look-up currently only have access to the Norwegian dictionary (NSF-ordliste). Support for other languages may be available in the future.
 					</p>
-					<!-- <p>
-						<strong> features that are currently available: </strong>
-						<ul>
-							<li> <%= link_to "Memo", memos_path %> (requires a user account)</li>
-						</ul>
-					</p>
-					<p>
-						<strong> features in progress: </strong>
-						<ul>
-							<li> Word Judge </li>
-							<li> Word / Anagram Search </li>
-							<li> Bingo Trainer (requires a user account)</li>
-						</ul>
-					</p> -->
 				</section>
 				<section>
 					<h4>Disclaimer</h4>
@@ -45,13 +31,15 @@
 			</div>
 			<div class="offset8">
 				<div class="well">
-					<!-- <p>
-						Random bingo:
-						<br/>
-						<strong> <%= @word %> </strong>
-						<br/>
-						<%= link_to "Next", home_path, class: "btn" %>
-					 </p>-->
+					<section>
+						<h4> Word of the day </h4>
+						<p>
+						<strong> <%= @random_bingo %> </strong>
+						</p>
+						<p>
+						<%= link_to "Next", root_url, class: "btn" %>
+						</p>
+					</section>
 				</div>
 			</div>
 		</div>

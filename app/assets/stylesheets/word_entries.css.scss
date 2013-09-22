@@ -1,0 +1,17 @@
+#word-entries-words {
+	.words {
+		font-family: "Courier New", monospace;
+	  font-size: 1.12em;
+	  .word-row {
+	  	padding: 5px 0;
+	  	margin-bottom: 15px;
+	  	h3 {
+	  		padding: 0px 5px;
+				margin-bottom: 5px;
+	  		background-color: #ddd;
+	  		background: -webkit-gradient(linear, left top, right top, from(#ddd), to(#eee));
+	  		background: -moz-linear-gradient(left,  #ddd,  #eee);
+	  	}
+	  }
+	}
+}

@@ -137,7 +137,7 @@ describe "Authentication" do
         post users_path, user: user
       end
       
-      specify { expect(response).to redirect_to home_path }
+      specify { expect(response).to redirect_to root_url }
     end
     
 

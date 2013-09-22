@@ -12,9 +12,16 @@ FactoryGirl.define do
 
   factory :memo do
     sequence(:name)  { |n| "Memo #{n}" }
-    word_list    	"ABC\nADL\nAGA\nAGE\nAGG"
-    hints 				"some hints"
-    num_practices	0
+    word_list     "ABC\nADL\nAGA\nAGE\nAGG"
+    hints         "some hints"
+    num_practices 0
     user
+  end
+
+  factory :word_entry do
+    sequence(:word)  { |n| "Word#{n}" }
+    letters         "abcd"
+    length          5
+    first_letter    "a"
   end
 end

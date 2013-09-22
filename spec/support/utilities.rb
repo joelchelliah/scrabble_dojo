@@ -55,3 +55,13 @@ RSpec::Matchers.define :have_headings do |h1_message, h2_message|
     expect(page).to have_selector('h2', text: h2_message)
   end
 end
+
+RSpec::Matchers.define :have_short_words_buttons do
+  match do |page|
+    expect(page).to have_link "Two letters"
+    expect(page).to have_link "Three letters"
+    expect(page).to have_link "Four letters"
+    expect(page).to have_link "Words with C"
+    expect(page).to have_link "Words with W"
+  end
+end
