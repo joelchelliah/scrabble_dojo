@@ -57,13 +57,6 @@ div.progress {
 	@include dark_well;
 }
 
-#memo-form {
-	.btn {
-		width: 100%;
-		padding-left: -1px;
-	}
-}
-
 .memo-status {
 	color: #555;
 	.text-green { color: $statusTextGreen !important}
@@ -73,6 +66,21 @@ div.progress {
 		font-size: 0.7em;
 	}
 }
+
+// New & Edit pages
+
+#memo-form {
+	textarea { height: 400px !important; }
+	label {
+		color: #666;
+		padding-left: 5px;
+	}
+	.btn {
+		width: 100%;
+		padding-left: -1px;
+	}
+}
+
 
 // Index page
 
@@ -87,6 +95,7 @@ div.progress {
 		.progress-info-box {
 			margin-left: -4px;
 			padding-top: 4px;
+			height: 92px;
 			@include dark_well;
 			.progress-info {
 				padding-top: 5px;
