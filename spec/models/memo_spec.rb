@@ -51,7 +51,7 @@ describe Memo do
   end
 
   describe "when word list is valid" do
-  	["a", "a\r\nb\r\nc", "a\nb\nc\n", "abc adl aga", "abc adl\r\n", "æøå"].each do |valid_list|
+  	["a", "a\nb\nc", "a\nb\nc\n", "abc adl aga", "abc adl\r\n", "æøå"].each do |valid_list|
   		before { @memo.word_list = valid_list }
   		it { should be_valid }
   	end

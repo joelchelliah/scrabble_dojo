@@ -2,6 +2,8 @@ class MemosController < ApplicationController
   before_action :logged_in_user
   before_action :correct_user, only: [:show, :edit, :update, :destroy, :practice, :results_of]
 
+  include MemosHelper
+
   def index
     @memos = sort_list_correctly_by_field(current_user.memos, :name)
   end
@@ -60,14 +62,9 @@ class MemosController < ApplicationController
 
     missed_words = memo_words - form_words
     wrong_words = form_words - memo_words
-    
-    decay_diff = ((Time.now - @memo.health_decay) / 1.day).to_i
-    num_errors = missed_words.count + wrong_words.count
+    previous_health = health(@memo)
 
-    previous_health = 100 - (3 * decay_diff)
-    health_inc = (decay_diff / (1 + num_errors)).to_i    # converting to integer to round it down
-
-    @memo.health_decay += health_inc.day                 # converting back to day before adding
+    @memo.health_decay += health_inc(@memo, missed_words.count + wrong_words.count).day
     @memo.num_practices += 1
 
     if @memo.save

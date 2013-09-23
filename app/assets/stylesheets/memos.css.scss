@@ -1,7 +1,3 @@
-$statusTextGreen: #383;
-$statusTextYellow: #AA2;
-$statusTextRed: #833;
-
 @mixin box_sizing {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -41,12 +37,7 @@ $statusTextRed: #833;
 
 .memo-status {
 	color: #555;
-	.text-green { color: $statusTextGreen !important}
-	.text-yellow { color: $statusTextYellow !important }
-	.text-red { color: $statusTextRed !important }
-	p {
-		font-size: 0.7em;
-	}
+	p { font-size: 0.7em; }
 }
 
 // New & Edit pages
@@ -144,17 +135,14 @@ $statusTextRed: #833;
 		width: 100%;
 		height: 40px;
 		margin: 0 0 10px 0;
+		.bar { position: relative; }
 	}
 	.health-update {
 		padding-top: 66px;
 		.text {
 			padding-top: 10px;
 			text-align: center;
-			color: $statusTextGreen;
 			letter-spacing: -1px;
-			.text-danger {
-				color: $statusTextRed;
-			}
 		}
 	}
 	.memo-status { padding-top: 66px }

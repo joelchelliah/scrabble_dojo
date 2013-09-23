@@ -37,17 +37,17 @@ describe MemosHelper do
 
 	describe "show health" do
 		it "should display the health% in yellow if health is below 75" do
-			helper.show_health.should =~ /text-yellow.*%/
+			helper.show_health.should =~ /text-warning.*%/
 		end
 
 		it "should display the health% in red if health is below 25" do
 			@memo.health_decay = Time.now - 30.days
-			helper.show_health.should =~ /text-red.*%/
+			helper.show_health.should =~ /text-error.*%/
 		end
 
 		it "should display the health% in green if health is above 75" do
 			@memo.health_decay = Time.now - 5.days
-			helper.show_health.should =~ /text-green.*%/
+			helper.show_health.should =~ /text-success.*%/
 		end
 	end
 
@@ -94,7 +94,7 @@ describe MemosHelper do
 		end
 
 		it "should display the average health in yellow if it's below 75" do
-			helper.show_average_health.should =~ /yellow/
+			helper.show_average_health.should =~ /warning/
 		end
 	end
 end

@@ -8,8 +8,8 @@ describe "Memos" do
 		before(:each) { log_in user }
 
 		describe "memo overview" do
-			before(:all) { 3.times { FactoryGirl.create(:memo, user: user) } }
-	    after(:all)  { user.destroy }
+			before(:each) { 3.times { FactoryGirl.create(:memo, user: user) } }
+	    after(:each)  { user.destroy }
 
 			before { visit memos_path }
 
@@ -174,8 +174,13 @@ describe "Memos" do
 					it { should_not have_flash_message_of_type 'missed_words' }
 					it { should have_content 'Health replenished: 0%' }
 					it { should have_content 'You made too many mistakes.' }
+
 					it { should have_link 'Overview' }
 					it { should have_link 'Revise again' }
+
+					it { should have_content 'Missed' }
+					it { should have_content 'Wrong' }
+					it { should have_content 'Solution' }
 				end
 
 				describe "and then after completing practice with correct information" do
@@ -190,9 +195,14 @@ describe "Memos" do
 					it { should_not have_flash_message_of_type 'missed_words' }
 					it { should have_content 'Health replenished:' }
 					it { should_not have_content 'You made too many mistakes.' }
+
 					it { should have_link 'Overview' }
 					it { should have_link 'Revise again' }
 					it { should have_content "Practice count: #{practice_count + 1}"}
+
+					it { should_not have_content 'Missed' }
+					it { should_not have_content 'Wrong' }
+					it { should_not have_content 'Solution' }
 
 					describe "and then when going to overview" do
 						before { click_link 'Overview' }
