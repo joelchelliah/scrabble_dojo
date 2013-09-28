@@ -15,7 +15,7 @@ module WordEntriesHelper
   
   def show_words_starting_with(x)
     filtered = @word_entries.inject("") do |result, w|
-      if w.word[0] == x then "#{result} #{w.word}" else result end
+      if w.word[0] == x then "#{result} #{w.word}<br class='visible-phone'/>" else result end
     end
     "<h3>#{x}</h3>#{filtered}".html_safe
   end
@@ -26,7 +26,7 @@ module WordEntriesHelper
     def alphabet()
       ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
        "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Æ", "Ø", "Å"]
-     end
+    end
 
     def found_words_for?(x)
       @word_entries.any? { |w| w.word[0] == x }

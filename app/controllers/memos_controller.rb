@@ -22,11 +22,11 @@ class MemosController < ApplicationController
     redirect_to current_user.memos.weakest
   end
 
-  def show
-  end
-
   def new
     @memo = current_user.memos.build
+  end
+
+  def show
   end
 
   def edit
@@ -57,22 +57,33 @@ class MemosController < ApplicationController
   end
 
   def practice
-    form_words = parse_form_words
-    memo_words = @memo.word_list.split(/\r?\n/).uniq
+    form_words  = parse_form_words
+    time        = params[:time].to_f
+    memo_words  = @memo.word_list.split(/\r?\n/)
 
-    missed_words = memo_words - form_words
-    wrong_words = form_words - memo_words
+    accepted_words  = []
+    accepted_words  = @memo.accepted_words.split(/\r?\n/) unless @memo.accepted_words.blank?
+    missed_words    = memo_words - form_words
+
+    wrong_words  = form_words - memo_words
+    wrong_words -= accepted_words
+    total_errors = missed_words.count + wrong_words.count
+
     previous_health = health(@memo)
+    previous_time   = @memo.best_time
 
-    @memo.health_decay += health_inc(@memo, missed_words.count + wrong_words.count).day
+    @memo.health_decay += health_inc(@memo, total_errors).day unless previous_health == 100
     @memo.num_practices += 1
+    @memo.best_time = time if previous_time.nil? or previous_time > time
 
     if @memo.save
       flash[:from_practice] = true
-      flash[:form_words] = form_words
-      flash[:missed_words] = missed_words
-      flash[:wrong_words] = wrong_words
-      flash[:prev_health] = previous_health
+      flash[:form_words]    = form_words
+      flash[:missed_words]  = missed_words
+      flash[:wrong_words]   = wrong_words
+      flash[:prev_health]   = previous_health
+      flash[:prac_time]     = time
+      flash[:prev_time]     = previous_time
       redirect_to results_of_memo_path @memo
     else
       flash[:error] = "Could not save results from practice session"
@@ -82,10 +93,12 @@ class MemosController < ApplicationController
 
   def results_of
     if flash[:from_practice]
-      @form_words = flash[:form_words]
+      @form_words   = flash[:form_words]
       @missed_words = flash[:missed_words]
-      @wrong_words = flash[:wrong_words]
-      @prev_health = flash[:prev_health]
+      @wrong_words  = flash[:wrong_words]
+      @prev_health  = flash[:prev_health]
+      @prac_time    = flash[:prac_time]
+      @prev_time    = flash[:prev_time]
     else
       redirect_to @memo
     end
@@ -104,7 +117,7 @@ class MemosController < ApplicationController
     end
 
     def memo_params
-      params.require(:memo).permit(:name, :hints, :word_list)
+      params.require(:memo).permit(:name, :hints, :word_list, :accepted_words)
     end
 
     def correct_user

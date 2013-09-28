@@ -3,12 +3,19 @@
 	<h1>Words</h1>
 	<h2><%= header_text %></h2>
 	<hr/>
+	<div class="word-nav visible-phone">
+		<p>
+			<% for_each_letter_with_words do |letter| %>
+			<%= link_to letter, "##{letter}" %> |
+			<% end %>
+		</p>
+	</div>
 	<div class="row">
 		<div class="span11">
 			<%= render 'short_words_buttons' %>
 			<div class="words">
 			<% for_each_letter_with_words do |letter| %>
-				<div class="word-row">
+				<%= "<div id='#{letter}' class='word-row'>".html_safe %>
 					<%= show_words_starting_with(letter) %>
 				</div>
 			<% end %>

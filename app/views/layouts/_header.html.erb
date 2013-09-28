@@ -1,12 +1,18 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
-      <div id="logo">Scrabble Dojo</div>
-      <nav>
+      <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">                                                   
+       <span class="icon-bar"></span>  
+       <span class="icon-bar"></span>  
+        <span class="icon-bar"></span>  
+        <span class="icon-bar"></span>
+      </a>
+      <div id="logo" class="brand">Scrabble Dojo</div>
+      <nav class="nav-collapse collapse">
         <ul class="nav pull-left">
           <li><%= link_to "<i class='icon-home icon-white'></i> <strong>Home</strong>".html_safe, root_url %></li>
           <%= render 'layouts/dropdowns/short_words' %>
-          <li><%= link_to "<i class='icon-list icon-white'></i> Memo".html_safe, memos_path %></li>            
+          <li><%= link_to "<i class='icon-list icon-white'></i> Memos".html_safe, memos_path %></li>            
           
         </ul>
         <ul class="nav pull-right">

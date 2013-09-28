@@ -7,7 +7,7 @@ describe "Memos" do
 		let(:user) { FactoryGirl.create(:user) }
 		before(:each) { log_in user }
 
-		describe "memo overview" do
+		describe "memo overview:" do
 			before(:each) { 3.times { FactoryGirl.create(:memo, user: user) } }
 	    after(:each)  { user.destroy }
 
@@ -29,7 +29,7 @@ describe "Memos" do
 			end
 
 			describe "when clicking on one of the Edits" do
-				before { click_link('Edit', href: edit_memo_path(Memo.first) ) }
+				before { visit edit_memo_path(Memo.first) }
 
 				it { should have_title 'Edit' }
 				it { should have_link 'Back', href: memos_path }
@@ -37,13 +37,18 @@ describe "Memos" do
 		end
 
 
-		describe "create new memo" do
+		describe "new memo page:" do
 			before { visit new_memo_path }
 
 			it { should have_title 'New memo' }
 			it { should have_headings 'Memo', 'Create' }
+			it { should have_selector 'label', text: "Name" }
+			it { should have_selector 'label', text: "Hints" }
+			it { should have_selector 'label', text: "Words" }
 			it { should have_selector 'input' }
 			it { should have_selector 'textarea' }
+			it { should have_link 'Advanced options', visible: true }
+			it { should have_selector 'label', text: "Accepted words", visible: false }
 			it { should have_button 'Create' }
 			it { should have_link 'Back', href: memos_path }
 
@@ -81,22 +86,35 @@ describe "Memos" do
 	        it { should have_success_message 'Created memo:' }
 
 	        describe "and then when going to the edit memo page" do
-					before { click_link 'Edit' }
+					before { visit edit_memo_path(Memo.first) }
 					
 					it { should have_content "ABC\r\nADL\r\nÆØÅ" }
 					it { should have_content "HINTSÆØÅ" }
 					end
 	      end
 			end
+
+			describe "when choosing advanced options" do
+				before { click_link "Advanced options" }
+
+				it { should have_link 'Advanced options', visible: false }
+				it { should have_selector 'label', text: "Accepted words", visible: true }
+				it { should have_content "During the practice session:" }
+			end
 		end
 
 
-		describe "update memo" do
+		describe "update memo page:" do
 			let(:memo) { FactoryGirl.create(:memo, user: user) }
 			before { visit edit_memo_path memo }
 
 			it { should have_title 'Edit memo' }
 			it { should have_headings 'Memo', 'Edit' }
+			it { should have_selector 'label', text: "Name" }
+			it { should have_selector 'label', text: "Hints" }
+			it { should have_selector 'label', text: "Words" }
+			it { should have_link 'Advanced options', visible: true }
+			it { should have_selector 'label', text: "Accepted words", visible: false }
 			it { should have_button 'Update' }
 			it { should have_link 'Back', href: memos_path }
 
@@ -137,18 +155,25 @@ describe "Memos" do
 	        it { should have_success_message 'Updated memo:' }
 
 	        describe "and then when going back to the edit memo page" do
-						before { click_link 'Edit' }
+						before { visit edit_memo_path(Memo.first) }
 						
 						it { should have_content "ABC\nÆØÅ" }
 						it { should have_content "HINTSÆØÅ" }
 					end
 	      end
 			end
+
+			describe "when choosing advanced options" do
+				before { click_link "Advanced options" }
+
+				it { should have_link 'Advanced options', visible: false }
+				it { should have_selector 'label', text: "Accepted words", visible: true }
+				it { should have_content "During the practice session:" }
+			end
 		end
 
-
-		describe "revise memo" do
-			let(:memo) { FactoryGirl.create(:memo, user: user) }
+		describe "revise memo page:" do
+			let(:memo) { FactoryGirl.create(:memo, user: user, word_list: "ABC\nADL\nAGA\nAGE\nAGG\nAGN\nAHA\nAIR", accepted_words: "ALV\nALL\nALT\nALP") }
 			before { visit memo_path memo }
 
 			it { should have_title memo.name }
@@ -158,6 +183,11 @@ describe "Memos" do
 			it { should have_link 'Hide words' }
 			it { should have_link 'Practice' }
 
+			it { should have_content 'Health:' }
+			it { should have_content 'Word count:' }
+			it { should have_content 'Practice count:' }
+			it { should have_content 'Best time:' }
+
 			describe "after starting practice session" do
 				before { click_link 'Practice' }
 
@@ -165,7 +195,7 @@ describe "Memos" do
 
 				describe "and then after completing practice with wrong information" do
 					before do
-						fill_in :message, with: "asdf lol haha this is wrong"
+						fill_in :message, with: "ABC wrong incorrect monkey pigeon"
 						click_button 'Done'
 					end
 
@@ -178,15 +208,17 @@ describe "Memos" do
 					it { should have_link 'Overview' }
 					it { should have_link 'Revise again' }
 
-					it { should have_content 'Missed' }
-					it { should have_content 'Wrong' }
+					it { should have_content 'Session completed in' }
+
+					it { should have_content 'Missed (7)' }
+					it { should have_content 'Wrong (4)' }
 					it { should have_content 'Solution' }
 				end
 
 				describe "and then after completing practice with correct information" do
 					let(:practice_count) { memo.num_practices }
 					before do
-						fill_in :message, with: "abc adl AGA age AGG"
+						fill_in :message, with: "abc adl AGA age AGG agn aha air"
 						click_button 'Done'
 					end
 
@@ -198,7 +230,9 @@ describe "Memos" do
 
 					it { should have_link 'Overview' }
 					it { should have_link 'Revise again' }
-					it { should have_content "Practice count: #{practice_count + 1}"}
+
+					it { should have_content 'Session completed in' }
+					it { should have_content "That's a new record!" }
 
 					it { should_not have_content 'Missed' }
 					it { should_not have_content 'Wrong' }
@@ -218,6 +252,24 @@ describe "Memos" do
 						it { should have_headings 'Memo', 'Revise' }
 					end
 				end
+			end
+
+			describe "and then after completing practice with acceptable words" do
+				before do
+					fill_in :message, with: "ABC ALV ALL ALT ALP"
+					click_button 'Done'
+				end
+
+				it { should_not have_content 'Wrong' }
+			end
+
+			describe "and then after completing practice with some acceptable words and some wrong words" do
+				before do
+					fill_in :message, with: "wrong ALV incorrect ALP"
+					click_button 'Done'
+				end
+
+				it { should have_content 'Wrong (2)' }
 			end
 		end
 	end

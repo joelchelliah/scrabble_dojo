@@ -1,7 +1,38 @@
+class Timer
+  constructor: (@target_id = "#timer") ->
+
+  init: ->
+    @reset()
+    window.tick = =>
+      @tick()
+    setInterval(window.tick, 100)
+
+  kill: ->
+  	@target_id = "#dead"
+  	@reset()
+
+  reset: ->
+    @seconds = 0
+    @one_tenth = 0
+    @updateTarget()
+
+  tick: ->
+    [one_tenth, seconds] = [@one_tenth, @seconds]
+    if one_tenth is 9
+      @seconds = seconds + 1
+      @one_tenth = 0
+    else
+      @one_tenth = one_tenth + 1
+    @updateTarget()
+
+  updateTarget: ->
+    $(@target_id).attr('value', (@seconds + "." + @one_tenth))
+
+
 hide_hints = ->
 	$('#btn-hints').text("Show hints")
 	$('#box-words').removeClass('span3').addClass('span8')
-	$('#box-hints').hide()
+	$('#box-hints').hide('fast')
 
 show_hints = ->
 	$('#btn-hints').text("Hide hints")
@@ -23,6 +54,14 @@ ready = ->
 
 	if $('h2').text() == "Create"
 		$('#memo_name').focus()
+		$('#advanced-options').hide()
+
+		$('#advanced-options-link a').click (e)->
+			e.preventDefault()
+			$('#advanced-options-link').hide('fast')
+			$('#advanced-options').slideDown('fast')
+			$('#memo_accepted_words').focus()
+			
 
 
 	# Edit page
@@ -30,13 +69,24 @@ ready = ->
 	if $('h2').text() == "Edit"
 		$('#memo_word_list').focus()
 
+		if $('#memo_accepted_words').text() == ""
+			$('#advanced-options').hide()
+		else
+			$('#advanced-options-link').hide()
+
+		$('#advanced-options-link a').click (e)->
+			e.preventDefault()
+			$('#advanced-options-link').hide('fast')
+			$('#advanced-options').slideDown('fast')
+			$('#memo_accepted_words').focus()
+
 
 	# Index page
 	#
 	#
 
 	# Show page
-
+	timer = new Timer('#memo-timer')
 	if $('h2').text() == 'Revise'
 		$('#box-hints').hide()
 		$('#box-practice').hide()
@@ -62,13 +112,17 @@ ready = ->
 				$('#btn-words').attr('disabled', true)
 				$('#box-practice').show('fast')
 				$('#practice-text-area').focus()
+				timer = new Timer('#memo-timer')
+				timer.init()
 			else
+				timer.kill()
 				$('#btn-practice').text("Practice").removeClass('btn-danger').addClass('btn-primary')
 				show_hints()
 				show_words()
 				$('#btn-hints').attr('disabled', false)
 				$('#btn-words').attr('disabled', false)
 				$('#box-practice').hide('fast')
+				
 
 
 	# Results page

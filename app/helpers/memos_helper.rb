@@ -40,7 +40,7 @@ module MemosHelper
 
 		show = "<div class='text'>"
 		if @prev_health == 100
-			show << "<strong> Your health is already at 100% </strong>"
+			show << "<strong> Your health bar is already full </strong>"
 		else
 			show << "<span class='text-error'>" if regained.zero?
 			show << "<span class='text-success'>" unless regained.zero?
@@ -49,6 +49,20 @@ module MemosHelper
 			show << "</span>" if regained.zero?
 		end
 		show <<	"</div>"
+		show.html_safe
+	end
+
+	def show_prac_time()
+		show = "<div class='text'>"
+		show << "Session completed in #{@prac_time} seconds."
+		if (@missed_words.count + @wrong_words.count).zero?
+			if @prev_time.nil? or @prev_time > @prac_time
+				show << "<span class='text-success'><br/><strong>That's a new record!</strong></span>"
+			else
+				show << "<p><strong>Could have done better...</strong></p>"
+			end
+		end
+		show << "</div>"
 		show.html_safe
 	end
 
@@ -84,6 +98,15 @@ module MemosHelper
 		c = "warning" if avg <= 75
 		c = "error" if avg <= 25
 		"<span class='text-#{c}'>#{avg}%</span>".html_safe
+	end
+
+	def show_average_word_time()
+		time_total = @memos.inject(0) { |acc, m| if m.best_time then acc + m.best_time else acc end }
+		memos_words_with_time = @memos.inject(0) { |acc, m| if m.best_time then acc + m.word_list.split(/\r?\n/).size else acc end }
+		avg_time = time_total / memos_words_with_time
+		
+		return "#{"%.1f" % avg_time} s" unless memos_words_with_time.zero?
+		"n/a"
 	end
 
 

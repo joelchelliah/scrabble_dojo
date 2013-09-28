@@ -1,4 +1,5 @@
 @import "bootstrap";
+@import "custom-responsive";
 
 $grayMediumDark: #434343;
 $grayMediumLight: #eaeaea;
@@ -26,15 +27,14 @@ body {
 	padding-top: 60px;
   background-color: #333 !important;
   font-family: verdana, arial, helvetica, sans-serif;
+  // .container {
+  //   width: auto;
+  //   max-width: 940px !important;
+  // }
 }
 
-container {
-	width: 1024px;
-}
-
-.navbar .container {
-  width: auto;
-  padding: 0 15px;
+@media (max-width: 979px) {
+  body { padding-top: 0 }
 }
 
 .navbar-inner { 
@@ -108,7 +108,6 @@ p {
  	float: left;
   margin-right: 10px;
   font-size: 1.5em;
-  color: #fff;
   text-transform: uppercase;
   letter-spacing: -2px;
   padding-top: 9px;

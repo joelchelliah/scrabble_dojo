@@ -3,8 +3,10 @@
 	<p>Health: </p>
 	<p>Word count: </p>
 	<p>Practice count: &nbsp; </p>
+	<p>Best time: </p>
 </div>
 <p><strong><%= show_health %></strong></p>
 <p><strong><%= @memo.word_list.split.count %></strong></p>
 <p><strong><%= @memo.num_practices %></strong></p>
+<p><strong><%= if @memo.best_time then "#{@memo.best_time} s" else "n/a" end %></strong></p>
 <hr/>

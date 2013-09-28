@@ -44,9 +44,12 @@
 
 #memo-form {
 	textarea { height: 400px !important; }
-	label {
+	label, p {
 		color: #666;
 		padding-left: 5px;
+	}
+	#advanced-options {
+		textarea { height: 180px !important; }
 	}
 	.btn {
 		width: 100%;
@@ -56,35 +59,64 @@
 
 
 // Index page
+@media 
+only screen and (max-width: 767px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+	.memo-table {
+		width: 100% !important;
+		/* Force table to not be like tables anymore */
+		table, thead, tbody, th, td, tr { 
+			display: block; 
+		}
+
+		table {
+			width: 100% !important;
+		}
+		
+
+		tr { border: 1px solid #ccc; }
+		
+		td { 
+			/* Behave  like a "row" */
+			border: none;
+			position: relative;
+			text-align: center !important;
+			.progress { width: 95% !important;}
+		}
+	}
+}
 
 #memo-overview {
-	table {
-		tr {
-			td { 
-				font-size: 0.7em;
-				vertical-align: middle;
-				.progress {
-					margin: 5px;
-					width: 200px;
-					.bar {
-						position: relative;
+	.memo-table {
+		width: 630px;
+		float: left;
+		table {
+			tr {
+				td { 
+					font-size: 0.7em;
+					vertical-align: middle;
+					.progress {
+						margin: 5px;
+						width: 200px;
+						.bar { position: relative; }
 					}
+					.icon-remove { margin-top: 2px; }
 				}
-			}
-			.word-column {
-			  font-weight: bold;
-			  text-align: left;
-			  a {
-			  	display: inline-block;
-			    height: 100%;
-			    width: 100%;
-			  	color: #26C;
-			  	padding-top: 5px;
-			  }
-			}
-			.size-column {
-				font-weight: bold;
-			  text-align: right;
+				.word-column {
+				  font-weight: bold;
+				  text-align: left;
+				  a {
+				  	display: inline-block;
+				    height: 100%;
+				    width: 100%;
+				  	color: #26C;
+				  	padding-top: 5px;
+				  }
+				}
+				.size-column {
+					font-weight: bold;
+				  text-align: right;
+				}
 			}
 		}
 	}
@@ -120,9 +152,19 @@
 		height: 30px;
 		margin-top: 10px;
 	}
-	.memo-status { padding-top: 19px }
-	#box-practice textarea {
-		height: 150px !important;
+	.memo-status { padding-top: 4px }
+	#box-practice {
+		textarea { height: 150px !important; }
+		#memo-timer-show {
+			color: #555;
+			font-size: 0.8em;
+			.icon-time { margin-top: 2px }
+			input { 
+				width: 50px !important;
+				margin-top: 6px;
+				border: 0;
+			}
+		}
 	}
 }
 

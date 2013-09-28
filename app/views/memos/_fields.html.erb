@@ -9,4 +9,16 @@
   <div class="span5"><%= f.text_area :hints %></div>
   <div class="span5"><%= f.text_area :word_list, placeholder: "Seperate words by space or new line" %></div>
 </div>
+<div id="advanced-options-link" class="row"><div class="span5"><p><%= link_to "Advanced options", '#' %></p></div></div>
+<div id="advanced-options">
+	<div class="row"><div class="span5"><%= f.label :accepted_words %></div></div>
+	<div class="row">
+		<div class="span5"><%= f.text_area :accepted_words, placeholder: "Seperate words by space or new line" %></div>
+		<div class="span5">
+			<p>During the practice session: If a word that is missing from the <strong>Words</strong> list is entered, it will not be counted as an incorrect word as long as it exists in the <strong>Accepted words</strong> list. </p>
+			<p>Use this option as a white-list for words that you are not memorizing in this Memo, but still consider to be correct.</p>
+		</div>
+	</div>
+</div>
+<hr />
     

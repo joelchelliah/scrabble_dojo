@@ -10,7 +10,7 @@
 					<%= link_to 'Back', memos_path, class: "btn" %>
 					<%= link_to 'Show hints', '#', id: "btn-hints", class: "btn"%>
 					<%= link_to 'Hide words', '#', id: "btn-words", class: "btn"%>
-					<%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold"%>
+					<%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold visible-desktop"%>
 				</span>
 			</div>
 			
@@ -42,18 +42,23 @@
       					<div class="span2">
       						<%= submit_tag"Done", class: "btn btn-primary btn-bold" %>
       					</div>
+      					<div id="memo-timer-show" class="offset1">
+      						<span class="icon icon-time"></span> <%= text_field_tag(:time, "", readonly: true, id: "memo-timer") %>
+      					</div>
       				</div>
 						<% end %>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="offset8">
+		<div class="offset8 visible-desktop">
 			<%= health_bar(@memo) %>
 			<div class="memo-status">
 				<div class="well">
 					<%= render 'memo_status' %>
-					<p> Once you are done revising, choose practice mode to test your skills and replenish your health. </p>
+					<div class="center"><span class="icon-book"></span></div>
+					<p> Once you are done revising, choose <strong>Practice</strong> mode to test your skills, and replenish your health. </p>
+					<p> Or try beating your best time score. </p>
 				</div>
 			</div>
 		</div>

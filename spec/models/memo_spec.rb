@@ -13,6 +13,8 @@ describe Memo do
   it { should respond_to :num_practices }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  it { should respond_to(:accepted_words) }
+  it { should respond_to(:best_time) }
   its(:user) { should eq user }
 
   it { should be_valid }
@@ -50,18 +52,32 @@ describe Memo do
   	it { should_not be_valid }
   end
 
-  describe "when word list is valid" do
-  	["a", "a\nb\nc", "a\nb\nc\n", "abc adl aga", "abc adl\r\n", "æøå"].each do |valid_list|
-  		before { @memo.word_list = valid_list }
-  		it { should be_valid }
-  	end
+  describe "when word list is invalid" do
+    ["a,b,c,d,e,f,g", "123 456 789", "a\nb\nc\nd\n1", "a\rb"].each do |invalid_list|
+      before { @memo.word_list = invalid_list }
+      it { should_not be_valid }
+    end
   end
 
-  describe "when word list is invalid" do
-  	["a,b,c,d,e,f,g", "123 456 789", "a\nb\nc\nd\n1", "a\rb"].each do |invalid_list|
-  		before { @memo.word_list = invalid_list }
-  		it { should_not be_valid }
-  	end
+  describe "when word list is valid" do
+    ["a", "a\nb\nc", "a\nb\nc\n", "abc adl aga", "abc adl\r\n", "æøå"].each do |valid_list|
+      before { @memo.word_list = valid_list }
+      it { should be_valid }
+    end
+  end
+
+  describe "when accepted words list is invalid" do
+    ["a,b,c,d,e,f,g", "123 456 789", "a\nb\nc\nd\n1", "a\rb"].each do |invalid_list|
+      before { @memo.accepted_words = invalid_list }
+      it { should_not be_valid }
+    end
+  end
+
+  describe "when accepted words list is valid" do
+    ["a", "a\nb\nc", "a\nb\nc\n", "abc adl aga", "abc adl\r\n", "æøå"].each do |valid_list|
+      before { @memo.accepted_words = valid_list }
+      it { should be_valid }
+    end
   end
 
   describe "after saving a memo with lowercase fields" do
@@ -69,11 +85,13 @@ describe Memo do
       @memo.name = "b4 æøå"
       @memo.word_list = "baht bøkl bægj   \r\nbåen båer båst"
       @memo.hints = "båt\r\nbæ - dj"
+      @memo.accepted_words = "bank berg bisk"
       @memo.save
     end
 
     its(:name) { should eq "B4 ÆØÅ"}
     its(:word_list) { should eq "BAHT\nBØKL\nBÆGJ\nBÅEN\nBÅER\nBÅST"}
     its(:hints) { should eq "BÅT\r\nBÆ - DJ"}
+    its(:accepted_words) { should eq "BANK\nBERG\nBISK" }
   end
 end

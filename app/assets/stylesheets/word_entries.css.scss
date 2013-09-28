@@ -1,3 +1,36 @@
+@media (max-width: 767px) {
+	#word-entries-words {
+		.words {
+			text-align: center;
+			font-size: 5.5em !important;
+			line-height: 1em;
+			h3 {
+				font-size: 0.9em !important;
+				padding: 10px 0 !important;
+				background: -webkit-gradient(linear, left top, right top, from(#ddd), to(#ddd)) !important;
+	  		background: -moz-linear-gradient(left,  #ddd,  #ddd) !important;
+	  		border-top: solid 2px #fff;
+	  		border-left: solid 2px #fff;
+	  		border-bottom: solid 2px #aaa;
+	  		border-right: solid 2px #aaa;
+			}
+		}
+		.word-nav {
+			text-align: center;
+			position: fixed;
+			bottom: 0;
+			padding: 5px;
+			margin-right: 60px;
+			min-width: 70%;
+			font-size: 1em;
+			color: #aaa;
+			border-top: solid 2px #aaa;
+			background: -webkit-gradient(linear, left top, right top, from(#ddd), to(#ddd)) !important;
+	  	background: -moz-linear-gradient(left,  #ddd,  #ddd) !important;
+		}
+	}
+}
+
 #word-entries-words {
 	.words {
 		font-family: "Courier New", monospace;
