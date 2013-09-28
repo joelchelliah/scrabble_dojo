@@ -103,10 +103,13 @@ module MemosHelper
 	def show_average_word_time()
 		time_total = @memos.inject(0) { |acc, m| if m.best_time then acc + m.best_time else acc end }
 		memos_words_with_time = @memos.inject(0) { |acc, m| if m.best_time then acc + m.word_list.split(/\r?\n/).size else acc end }
-		avg_time = time_total / memos_words_with_time
 		
-		return "#{"%.1f" % avg_time} s" unless memos_words_with_time.zero?
-		"n/a"
+		unless memos_words_with_time.zero?
+			avg_time = time_total / memos_words_with_time
+			"#{"%.1f" % avg_time} s" 
+		else
+			"n/a"
+		end
 	end
 
 
