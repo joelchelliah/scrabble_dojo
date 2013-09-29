@@ -2,12 +2,14 @@
 <div class="row"><div class="span5"><%= f.label :name %></div></div>
 <div class="row"><div class="span5"><%= f.text_field :name %></div></div>
 <div class="row">
-  <div class="span5"><%= f.label :hints %></div>
-  <div class="span5"><%= f.label :words %></div>
-</div>
-<div class="row">
-  <div class="span5"><%= f.text_area :hints %></div>
-  <div class="span5"><%= f.text_area :word_list, placeholder: "Seperate words by space or new line" %></div>
+	<div class="span5">
+	  <%= f.label :hints %>
+	  <%= f.text_area :hints %>
+	</div>
+	<div class="span5">
+  	<%= f.label :words %>
+  	<%= f.text_area :word_list, placeholder: "Seperate words by space or new line" %>
+  </div>
 </div>
 <div id="advanced-options-link" class="row"><div class="span5"><p><%= link_to "Advanced options", '#' %></p></div></div>
 <div id="advanced-options">

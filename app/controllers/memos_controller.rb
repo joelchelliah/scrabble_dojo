@@ -67,15 +67,15 @@ class MemosController < ApplicationController
 
     wrong_words  = form_words - memo_words
     wrong_words -= accepted_words
-    
-    total_errors = missed_words.count + wrong_words.count
+
+    total_errors = compute_total_errors(missed_words, wrong_words)
 
     previous_health = health(@memo)
     previous_time   = @memo.best_time
 
     @memo.health_decay += health_inc(@memo, total_errors).day unless previous_health == 100
     @memo.num_practices += 1
-    @memo.best_time = time if (total_errors <= acceptable_error_margin) and (previous_time.nil? or previous_time > time)
+    @memo.best_time = time if total_errors.zero? and (previous_time.nil? or previous_time > time)
 
     if @memo.save
       flash[:from_practice] = true
@@ -115,6 +115,12 @@ class MemosController < ApplicationController
                       .split(/\r?\n/)
                       .uniq
                       .reject { |w| w == "" }
+    end
+
+    def compute_total_errors(missed, wrong)
+      total = missed.count + wrong.count
+      return 0 unless total >= acceptable_error_margin
+      total - acceptable_error_margin()
     end
 
     def memo_params

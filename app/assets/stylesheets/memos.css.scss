@@ -32,6 +32,7 @@
 .word-box {
 	font-size: 15px;
 	padding: 10px;
+	margin-bottom: 20px;
 	@include dark_well;
 }
 
@@ -52,7 +53,6 @@
 		textarea { height: 180px !important; }
 	}
 	.btn {
-		width: 100%;
 		padding-left: -1px;
 	}
 }
@@ -152,16 +152,21 @@ only screen and (max-width: 767px), (min-device-width: 768px) and (max-device-wi
 		height: 30px;
 		margin-top: 10px;
 	}
-	.memo-status { padding-top: 4px }
+	.memo-status {
+		padding-top: 4px;
+		ul {
+			font-size: 0.7em;
+			li { line-height: 20px; }
+		}
+	}
 	#box-practice {
 		textarea { height: 150px !important; }
 		#memo-timer-show {
 			color: #555;
 			font-size: 0.8em;
-			.icon-time { margin-top: 2px }
 			input { 
 				width: 80px !important;
-				margin-top: 6px;
+				margin-top: 4px;
 				border: 0;
 			}
 		}
