@@ -209,6 +209,7 @@ describe "Memos" do
 					it { should have_link 'Revise again' }
 
 					it { should have_content 'Session completed in' }
+					it { should have_content 'Try again with fewer mistakes...' }
 
 					it { should have_content 'Missed (7)' }
 					it { should have_content 'Wrong (4)' }

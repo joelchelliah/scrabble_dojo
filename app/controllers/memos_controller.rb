@@ -67,6 +67,7 @@ class MemosController < ApplicationController
 
     wrong_words  = form_words - memo_words
     wrong_words -= accepted_words
+    
     total_errors = missed_words.count + wrong_words.count
 
     previous_health = health(@memo)
@@ -74,7 +75,7 @@ class MemosController < ApplicationController
 
     @memo.health_decay += health_inc(@memo, total_errors).day unless previous_health == 100
     @memo.num_practices += 1
-    @memo.best_time = time if previous_time.nil? or previous_time > time
+    @memo.best_time = time if (total_errors <= acceptable_error_margin) and (previous_time.nil? or previous_time > time)
 
     if @memo.save
       flash[:from_practice] = true

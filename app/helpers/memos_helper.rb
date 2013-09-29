@@ -23,6 +23,10 @@ module MemosHelper
 		h(list).gsub(/\r?\n/, '<br/>').html_safe
 	end
 
+	def acceptable_error_margin()
+		2
+	end
+
 
 	# Show page
 
@@ -55,12 +59,14 @@ module MemosHelper
 	def show_prac_time()
 		show = "<div class='text'>"
 		show << "Session completed in #{@prac_time} seconds."
-		if (@missed_words.count + @wrong_words.count).zero?
+		if (@missed_words.count + @wrong_words.count) < 3
 			if @prev_time.nil? or @prev_time > @prac_time
 				show << "<span class='text-success'><br/><strong>That's a new record!</strong></span>"
 			else
 				show << "<p><strong>Could have done better...</strong></p>"
 			end
+		else
+			show << "<p>Try again with fewer mistakes...</p>"
 		end
 		show << "</div>"
 		show.html_safe
