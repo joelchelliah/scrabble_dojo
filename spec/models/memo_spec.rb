@@ -15,6 +15,7 @@ describe Memo do
   it { should respond_to(:user) }
   it { should respond_to(:accepted_words) }
   it { should respond_to(:best_time) }
+  it { should respond_to(:practice_disabled) }
   its(:user) { should eq user }
 
   it { should be_valid }

@@ -10,7 +10,7 @@
 					<%= link_to 'Back', memos_path, class: "btn" %>
 					<%= link_to 'Show hints', '#', id: "btn-hints", class: "btn"%>
 					<%= link_to 'Hide words', '#', id: "btn-words", class: "btn"%>
-					<%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold visible-desktop"%>
+					<%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold visible-desktop" unless @memo.practice_disabled %>
 				</span>
 			</div>
 			
@@ -40,7 +40,7 @@
 							</div>
 							<div class="row">
       					<div class="span2">
-      						<%= submit_tag"Done", class: "btn btn-primary btn-bold" %>
+      						<%= submit_tag "Done", id: "practice-done", class: "btn btn-primary btn-bold" %>
       					</div>
       					<div id="memo-timer-show" class="offset1">
       						<span class="icon icon-time"></span> <%= text_field_tag(:time, "", readonly: true, id: "memo-timer") %>
@@ -57,12 +57,16 @@
 				<div class="well">
 					<%= render 'memo_status' %>
 					<div class="center"><span class="icon-book"></span></div>
-					<p> Once you are done revising, choose <strong>Practice</strong> mode to:</p>
-					<ul>
-						<li> Test your skills</li>
-						<li> Replenish your health</li>
-						<li> Set a new time record</li>
-					</ul>
+					<% if @memo.practice_disabled %>
+						<p> <strong>Practice</strong> mode has been disabled for this Memo. </p>
+					<% else %>
+						<p> Once you are done revising, choose <strong>Practice</strong> mode to:</p>
+						<ul>
+							<li> Test your skills</li>
+							<li> Replenish your health</li>
+							<li> Set a new time record</li>
+						</ul>
+					<% end %>
 				</div>
 			</div>
 		</div>

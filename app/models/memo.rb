@@ -5,7 +5,7 @@ class Memo < ActiveRecord::Base
 	belongs_to :user
 
 	default_scope 		-> { order('name ASC') }
-	scope :by_health,	-> { order('health_decay ASC') }
+	scope :by_health,	-> { order('health_decay ASC').order('practice_disabled ASC') }
 	scope :weakest,		-> { by_health.first }
 
 	before_validation :prepare_name, :prepare_word_list, :prepare_accepted_words

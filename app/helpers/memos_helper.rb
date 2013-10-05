@@ -1,3 +1,4 @@
+
 module MemosHelper
 
 	# general
@@ -14,9 +15,13 @@ module MemosHelper
 	end
 
 	def health_bar(memo)
-		h = health memo
-		c = health_color memo
-		"<div class='progress progress-#{c} progress-striped active'><div class='bar' style='width: #{h}%'></div></div>".html_safe
+		if memo.practice_disabled
+			"<div class='progress progress-disabled'><div class='bar' style='width: 100%'></div></div>".html_safe
+		else
+			h = health memo
+			c = health_color memo
+			"<div class='progress progress-#{c} progress-striped active'><div class='bar' style='width: #{h}%'></div></div>".html_safe
+		end
 	end
 
 	def show_word_list(list)
@@ -77,7 +82,7 @@ module MemosHelper
 
 	def color_memo_row(memo)
 		color = health_text_color memo
-		return color unless color == "success"
+		return color unless color == "success" or memo.practice_disabled
 		""
 	end
 
@@ -99,7 +104,16 @@ module MemosHelper
 
 	def show_average_health()
 		return 0 if @memos.blank?
-		avg = @memos.inject(0) { |acc, m| acc + health(m) } / @memos.count
+
+		tot = @memos.inject(0) do |acc, m|
+			if m.practice_disabled
+				acc
+			else
+				acc + health(m)
+			end
+		end
+
+		avg = tot / @memos.reject { |m| m.practice_disabled == true }.count
 		c = "success"
 		c = "warning" if avg <= 75
 		c = "error" if avg <= 25

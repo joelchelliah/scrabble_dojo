@@ -124,7 +124,7 @@ class MemosController < ApplicationController
     end
 
     def memo_params
-      params.require(:memo).permit(:name, :hints, :word_list, :accepted_words)
+      params.require(:memo).permit(:name, :hints, :word_list, :accepted_words, :practice_disabled)
     end
 
     def correct_user

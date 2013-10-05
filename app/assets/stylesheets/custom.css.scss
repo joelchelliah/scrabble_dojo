@@ -153,6 +153,17 @@ footer {
 	}
 }
 
+@media 
+only screen and (max-width: 767px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  footer nav {
+    padding-right: 0;
+    table {
+      float: left;
+      tr td { font-size: 0.7em; font-weight: normal; }
+    }
+  }
+}
+
 
 /* forms */
 
@@ -194,6 +205,11 @@ textarea {
 table tr td.right-column {
   text-align: right;
 }
+
+/* fix for a bug in bootstrap 2.3.2 */
+
+.dropdown-backdrop { position: static; }
+
 
 /* miscellaneous */
 

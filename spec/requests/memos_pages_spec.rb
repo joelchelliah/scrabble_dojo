@@ -49,6 +49,7 @@ describe "Memos" do
 			it { should have_selector 'textarea' }
 			it { should have_link 'Advanced options', visible: true }
 			it { should have_selector 'label', text: "Accepted words", visible: false }
+			it { should have_selector 'label', text: "Disable practice mode", visible: false }
 			it { should have_button 'Create' }
 			it { should have_link 'Back', href: memos_path }
 
@@ -99,7 +100,7 @@ describe "Memos" do
 
 				it { should have_link 'Advanced options', visible: false }
 				it { should have_selector 'label', text: "Accepted words", visible: true }
-				it { should have_content "During the practice session:" }
+				it { should have_selector 'label', text: "Disable practice mode", visible: true }
 			end
 		end
 
@@ -115,6 +116,7 @@ describe "Memos" do
 			it { should have_selector 'label', text: "Words" }
 			it { should have_link 'Advanced options', visible: true }
 			it { should have_selector 'label', text: "Accepted words", visible: false }
+			it { should have_selector 'label', text: "Disable practice mode", visible: false }
 			it { should have_button 'Update' }
 			it { should have_link 'Back', href: memos_path }
 
@@ -168,7 +170,7 @@ describe "Memos" do
 
 				it { should have_link 'Advanced options', visible: false }
 				it { should have_selector 'label', text: "Accepted words", visible: true }
-				it { should have_content "During the practice session:" }
+				it { should have_selector 'label', text: "Disable practice mode", visible: true }
 			end
 		end
 
@@ -199,6 +201,8 @@ describe "Memos" do
 						click_button 'Done'
 					end
 
+					it { should have_title 'Results' }
+					it { should have_headings 'Memo', 'Results' }
 					it { should_not have_flash_message_of_type 'form_practice' }
 					it { should_not have_flash_message_of_type 'form_words' }
 					it { should_not have_flash_message_of_type 'missed_words' }
@@ -223,6 +227,8 @@ describe "Memos" do
 						click_button 'Done'
 					end
 
+					it { should have_title 'Results' }
+					it { should have_headings 'Memo', 'Results' }
 					it { should_not have_flash_message_of_type 'form_practice' }
 					it { should_not have_flash_message_of_type 'form_words' }
 					it { should_not have_flash_message_of_type 'missed_words' }

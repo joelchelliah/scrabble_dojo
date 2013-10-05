@@ -17,16 +17,16 @@
 		}
 		.word-nav {
 			text-align: center;
+			width: 100%;
+			left: 0%;
+			margin-right: 0%;
 			position: fixed;
 			bottom: 0;
 			padding: 5px;
-			margin-right: 60px;
-			min-width: 70%;
-			font-size: 1em;
+			font-size: 1.2em;
 			color: #aaa;
-			border-top: solid 2px #aaa;
-			background: -webkit-gradient(linear, left top, right top, from(#ddd), to(#ddd)) !important;
-	  	background: -moz-linear-gradient(left,  #ddd,  #ddd) !important;
+			border-top: solid 3px #aaa;
+			background-color: #ddd;
 		}
 	}
 }
