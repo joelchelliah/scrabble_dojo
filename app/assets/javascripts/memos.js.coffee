@@ -11,9 +11,6 @@ class Timer
   	@target_id = "#dead"
   	@reset()
 
-  slow: ->
-  	setInterval(window.tick, 10000)
-
   reset: ->
     @seconds = 0
     @one_tenth = 0
@@ -128,8 +125,9 @@ ready = ->
 				$('#box-practice').hide('fast')
 
 			$('#practice-done').click (e)->
-				timer.slow()
-				$('#memo-timer').after("<p class='text-success'>Saving results...</p>")
+				$('#memo-timer').after("<span class='text-success'>Saving results...</span>")
+				$('#memo-timer').after("<span>Time: " + $('#memo-timer').attr('value') + "seconds. &nbsp; </span>")
+				$('#memo-timer').hide()
 				
 
 

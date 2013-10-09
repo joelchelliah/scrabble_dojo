@@ -95,4 +95,44 @@ describe Memo do
     its(:hints) { should eq "BÅT\r\nBÆ - DJ"}
     its(:accepted_words) { should eq "BANK\nBERG\nBISK" }
   end
+
+  describe "when retrieving memos" do
+    let!(:memo_user) { FactoryGirl.create(:user, name: "memo_user", email: "memo@user.no") }
+    let!(:memo_C) { FactoryGirl.create(:memo, user: memo_user, name: "C", health_decay: Time.now - 3.day) }
+    let!(:memo_A) { FactoryGirl.create(:memo, user: memo_user, name: "A", health_decay: Time.now - 2.day) }
+    let!(:memo_B) { FactoryGirl.create(:memo, user: memo_user, name: "B", health_decay: Time.now - 4.day, practice_disabled: true) }
+    
+
+    describe "by default order" do
+      it "should have the memos in the right order" do
+        expect(memo_user.memos.to_a).to eq [memo_A, memo_B, memo_C]
+      end
+    end
+
+    describe "by health" do
+      it "should have the weakest memos up front and practice disabled always last reguardless of health" do
+        expect(memo_user.memos.by_health.to_a).to eq [memo_C, memo_A, memo_B]
+      end
+    end
+
+    describe "- get weakest" do
+      it "should find the weakest memo that does not have practice disabled" do
+        expect(memo_user.memos.weakest).to eq memo_C
+      end
+
+      describe "and even when all other memos have full health" do
+        before do
+          user.memos.reject { |m| m.practice_disabled }.each do |m|
+            m.health_decay = Time.now
+            m.save
+          end
+        end
+
+        it "should still not find a memo with practice disabled" do
+          expect(memo_user.memos.weakest).not_to eq memo_B
+        end
+      end
+    end
+
+  end
 end

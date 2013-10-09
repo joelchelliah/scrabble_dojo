@@ -133,18 +133,7 @@ describe User do
       expect(@user.memos.to_a).to eq [memo_A3, memo_B3, memo_C3]
     end
 
-    describe "when getting memos according to health" do
-      it "should have the memos in the right order" do
-        expect(@user.memos.by_health.to_a).to eq [memo_A3, memo_C3, memo_B3]
-      end
-
-      it "should find the weakest memo" do
-        expect(@user.memos.weakest).to eq memo_A3
-      end
-    end
-
-
-    describe "when use is destroyed" do
+    describe "when user is destroyed" do
       it "should destroy associated memos" do
         memos = @user.memos.to_a
         @user.destroy

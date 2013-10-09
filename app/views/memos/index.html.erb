@@ -15,8 +15,8 @@
         <%= link_to 'Create memo', new_memo_path, class: "btn btn-primary" %>
       </div>
     <% else %>
-    <%= render 'overview_buttons' %>
       <div class="memo-table">
+        <%= render 'overview_buttons' %>
         <table class="table table-striped table-hover">
           <% @memos.each do |memo| %>
             <tr class=<%= color_memo_row(memo) %>>
