@@ -4,4 +4,4 @@
 
 **Language:** Norwegian
 
-url: TBA
+url: **scrabbledojo.herokuapp.com**
