@@ -1,5 +1,19 @@
-<h1>New word</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', words_path %>
+<% provide(:title, @word_entry.word) %>
+<div id="word-entries-edit" class="hero-unit">
+  <h1>Words</h1>
+  <h2>Add <%= @word_entry.word %>?</h2>
+  <hr/>
+  <div class="row">
+    <div class="span11 center">
+    	<p> The word <strong><%= @word_entry.word %></strong> was not found in the dictionary. Do you want to add it? </p>
+    	<%= form_for(@word_entry) do |f| %>
+    		<%= f.hidden_field :word %>
+    		<%= f.hidden_field :letters %>
+    		<%= f.hidden_field :length %>
+    		<%= f.hidden_field :first_letter %>
+    		<%= f.submit 'Add', id: "word-entries-add", class: "btn btn-primary btn-bold" %>
+    		<%= link_to 'Cancel', word_entries_path, id: "btn-cancel", class: "btn" %>
+    	<% end %>
+		</div>
+	</div>
+</div>

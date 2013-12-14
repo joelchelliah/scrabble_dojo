@@ -1,7 +1,9 @@
 class WordEntriesController < ApplicationController
-  before_action :set_word_entry, only: [:edit, :update, :destroy]
-  before_action :admin_user,     only: [:new, :create, :update, :destroy]
+  before_action :set_word_entry, only: [:show, :destroy]
+  before_action :admin_user,     only: [:show, :new, :create, :destroy, :index, :look_up]
 
+  # Short words #
+  ###############
 
   def word_length
     @length = params[:len]
@@ -25,50 +27,57 @@ class WordEntriesController < ApplicationController
     end
   end
 
-  def bingos
-    @word_entries = WordEntry.bingos
-    render 'short_words'
+
+  # Manage words #
+  ################
+
+  def index
+  end
+
+  def look_up
+    w = params[:word]
+    redirect_to word_entries_path if w.blank?
+    w = w.upcase.tr("å-ü", "Å-Ü")
+    
+    word_entry = WordEntry.find_by(word: w)
+
+    if word_entry
+      redirect_to word_entry
+    else
+      flash[:from_lookup] = true
+      flash[:new_word] = w
+      redirect_to new_word_entry_path
+    end
+  end
+
+  def show
   end
 
   def new
-    @word_entry = WordEntry.new
-  end
-
-  def edit
+    if flash[:from_lookup]
+      w = flash[:new_word]
+      @word_entry = WordEntry.new(word: w, letters: w.split(//).sort.join, length: w.length, first_letter: w.split(//).first)
+    else
+      redirect_to word_entries_path
+    end
   end
 
   def create
     @word_entry = WordEntry.new(word_entry_params)
-
-    respond_to do |format|
-      if @word_entry.save
-        format.html { redirect_to @word_entry, notice: 'Word entry was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @word_entry }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @word_entry.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @word_entry.update(word_entry_params)
-        format.html { redirect_to @word_entry, notice: 'Word entry was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @word_entry.errors, status: :unprocessable_entity }
-      end
+    if @word_entry.save
+      flash[:success] = "Added word: #{@word_entry.word}."
+      redirect_to word_entries_path
+    else
+      flash[:error] = "Could not add word: #{@word_entry.word}."
+      redirect_to word_entries_path
     end
   end
 
   def destroy
+    word = @word_entry.word
     @word_entry.destroy
-    respond_to do |format|
-      format.html { redirect_to word_entry_entries_url }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Removed word: #{word}."
+    redirect_to word_entries_path
   end
 
 
@@ -79,6 +88,6 @@ class WordEntriesController < ApplicationController
     end
 
     def word_entry_params
-      params.require(:word_entry).permit(:text, :letters, :length, :first_letter)
+      params.require(:word_entry).permit(:word, :letters, :length, :first_letter)
     end
 end

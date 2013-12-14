@@ -1,24 +1,14 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Text:</strong>
-  <%= @word.text %>
-</p>
-
-<p>
-  <strong>Letters:</strong>
-  <%= @word.letters %>
-</p>
-
-<p>
-  <strong>Length:</strong>
-  <%= @word.length %>
-</p>
-
-<p>
-  <strong>First letter:</strong>
-  <%= @word.first_letter %>
-</p>
-
-<%= link_to 'Edit', edit_word_path(@word) %> |
-<%= link_to 'Back', words_path %>
+<% provide(:title, @word_entry.word) %>
+<div id="word-entries-edit" class="hero-unit">
+  <h1>Words</h1>
+  <h2>Remove <%= @word_entry.word %>?</h2>
+  <hr/>
+  <div class="row">
+    <div class="span11 center">
+    	<p> The word <strong><%= @word_entry.word %></strong> was found in the dictionary. Do you want to remove it? </p>
+    	<%= link_to 'Remove', @word_entry, method: :delete, data: { confirm: "Remove: #{@word_entry.word} from the dictionary ?" },
+    							class: "btn btn-danger btn-bold" %>
+    	<%= link_to 'Cancel', word_entries_path, id: "btn-cancel", class: "btn" %>			
+		</div>
+	</div>
+</div>

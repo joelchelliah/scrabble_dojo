@@ -48,3 +48,16 @@
 	  }
 	}
 }
+
+#word-entries-manage {
+	input {
+		width: 205px !important;
+		margin-top: 20px;
+		font-size: 1em;
+	 }
+}
+
+#word-entries-edit {
+	strong { font-size: 1.2em }
+	.btn { margin-top: 20px }
+}

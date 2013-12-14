@@ -9,10 +9,17 @@
         <p>
           A memo consists of the list of words that you want to memorize, optionally accompanied by some hints to help you remember. Here you can create, edit and revise your own memos, and get a some general statistics of your revisions.
         </p>
-        <p>
-          Start by creating your first memo.
-        </p>
-        <%= link_to 'Create memo', new_memo_path, class: "btn btn-primary" %>
+        <div class="visible-desktop">
+          <p>
+            Start by creating your first memo.
+          </p>
+          <%= link_to 'Create memo', new_memo_path, class: "btn btn-primary" %>
+        </div>
+        <div class="hidden-desktop">
+          <p>
+            Cannot create new Memos on this device.
+          </p>
+        </div>
       </div>
     <% else %>
       <div class="memo-table">

@@ -15,6 +15,23 @@ ready = ->
 
 
 
+	# Manage words
+
+	if $('h2').text() == "Manage"
+		$('#word').focus()
+
+
+	# Remove word
+
+	if $('h2').text().indexOf "Remove" == 0
+		$('#btn-cancel').focus()
+
+
+	# Add word
+
+	if $('h2').text().indexOf "Add" == 0
+		$('#btn-cancel').focus()
+
 
 # Setup
 
