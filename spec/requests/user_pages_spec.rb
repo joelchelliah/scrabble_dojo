@@ -85,42 +85,42 @@ describe "User pages" do
   end
 
 
-  describe "signup" do
-    before { visit signup_path }
+  # describe "signup" do
+  #   before { visit signup_path }
 
-	  it { should have_title 'Sign up' }
-		it { should have_headings 'Account', 'Sign up' }
+	 #  it { should have_title 'Sign up' }
+		# it { should have_headings 'Account', 'Sign up' }
     
-    let(:submit) { "Create my account" }
+  #   let(:submit) { "Create my account" }
 
-    describe "with invalid information" do
-      it "should not create a user" do
-        expect { click_button submit }.not_to change(User, :count)
-      end
+  #   describe "with invalid information" do
+  #     it "should not create a user" do
+  #       expect { click_button submit }.not_to change(User, :count)
+  #     end
 
-      describe "after submission" do
-        before { click_button submit }
+  #     describe "after submission" do
+  #       before { click_button submit }
 
-        it { should have_error_message 'The form contains' }
-      end
-    end
+  #       it { should have_error_message 'The form contains' }
+  #     end
+  #   end
 
-    describe "with valid information" do
-      before { valid_signup }
+  #   describe "with valid information" do
+  #     before { valid_signup }
 
-      it "should create a user" do
-        expect { click_button submit }.to change(User, :count).by(1)
-      end
+  #     it "should create a user" do
+  #       expect { click_button submit }.to change(User, :count).by(1)
+  #     end
 
-      describe "after saving the user" do
-        before { click_button submit }
+  #     describe "after saving the user" do
+  #       before { click_button submit }
 
-        it { should have_title 'Home' }
-        it { should have_link 'Log out', href: logout_path }
-        it { should have_success_message 'Welcome to Scrabble Dojo!' }
-      end
-    end
-  end
+  #       it { should have_title 'Home' }
+  #       it { should have_link 'Log out', href: logout_path }
+  #       it { should have_success_message 'Welcome to Scrabble Dojo!' }
+  #     end
+  #   end
+  # end
 
   describe "edit profile" do
     let(:user) { FactoryGirl.create(:user) }

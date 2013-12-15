@@ -1,0 +1,32 @@
+<% provide(:title, 'Word search') %>
+<div id="word-entries-search" class="hero-unit">
+  <h1>Words</h1>
+  <h2>Search</h2>
+  <hr/>
+  <div class="row">
+    <div class="span11 center">
+    	<p> Enter a word, or sequence of letters to find all possible anagrams in the dictionary.</p>
+    	<p>A maximum of two blank tiles may be used, denoted by a blank <strong>space</strong>, or a <strong>period</strong>.</p>
+			<%= form_tag("/search", method: "get") do %>
+			  <%= text_field_tag(:word, @word, placeholder: ". . .") %>
+			<% end %>
+		</div>
+	</div>
+	<% unless @word.blank? %>
+		<div class="row">
+	    <div class="span11 center">
+	    	<hr/>
+	    	<p> Found <strong><%= @word_entries.length %></strong> anagrams for <strong><%= @word %></strong> </p>
+	    	<div class="results">
+		    	<% @word_entries.each do |word_entry| %>
+		    		<% if @word == word_entry.word %>
+		    			<p class="text-success"><strong> <%= word_entry.word %> </strong></p>
+		    		<% else %>
+		    			<p><strong> <%= word_entry.word %> </strong></p>
+		    		<% end %>
+		    	<% end %>
+		    </div>
+	    </div>
+	  </div>
+	<% end %>
+</div>

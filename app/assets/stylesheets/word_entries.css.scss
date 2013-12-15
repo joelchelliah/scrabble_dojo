@@ -61,3 +61,15 @@
 	strong { font-size: 1.2em }
 	.btn { margin-top: 20px }
 }
+
+#word-entries-search {
+	input {
+		width: 205px !important;
+		margin-top: 20px;
+		font-size: 1em;
+	 }
+	 .results {
+	 	padding-top: 10px;
+	 	p { font-size: 1em }
+	 }
+}

@@ -1,5 +1,6 @@
 class WordEntriesController < ApplicationController
   before_action :set_word_entry, only: [:show, :destroy]
+  before_action :logged_in_user, only: [:show, :new, :create, :destroy, :index, :look_up, :search]
   before_action :admin_user,     only: [:show, :new, :create, :destroy, :index, :look_up]
 
   # Short words #
@@ -25,6 +26,29 @@ class WordEntriesController < ApplicationController
     else
       redirect_to root_url
     end
+  end
+
+
+  # Search words #
+  ################
+
+  def search
+    @word = params[:word]
+    @word_entries = []
+    unless @word.blank?
+      @word =   @word.upcase.tr("å-ü", "Å-Ü").tr(" ", ".")
+      letters = @word.split(//).sort
+
+      if get_num_blank_tiles(letters) > 2
+        flash[:error] = "Too many blank tiles entered in search: [#{@word}]. The maximum allowed is two."
+        redirect_to search_path
+      elsif get_num_blank_tiles(letters) >= 1
+        @word_entries = find_words_with_blank_tiles(@word, get_num_blank_tiles(letters) == 2)
+      else
+        @word_entries = WordEntry.where(letters: letters.join)
+      end
+    end
+    @word_entries = @word_entries.sort_by { |w| w.word }
   end
 
 
@@ -89,5 +113,30 @@ class WordEntriesController < ApplicationController
 
     def word_entry_params
       params.require(:word_entry).permit(:word, :letters, :length, :first_letter)
+    end
+
+    def get_num_blank_tiles(letters)
+      letters.find_all { |t| t == "." }.size
+    end
+
+    def find_words_with_blank_tiles(word, has_two_blank_tiles)
+      word_entries = []
+      alphabet().each do |first_blank_sub|
+        word_with_first_blank_replaced = word.sub(".", first_blank_sub)
+        if has_two_blank_tiles
+          alphabet().each do |second_blank_sub|
+            word_with_second_blank_replaced = word_with_first_blank_replaced.sub(".", second_blank_sub)
+            word_entries += WordEntry.where(letters: word_with_second_blank_replaced.split(//).sort.join)
+          end
+        else
+          word_entries += WordEntry.where(letters: word_with_first_blank_replaced.split(//).sort.join)
+        end
+      end
+      word_entries.uniq
+    end
+
+    def alphabet()
+      ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+       "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Æ", "Ø", "Å", "Ü"]
     end
 end

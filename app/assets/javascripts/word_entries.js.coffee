@@ -33,6 +33,12 @@ ready = ->
 		$('#btn-cancel').focus()
 
 
+	# Search words
+
+	if $('h2').text() == "Search"
+		$('#word').focus()
+
+
 # Setup
 
 $(document).ready(ready)

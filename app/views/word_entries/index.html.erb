@@ -5,9 +5,9 @@
   <hr/>
   <div class="row">
     <div class="span11 center">
-    	<p> Look up a single word. Then choose to add or remove it from the dictionary. </p>
+    	<p> Look up a single word. Then choose to add or remove it from the dictionary.</p>
 			<%= form_tag("/look_up", method: "get") do %>
-			  <%= text_field_tag(:word, "", placeholder: "Word") %>
+			  <%= text_field_tag(:word, "", placeholder: ". . .") %>
 			<% end %>
 		</div>
 	</div>
