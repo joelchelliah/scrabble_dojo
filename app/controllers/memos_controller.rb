@@ -9,7 +9,7 @@ class MemosController < ApplicationController
   end
 
   def by_health
-    @memos = current_user.memos.sort_by { |m| health(m) }
+    @memos = current_user.memos.sort_by { |m| if m.practice_disabled then 101 else health(m) end }
     render 'index'
   end
 
