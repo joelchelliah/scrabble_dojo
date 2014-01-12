@@ -67,12 +67,12 @@ module MemosHelper
 
 	def show_prac_time()
 		show = "<div class='text'>"
-		show << "Session completed in #{@prac_time} seconds."
+		show << "Session completed in <strong>#{@prac_time}</strong> seconds."
 		if within_acceptable_error_margin(@wrong_words, @missed_words)
 			if @prev_time.nil? or @prev_time > @prac_time
 				show << "<span class='text-success'><br/><strong>That's a new record!</strong></span>"
 			else
-				show << "<p><strong>Could have done better...</strong></p>"
+				show << "<p>#{@prac_time - @prev_time} seconds slower than your best...</p>"
 			end
 		else
 			show << "<p>Try again with fewer mistakes...</p>"

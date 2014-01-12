@@ -10,7 +10,6 @@ ScrabbleDojo::Application.routes.draw do
       get 'revise_weakest'
     end
     member do
-      get 'results_of'
       patch 'practice'
     end
   end

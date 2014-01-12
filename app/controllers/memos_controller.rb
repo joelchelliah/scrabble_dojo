@@ -27,6 +27,17 @@ class MemosController < ApplicationController
   end
 
   def show
+    if flash[:from_practice]
+      @form_words   = flash[:form_words]
+      @missed_words = flash[:missed_words]
+      @wrong_words  = flash[:wrong_words]
+      @prev_health  = flash[:prev_health]
+      @prac_time    = flash[:prac_time]
+      @prev_time    = flash[:prev_time]
+      render 'results'
+    else
+      render 'show'
+    end
   end
 
   def edit
@@ -85,23 +96,10 @@ class MemosController < ApplicationController
       flash[:prev_health]   = previous_health
       flash[:prac_time]     = time
       flash[:prev_time]     = previous_time
-      redirect_to results_of_memo_path @memo
+      redirect_to @memo
     else
       flash[:error] = "Could not save results from practice session"
       redirect_to memos_path
-    end
-  end
-
-  def results_of
-    if flash[:from_practice]
-      @form_words   = flash[:form_words]
-      @missed_words = flash[:missed_words]
-      @wrong_words  = flash[:wrong_words]
-      @prev_health  = flash[:prev_health]
-      @prac_time    = flash[:prac_time]
-      @prev_time    = flash[:prev_time]
-    else
-      redirect_to @memo
     end
   end
 
