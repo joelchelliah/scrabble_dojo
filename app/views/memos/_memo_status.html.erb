@@ -7,6 +7,7 @@
 		<p>Word count: </p>
 		<p>Practice count: &nbsp; </p>
 		<p>Best time: </p>
+		<p>Avg. word time: </p>
 	<% end %>
 </div>
 <% if @memo.practice_disabled %>
@@ -16,5 +17,10 @@
 	<p><strong><%= @memo.word_list.split.count %></strong></p>
 	<p><strong><%= @memo.num_practices %></strong></p>
 	<p><strong><%= if @memo.best_time then "#{@memo.best_time} s" else "n/a" end %></strong></p>
+	<% if @memo.best_time and !@memo.word_list.blank? %>
+		<p><strong><%= "#{"%.1f" % (@memo.best_time / @memo.word_list.split(/\r?\n/).size)}" %> s</strong></p>
+	<% else %>
+		<p><strong> n/a </strong></p>
+	<% end %>
 <% end %>
 <hr/>

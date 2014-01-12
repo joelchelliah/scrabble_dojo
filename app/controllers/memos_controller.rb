@@ -54,6 +54,7 @@ class MemosController < ApplicationController
   end
 
   def update
+    @memo.best_time = nil unless @memo.practice_disabled
     if @memo.update_attributes(memo_params)
       flash[:success] = "Updated memo: #{@memo.name}."
       redirect_to memos_path
