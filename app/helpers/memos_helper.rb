@@ -4,7 +4,7 @@ module MemosHelper
 	# general
 
 	def health(memo)
-		health = 100 - 3 * decay_diff(memo)
+		health = 100 - decay_multiplier(memo) * decay_diff(memo)
 		health = 1 if health < 1
 		health = 100 if health > 100
 		health
@@ -153,5 +153,14 @@ module MemosHelper
 
 		def decay_diff(memo)
 			((Time.now - memo.health_decay) / 1.day).to_i
+		end
+
+		def decay_multiplier(memo)
+			n = memo.num_practices
+			return 5 if n <= 5
+			return 4 if n <= 10
+			return 3 if n <= 15
+			return 2 if n <= 20
+			1
 		end
 end

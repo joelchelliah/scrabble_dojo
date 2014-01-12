@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MemosHelper do
-  before { @memo = Memo.new(name: "A3", hints: "", word_list: "ABC", health_decay: Time.now - 10.days) }
+  before { @memo = Memo.new(name: "A3", hints: "", word_list: "ABC", health_decay: Time.now - 10.days, num_practices: 15) }
 
 	describe "health" do	
 		it "calculates the amount of health based on date of last revision" do
@@ -84,9 +84,9 @@ describe MemosHelper do
 
 	describe "show average health" do
 		before do
-				@memos = [Memo.new(health_decay: Time.now),
-									Memo.new(health_decay: Time.now - 17.days),
-									Memo.new(health_decay: Time.now - 33.days)]
+				@memos = [Memo.new(health_decay: Time.now, num_practices: 15),
+									Memo.new(health_decay: Time.now - 17.days, num_practices: 15),
+									Memo.new(health_decay: Time.now - 33.days, num_practices: 15)]
 			end
 
 		it "should display the average health based on all the memos" do
