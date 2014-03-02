@@ -9,7 +9,7 @@ class MemosController < ApplicationController
   end
 
   def by_health
-    @memos = current_user.memos.sort_by { |m| if m.practice_disabled then 101 else health(m) end }
+    @memos = current_user.memos.by_health
     render 'index'
   end
 
@@ -19,9 +19,7 @@ class MemosController < ApplicationController
   end
 
   def revise_weakest
-    memos = current_user.memos
-    weakest_memo = memos.inject(memos.first) { |weakest,  m| if health(m) < health(weakest) then m else weakest end }
-    redirect_to weakest_memo
+    redirect_to current_user.memos.weakest
   end
 
   def new

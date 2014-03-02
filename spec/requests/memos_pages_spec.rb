@@ -34,6 +34,18 @@ describe "Memos" do
 				it { should have_title 'Edit' }
 				it { should have_link 'Back', href: memos_path }
 			end
+
+			describe "when clicking on 'Sort by health'" do
+				before { click_link 'Sort by health'}
+
+				it { should have_title 'Memos' }
+			end
+
+			describe "when clicking on 'Revise weakest memo'" do
+				before { click_link 'Revise weakest memo'}
+
+				it { should have_headings 'Memo', 'Revise' }
+			end
 		end
 
 

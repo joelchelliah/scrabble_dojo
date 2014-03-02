@@ -12,7 +12,7 @@
         <ul class="nav pull-left">
           <li><%= link_to "<i class='icon-home icon-white'></i> <strong>Home</strong>".html_safe, root_url %></li>
           <%= render 'layouts/dropdowns/short_words' %>
-          <li><%= link_to "<i class='icon-list icon-white'></i> Memos".html_safe, memos_path %></li>            
+          <li class="hidden-phone"><%= link_to "<i class='icon-list icon-white'></i> Memos".html_safe, memos_path %></li>            
         </ul>
         <ul class="nav pull-right">
           <%= render 'layouts/dropdowns/admin_bar' %>

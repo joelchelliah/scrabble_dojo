@@ -72,7 +72,8 @@ module MemosHelper
 			if @prev_time.nil? or @prev_time > @prac_time
 				show << "<span class='text-success'><br/><strong>That's a new record!</strong></span>"
 			else
-				show << "<p>#{@prac_time - @prev_time} seconds slower than your best...</p>"
+				prac_time_diff = (@prac_time - @prev_time).round 1
+				show << "<p>#{prac_time_diff} seconds slower than your best...</p>"
 			end
 		else
 			show << "<p>Try again with fewer mistakes...</p>"

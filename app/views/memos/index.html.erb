@@ -28,7 +28,7 @@
           <% @memos.each do |memo| %>
             <tr class=<%= color_memo_row(memo) %>>
               <td><%= link_to memo.name, memo, class: "btn btn-primary" %></td>
-              <td class="hidden-phone"><%= health_bar(memo) %></td>
+              <td><%= health_bar(memo) %></td>
               <td class="size-column"><%= show_word_count(memo) %> words</td>
               <td class="right-column">
                 <div class="btn-group">
