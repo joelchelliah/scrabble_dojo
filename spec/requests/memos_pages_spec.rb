@@ -6,10 +6,12 @@ describe "Memos" do
 	describe "for logged in user" do
 		let(:user) { FactoryGirl.create(:user) }
 		before(:each) { log_in user }
-
+		after(:each)  { user.destroy }
+    
 		describe "memo overview:" do
-			before(:each) { 3.times { FactoryGirl.create(:memo, user: user) } }
-	    after(:each)  { user.destroy }
+			let!(:memo_C) { FactoryGirl.create(:memo, user: user, name: "C", health_decay: Time.now - 3.day) }
+	    let!(:memo_A) { FactoryGirl.create(:memo, user: user, name: "A", health_decay: Time.now - 2.day) }
+	    let!(:memo_B) { FactoryGirl.create(:memo, user: user, name: "B", health_decay: Time.now - 4.day, practice_disabled: true) }
 
 			before { visit memos_path }
 
@@ -39,12 +41,19 @@ describe "Memos" do
 				before { click_link 'Sort by health'}
 
 				it { should have_title 'Memos' }
+				it "should sort the non-disabled memos by health" do
+					expect(page.body =~ />#{memo_C.name}</).to be < (page.body =~ />#{memo_A.name}</)
+				end
+				it "should keep the disabled ones at the bottom" do
+					expect(page.body =~ />#{memo_A.name}</).to be < (page.body =~ />#{memo_B.name}</)
+				end
 			end
 
 			describe "when clicking on 'Revise weakest memo'" do
 				before { click_link 'Revise weakest memo'}
 
 				it { should have_headings 'Memo', 'Revise' }
+				it { should have_selector 'strong', memo_C.name}
 			end
 		end
 

@@ -9,7 +9,7 @@ class MemosController < ApplicationController
   end
 
   def by_health
-    @memos = current_user.memos.by_health
+    @memos = ordered_by_health()
     render 'index'
   end
 
@@ -19,7 +19,7 @@ class MemosController < ApplicationController
   end
 
   def revise_weakest
-    redirect_to current_user.memos.weakest
+    redirect_to ordered_by_health().first
   end
 
   def new
@@ -132,6 +132,10 @@ class MemosController < ApplicationController
         flash[:error] = "Could not find memo"
         redirect_to root_url
       end
+    end
+
+    def ordered_by_health()
+      current_user.memos.sort_by { |m| if m.practice_disabled then 101 else health m end }
     end
 
 end

@@ -108,31 +108,5 @@ describe Memo do
         expect(memo_user.memos.to_a).to eq [memo_A, memo_B, memo_C]
       end
     end
-
-    describe "by health" do
-      it "should have the weakest memos up front and practice disabled always last reguardless of health" do
-        expect(memo_user.memos.by_health.to_a).to eq [memo_C, memo_A, memo_B]
-      end
-    end
-
-    describe "- get weakest" do
-      it "should find the weakest memo that does not have practice disabled" do
-        expect(memo_user.memos.weakest).to eq memo_C
-      end
-
-      describe "and even when all other memos have full health" do
-        before do
-          user.memos.reject { |m| m.practice_disabled }.each do |m|
-            m.health_decay = Time.now
-            m.save
-          end
-        end
-
-        it "should still not find a memo with practice disabled" do
-          expect(memo_user.memos.weakest).not_to eq memo_B
-        end
-      end
-    end
-
   end
 end
