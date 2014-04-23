@@ -7,7 +7,7 @@ describe "Authentication" do
   describe "log in" do
     before { visit login_path }
 
-    it { should go_to_the_login_page }
+    it { should be_the_login_page }
 
 		describe "with invalid information" do
       before { click_button "Log in" }

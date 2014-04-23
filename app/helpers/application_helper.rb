@@ -26,46 +26,5 @@ module ApplicationHelper
   	show << "</table>"
   	show.html_safe
   end
-
-  # <table>
-  #         <tr>          
-  #           <td>P - 2</td>
-  #           <td>V - 4</td>
-  #           <td>Å - 2</td>
-  #         </tr>
-  #         <tr>
-  #           <td>B - 3</td>
-  #           <td>H - 3</td>
-  #           <td>L - 5</td>
-  #           <td>R - 6</td>
-  #           <td>W - 1</td>
-  #           <td>? - 2</td>
-  #         </tr>
-  #         <tr>
-  #           <td>C - 1</td>
-  #           <td>I - 5</td>
-  #           <td>M - 3</td>
-  #           <td>S - 6</td>
-  #           <td>Y - 1</td>
-  #         </tr>
-  #         <tr>
-  #           <td>D - 5</td>
-  #           <td>J - 2</td>
-  #           <td>N - 6</td>
-  #           <td>T - 6</td>
-  #           <td>Æ - 1</td>
-  #         </tr>
-  #         <tr>
-  #           <td>E - 9</td>
-            
-  #           <td>O - 4</td>
-  #           <td>U - 3</td>
-  #           <td>Ø - 2</td>
-  #         </tr>
-  #         <tr>
-  #           <td>F - 4</td>
-  #           <td>K - 4</td>
-  #         </tr>
-  #       </table>
 end
 

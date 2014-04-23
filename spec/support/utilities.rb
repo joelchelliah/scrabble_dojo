@@ -1,5 +1,3 @@
-include ApplicationHelper
-
 def valid_signup()
   fill_in "user_name",                  with: "Example User"
   fill_in "user_email",                 with: "user@example.com"
@@ -25,6 +23,7 @@ def valid_login(user)
   click_button "Log in"
 end
 
+
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
     expect(page).to have_selector('div.alert.alert-error', text: message)
@@ -49,7 +48,16 @@ RSpec::Matchers.define :have_flash_message_of_type do |type|
   end
 end
 
-RSpec::Matchers.define :go_to_the_login_page do
+RSpec::Matchers.define :have_headings do |h1_message, h2_message|
+  match do |page|
+    expect(page).to have_selector('h1', text: h1_message)
+    expect(page).to have_selector('h2', text: h2_message)
+  end
+end
+
+
+
+RSpec::Matchers.define :be_the_login_page do
   match do |page|
     expect(page).to have_title 'Log in'
     expect(page).to have_selector('h1', text: 'Account')
@@ -57,7 +65,7 @@ RSpec::Matchers.define :go_to_the_login_page do
   end
 end
 
-RSpec::Matchers.define :go_to_the_home_page do
+RSpec::Matchers.define :be_the_home_page do
   match do |page|
     expect(page).to have_title 'Home'
     expect(page).to have_selector('h1', text: 'Scrabble Dojo')
@@ -66,19 +74,3 @@ RSpec::Matchers.define :go_to_the_home_page do
   end
 end
 
-RSpec::Matchers.define :have_headings do |h1_message, h2_message|
-  match do |page|
-    expect(page).to have_selector('h1', text: h1_message)
-    expect(page).to have_selector('h2', text: h2_message)
-  end
-end
-
-RSpec::Matchers.define :have_short_words_buttons do
-  match do |page|
-    expect(page).to have_link "Two letters"
-    expect(page).to have_link "Three letters"
-    expect(page).to have_link "Four letters"
-    expect(page).to have_link "Words with C"
-    expect(page).to have_link "Words with W"
-  end
-end
