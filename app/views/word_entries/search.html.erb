@@ -5,10 +5,11 @@
   <hr/>
   <div class="row">
     <div class="span11 center">
-    	<p> Enter a word, or sequence of letters to find all possible anagrams in the dictionary.</p>
+    	<p> Enter a word, or sequence of letters to find all possible anagrams.</p>
     	<p>A maximum of two blank tiles may be used, denoted by a blank <strong>space</strong>, or a <strong>period</strong>.</p>
 			<%= form_tag("/search", method: "get") do %>
 			  <%= text_field_tag(:word, @word, placeholder: ". . .") %>
+        <%= submit_tag "Search", class: "hide-off-screen" %>
 			<% end %>
 		</div>
 	</div>
@@ -16,7 +17,7 @@
 		<div class="row">
 	    <div class="span11 center">
 	    	<hr/>
-	    	<p> Found <strong><%= @word_entries.length %></strong> anagrams for <strong><%= @word %></strong> </p>
+	    	<p> Found <%= pluralize(@word_entries.length, "anagram") %> for <strong><%= @word %></strong> </p>
 	    	<div class="results">
 		    	<% @word_entries.each do |word_entry| %>
 		    		<% if @word == word_entry.word %>

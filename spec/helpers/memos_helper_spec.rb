@@ -86,7 +86,7 @@ describe MemosHelper do
 		before do
 				@memos = [Memo.new(health_decay: Time.now, num_practices: 15),
 									Memo.new(health_decay: Time.now - 17.days, num_practices: 15),
-									Memo.new(health_decay: Time.now - 33.days, num_practices: 15)]
+									Memo.new(health_decay: Time.now - 45.days, num_practices: 15)]
 			end
 
 		it "should display the average health based on all the memos" do

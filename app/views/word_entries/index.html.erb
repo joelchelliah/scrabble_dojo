@@ -8,6 +8,7 @@
     	<p> Look up a single word. Then choose to add or remove it from the dictionary.</p>
 			<%= form_tag("/look_up", method: "get") do %>
 			  <%= text_field_tag(:word, "", placeholder: ". . .") %>
+        <%= submit_tag "Search", class: "hide-off-screen" %>
 			<% end %>
 		</div>
 	</div>

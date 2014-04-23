@@ -5,7 +5,7 @@
   <hr/>
   <div class="row">
     <div class="span11 center">
-    	<p> The word <strong><%= @word_entry.word %></strong> was not found in the dictionary. Do you want to add it? </p>
+    	<p> The word <strong><%= @word_entry.word %></strong> was not found. Do you want to add it? </p>
     	<%= form_for(@word_entry) do |f| %>
     		<%= f.hidden_field :word %>
     		<%= f.hidden_field :letters %>
