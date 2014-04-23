@@ -49,6 +49,23 @@ RSpec::Matchers.define :have_flash_message_of_type do |type|
   end
 end
 
+RSpec::Matchers.define :go_to_the_login_page do
+  match do |page|
+    expect(page).to have_title 'Log in'
+    expect(page).to have_selector('h1', text: 'Account')
+    expect(page).to have_selector('h2', text: 'Log in')
+  end
+end
+
+RSpec::Matchers.define :go_to_the_home_page do
+  match do |page|
+    expect(page).to have_title 'Home'
+    expect(page).to have_selector('h1', text: 'Scrabble Dojo')
+    expect(page).to have_selector('h2', text: 'Practice makes perfect!')
+    expect(page).to have_content 'Welcome'
+  end
+end
+
 RSpec::Matchers.define :have_headings do |h1_message, h2_message|
   match do |page|
     expect(page).to have_selector('h1', text: h1_message)

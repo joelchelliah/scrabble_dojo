@@ -25,6 +25,7 @@ ScrabbleDojo::Application.routes.draw do
   get '/word_length/:len'         => 'word_entries#word_length',      as: 'word_length'
 
   get '/look_up'                  => 'word_entries#look_up',          as: 'look_up'
-  get '/search'                  => 'word_entries#search',          as: 'search'
+  get '/search'                   => 'word_entries#search',           as: 'search'
+  get '/stems'                    => 'word_entries#stems',            as: 'stems'
 
 end

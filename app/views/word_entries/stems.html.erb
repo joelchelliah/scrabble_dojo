@@ -1,0 +1,31 @@
+<% provide(:title, 'Word stems') %>
+<div id="word-entries-search" class="hero-unit">
+  <h1>Words</h1>
+  <h2>Stems</h2>
+  <hr/>
+  <div class="row">
+    <div class="span11 center">
+      <p> Enter a word, or sequence of letters to find all words containing the given stem.</p>
+      <div class="form-group">
+        <%= form_tag("/stems", method: "get") do %>
+          <%= text_field_tag(:word, @word, placeholder: ". . .") %>
+          <%= select_tag :option, options_for_select([['Prefix', :prefix], ['Suffix', :suffix], ['Prefix or suffix', :both], ['Contains', :contains]], @option), class: "form-control" %>
+          <%= submit_tag "Search", class: "hide-off-screen" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% unless @word.blank? %>
+    <div class="row">
+      <div class="span11 center">
+        <hr/>
+        <p> Found <%= pluralize(@word_entries.length, "word") %> containing <strong><%= @word %></strong> <%= @option_text %> </p>
+        <div class="results">
+          <% @word_entries.each do |word_entry| %>
+            <p><strong> <%= word_entry.word %> </strong></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,6 +1,6 @@
 class WordEntriesController < ApplicationController
   before_action :set_word_entry, only: [:show, :destroy]
-  before_action :logged_in_user, only: [:show, :new, :create, :destroy, :index, :look_up, :search]
+  before_action :logged_in_user, only: [:show, :new, :create, :destroy, :index, :look_up, :search, :stems]
   before_action :admin_user,     only: [:show, :new, :create, :destroy, :index, :look_up]
 
   # Short words #
@@ -49,6 +49,35 @@ class WordEntriesController < ApplicationController
       end
     end
     @word_entries = @word_entries.sort_by { |w| w.word }
+  end
+
+
+  # Word stems #
+  ##############
+
+  def stems
+    option_both = 'both'
+    option_prefix = 'prefix'
+    option_suffix = 'suffix'
+    option_contains = 'contains'
+
+    @word = params[:word]
+    @word_entries = []
+    @option = params[:option] || option_contains
+    @option_text = ""
+    unless @word.blank?
+      @word = @word.upcase.tr("å-ü", "Å-Ü")
+      condition = "length > :l AND word LIKE :s"
+      if @option == option_contains
+        @word_entries = WordEntry.where(condition, l: @word.length, s: "%#{@word}%")
+      else
+        @word_entries += WordEntry.where(condition, l: @word.length, s: "#{@word}%") unless @option == option_suffix
+        @word_entries += WordEntry.where(condition, l: @word.length, s: "%#{@word}") unless @option == option_prefix
+        
+        @option_text = @option == option_both ? "as either a prefix or a suffix" : "as a " << @option.to_s
+      end
+    end
+    @word_entries = @word_entries.sort_by { |w| w.length }
   end
 
 

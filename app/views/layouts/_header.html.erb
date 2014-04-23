@@ -10,15 +10,15 @@
       <div id="logo" class="brand">Scrabble Dojo</div>
       <nav class="nav-collapse collapse">
         <ul class="nav pull-left">
-          <li><%= link_to "<i class='icon-home icon-white'></i> <strong>Home</strong>".html_safe, root_url %></li>
-          <%= render 'layouts/dropdowns/short_words' %>
-          <li class="hidden-phone"><%= link_to "<i class='icon-list icon-white'></i> Memos".html_safe, memos_path %></li>            
+          <%= render 'layouts/buttons/home_bar' %>
+          <%= render 'layouts/dropdowns/short_words_bar' %>
+          <%= render 'layouts/dropdowns/training_bar' %>
+          <%= render 'layouts/dropdowns/find_words_bar' %>
         </ul>
         <ul class="nav pull-right">
           <%= render 'layouts/dropdowns/admin_bar' %>
           <%= render 'layouts/dropdowns/account_bar' %>
         </ul>
-        <%= render 'layouts/search_bar' %>
       </nav>
     </div>
   </div>
