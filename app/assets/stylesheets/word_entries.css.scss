@@ -6,6 +6,22 @@
 	 }
 }
 
+#word-nav {
+	display : none;
+	text-align: center;
+	width: 100%;
+	left: 0%;
+	margin-right: 0%;
+	position: fixed;
+	bottom: 0;
+	padding: 5px;
+	font-size: 1.2em;
+	color: #aaa;
+	border-top: solid 3px #aaa;
+	background-color: #ddd;
+}
+
+
 @media (max-width: 767px) {
 	#word-entries-words {
 		.words {
@@ -22,19 +38,6 @@
 	  		border-bottom: solid 2px #aaa;
 	  		border-right: solid 2px #aaa;
 			}
-		}
-		.word-nav {
-			text-align: center;
-			width: 100%;
-			left: 0%;
-			margin-right: 0%;
-			position: fixed;
-			bottom: 0;
-			padding: 5px;
-			font-size: 1.2em;
-			color: #aaa;
-			border-top: solid 3px #aaa;
-			background-color: #ddd;
 		}
 	}
 }
@@ -71,12 +74,13 @@
 #word-entries-search {
 	@include search-text;
 	select { 
-		width: 140px !important;
-		margin-top: 20px;
-		padding-bottom: 0px;
+		width: 205px !important;
+		margin-top: 5px;
+		padding-bottom: 0;
 	}
+	.btn { width: 205px !important; }
 	.results {
 	 	padding-top: 10px;
-	 	p { font-size: 1em }
+	 	p { font-size: 1em; }
 	}
 }

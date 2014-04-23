@@ -39,7 +39,17 @@ ready = ->
 		$('#word').focus()
 
 
+	# Word stems
+
+	if $('h2').text() == "Stems"
+		$('#word').focus()
+
+
+
 # Setup
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
+$(document).scroll ->
+  $('#word-nav').toggle $(this).scrollTop() > 2000
+  return

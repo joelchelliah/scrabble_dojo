@@ -21,6 +21,19 @@ module WordEntriesHelper
   end
 
 
+  # Word stems
+
+  def word_stems_result_text()
+    option_text = "#{@option.to_s.downcase}ed by"
+    option_text = "containing" if @option == "contains"
+    option_text = "affixed by" if @option == "both"
+    length_text = @max_length == "15" ? "" : ", with a maximum length of <strong>#{@max_length}</strong>"
+    words_text  = pluralize(@word_entries.length, "word")
+
+    "Found #{words_text} #{option_text} <strong>#{@word}</strong>#{length_text}".html_safe
+  end
+
+
   private
 
     def alphabet()

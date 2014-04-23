@@ -41,28 +41,30 @@ end
 RSpec::Matchers.define :be_the_word_search_page do
   match do |page|
     expect(page).to have_title 'Word search'
-    expect(page).to have_selector('h1', text: 'Words')
-    expect(page).to have_selector('h2', text: 'Search')
-    expect(page).to have_selector('input')
+    expect(page).to have_selector 'h1', text: 'Words'
+    expect(page).to have_selector 'h2', text: 'Search'
+    expect(page).to have_selector 'input'
+    expect(page).to have_button 'Search'
   end
 end
 
 RSpec::Matchers.define :be_the_word_stems_page do
   match do |page|
     expect(page).to have_title 'Word stems'
-    expect(page).to have_selector('h1', text: 'Words')
-    expect(page).to have_selector('h2', text: 'Stems')
-    expect(page).to have_selector('input')
-    expect(page).to have_selector('select')
+    expect(page).to have_selector 'h1', text: 'Words'
+    expect(page).to have_selector 'h2', text: 'Stems'
+    expect(page).to have_selector 'input'
+    expect(page).to have_selector 'select'
+    expect(page).to have_button 'Search'
   end
 end
 
 RSpec::Matchers.define :be_the_manage_words_page do
   match do |page|
     expect(page).to have_title 'Manage words'
-    expect(page).to have_selector('h1', text: 'Words')
-    expect(page).to have_selector('h2', text: 'Manage')
-    expect(page).to have_selector('input')
+    expect(page).to have_selector 'h1', text: 'Words'
+    expect(page).to have_selector 'h2', text: 'Manage'
+    expect(page).to have_selector 'input'
   end
 end
 

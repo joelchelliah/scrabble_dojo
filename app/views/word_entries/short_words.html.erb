@@ -3,7 +3,7 @@
 	<h1>Words</h1>
 	<h2><%= header_text %></h2>
 	<hr/>
-	<div class="word-nav visible-phone">
+	<div id="word-nav">
 		<p>
 			<% for_each_letter_with_words do |letter| %>
 			<%= link_to letter, "##{letter}" %> |

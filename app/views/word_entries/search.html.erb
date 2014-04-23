@@ -3,13 +3,20 @@
   <h1>Words</h1>
   <h2>Search</h2>
   <hr/>
+  <div id="word-nav">
+    <p>
+      <%= link_to "Scroll to top", "#word-entries-search" %>
+    </p>
+  </div>
   <div class="row">
     <div class="span11 center">
     	<p> Enter a word, or sequence of letters to find all possible anagrams.</p>
     	<p>A maximum of two blank tiles may be used, denoted by a blank <strong>space</strong>, or a <strong>period</strong>.</p>
 			<%= form_tag("/search", method: "get") do %>
-			  <%= text_field_tag(:word, @word, placeholder: ". . .") %>
-        <%= submit_tag "Search", class: "hide-off-screen" %>
+        <div>
+  			  <%= text_field_tag(:word, @word, placeholder: ". . .") %>
+        </div>
+        <%= submit_tag "Search", class: "btn btn-primary" %>
 			<% end %>
 		</div>
 	</div>

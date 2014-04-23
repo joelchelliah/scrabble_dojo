@@ -56,7 +56,6 @@ class WordEntriesController < ApplicationController
   ##############
 
   def stems
-    option_both = 'both'
     option_prefix = 'prefix'
     option_suffix = 'suffix'
     option_contains = 'contains'
@@ -64,17 +63,15 @@ class WordEntriesController < ApplicationController
     @word = params[:word]
     @word_entries = []
     @option = params[:option] || option_contains
-    @option_text = ""
+    @max_length = params[:max_length] || 15
     unless @word.blank?
       @word = @word.upcase.tr("å-ü", "Å-Ü")
-      condition = "length > :l AND word LIKE :s"
+      condition = "length > :lmin AND length >= 5 AND length <= :lmax AND word LIKE :s"
       if @option == option_contains
-        @word_entries = WordEntry.where(condition, l: @word.length, s: "%#{@word}%")
+        @word_entries = WordEntry.where(condition, lmin: @word.length, lmax: @max_length, s: "%#{@word}%")
       else
-        @word_entries += WordEntry.where(condition, l: @word.length, s: "#{@word}%") unless @option == option_suffix
-        @word_entries += WordEntry.where(condition, l: @word.length, s: "%#{@word}") unless @option == option_prefix
-        
-        @option_text = @option == option_both ? "as either a prefix or a suffix" : "as a " << @option.to_s
+        @word_entries += WordEntry.where(condition, lmin: @word.length, lmax: @max_length, s: "#{@word}%") unless @option == option_suffix
+        @word_entries += WordEntry.where(condition, lmin: @word.length, lmax: @max_length, s: "%#{@word}") unless @option == option_prefix
       end
     end
     @word_entries = @word_entries.sort_by { |w| w.length }
