@@ -11,8 +11,7 @@ File.open('NSF-ordlisten.txt', 'r') do |input|
       word = line.split[0]
       unless word.length > 15 or last_word == word
         letters = word.split(//)
-        output << "Word.create(text: '#{word}', letters: '#{letters.sort.join}', length: #{word.length}, first_letter: '#{letters.first}')"
-        output << " unless Word.find_by text: '#{word}'"
+        output << "WordEntry.create(word: '#{word}', letters: '#{letters.sort.join}', length: #{word.length}, first_letter: '#{letters.first}')"
         output << "\n"
         last_word = word
       end
