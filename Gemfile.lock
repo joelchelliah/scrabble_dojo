@@ -117,6 +117,8 @@ GEM
     multi_json (1.7.9)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    nyan-cat-formatter (0.5.2)
+      rspec (>= 2.13)
     pg (0.15.1)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -233,6 +235,7 @@ DEPENDENCIES
   guard-spork (= 1.5.0)
   jbuilder (= 1.0.2)
   jquery-rails (= 2.2.1)
+  nyan-cat-formatter
   pg (= 0.15.1)
   rails (= 4.0.0)
   rails_12factor (= 0.0.2)
