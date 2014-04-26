@@ -1,8 +1,6 @@
 <% provide(:title, "Profile") %>
 <div id="profile" class="hero-unit">
-  <h1>Account</h1>
-  <h2>Edit profile</h2>
-  <hr/> 
+  <%= heading 'Account', 'Edit profile' %>
   <%= form_for(@user) do |f| %>
 		<fieldset>
 	  	<%= render 'fields', f: f, password_placeholder: "Enter your password to edit profile" %>

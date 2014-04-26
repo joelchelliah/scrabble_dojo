@@ -1,8 +1,6 @@
 <% provide(:title, 'Word search') %>
 <div id="word-entries-search" class="hero-unit">
-  <h1>Words</h1>
-  <h2>Search</h2>
-  <hr/>
+  <%= heading 'Words', "Search" %>
   <div id="word-nav">
     <p>
       <%= link_to "Scroll to top", "#word-entries-search" %>
@@ -12,19 +10,14 @@
     <div class="span11 center">
     	<p> Enter a word, or sequence of letters to find all possible anagrams.</p>
     	<p>A maximum of two blank tiles may be used, denoted by a blank <strong>space</strong>, or a <strong>period</strong>.</p>
-			<%= form_tag("/search", method: "get") do %>
-        <div>
-  			  <%= text_field_tag(:word, @word, placeholder: ". . .") %>
-        </div>
-        <%= submit_tag "Search", class: "btn btn-primary" %>
-			<% end %>
+      <%= render 'word_search_fields', word: @word %>
 		</div>
 	</div>
 	<% unless @word.blank? %>
 		<div class="row">
 	    <div class="span11 center">
 	    	<hr/>
-	    	<p> Found <%= pluralize(@word_entries.length, "anagram") %> for <strong><%= @word %></strong> </p>
+	    	<p><%= search_result_text %></p>
 	    	<div class="results">
 		    	<% @word_entries.each do |word_entry| %>
 		    		<% if @word == word_entry.word %>

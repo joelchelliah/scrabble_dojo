@@ -45,7 +45,7 @@ describe "Short words:" do
 		before { visit short_words_with_path("C") }
 
     it "Should show all short C words" do
-      expect(page).to be_the_short_words_page_for 'Short words with C'
+      expect(page).to be_the_short_words_page_for 'Short C words'
       expect(page).to have_these_short_words %w(WC COR)
       expect(page).not_to have_these_short_words %w(AB PEN BOWL)
     end
@@ -55,7 +55,7 @@ describe "Short words:" do
 		before { visit short_words_with_path("W") }
 
     it "Should show all short W words" do
-      expect(page).to be_the_short_words_page_for 'Short words with W'
+      expect(page).to be_the_short_words_page_for 'Short W words'
       expect(page).to have_these_short_words %w(WC BOWL)
       expect(page).not_to have_these_short_words %w(AB COR PEN)
     end

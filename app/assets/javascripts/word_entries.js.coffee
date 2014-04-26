@@ -17,31 +17,31 @@ ready = ->
 
 	# Manage words
 
-	if $('h2').text() == "Manage"
+	if $('h2').text().indexOf "Manage" > -1
 		$('#word').focus()
 
 
 	# Remove word
 
-	if $('h2').text().indexOf "Remove" == 0
+	if $('h2').text().indexOf "Remove" > -1
 		$('#btn-cancel').focus()
 
 
 	# Add word
 
-	if $('h2').text().indexOf "Add" == 0
+	if $('h2').text().indexOf "Add" > -1
 		$('#btn-cancel').focus()
 
 
 	# Search words
 
-	if $('h2').text() == "Search"
+	if $('h2').text().indexOf "Search" > -1
 		$('#word').focus()
 
 
 	# Word stems
 
-	if $('h2').text() == "Stems"
+	if $('h2').text().indexOf "Stems" > -1
 		$('#word').focus()
 
 

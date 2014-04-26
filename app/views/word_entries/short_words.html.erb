@@ -1,8 +1,6 @@
 <% provide(:title, 'Short words') %>
 <div id="word-entries-words" class="hero-unit">
-	<h1>Words</h1>
-	<h2><%= header_text %></h2>
-	<hr/>
+	<%= heading 'Words', header_text %>
 	<div id="word-nav">
 		<p>
 			<% for_each_letter_with_words do |letter| %>

@@ -4,7 +4,7 @@ module WordEntriesHelper
     num = %w(- - Two Three Four)
     
     return "#{num[@length.to_i]} letter words" if @length
-    return "Short words with #{@letter}" if @letter
+    return "Short #{@letter} words" if @letter
   end
 
   def for_each_letter_with_words()
@@ -21,9 +21,12 @@ module WordEntriesHelper
   end
 
 
-  # Word stems
+  def search_result_text()
+    anagrams_text = pluralize(@word_entries.length, "anagram")
+    "Found #{anagrams_text} for <strong>#{@word}</strong>".html_safe
+  end
 
-  def word_stems_result_text()
+  def stems_result_text()
     option_text = "#{@option.to_s.downcase}ed by"
     option_text = "containing" if @option == "contains"
     option_text = "affixed by" if @option == "both"

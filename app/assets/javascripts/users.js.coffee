@@ -2,19 +2,19 @@ ready = ->
 
 	# Signup page
 
-	if $('h2').text() == "Sign up"
+	if $('h2').text().indexOf "Sign up" > -1
 		$('#user_name').focus()
 
 
 	# Login page
 
-	if $('h2').text() == "Log in"
+	if $('h2').text().indexOf "Log in" > -1
 		$('#session_email').focus()
 
 
 	# Edit page
 
-	if $('h2').text() == "Edit profile"
+	if $('h2').text().indexOf "Edit profile" > -1
 		$('#user_name').focus()
 
 

@@ -1,8 +1,6 @@
 <% provide(:title, "Add #{@word_entry.word}") %>
 <div id="word-entries-edit" class="hero-unit">
-  <h1>Words</h1>
-  <h2>Add <%= @word_entry.word %>?</h2>
-  <hr/>
+  <%= heading 'Words', "Add #{@word_entry.word}?" %>
   <div class="row">
     <div class="span11 center">
     	<p> The word <strong><%= @word_entry.word %></strong> was not found. Do you want to add it? </p>

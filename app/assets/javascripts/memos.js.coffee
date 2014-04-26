@@ -52,7 +52,7 @@ ready = ->
 
 	# Create page
 
-	if $('h2').text() == "Create"
+	if $('h2').text().indexOf "Create" > -1
 		$('#memo_name').focus()
 		$('#advanced-options').hide()
 
@@ -66,7 +66,7 @@ ready = ->
 
 	# Edit page
 
-	if $('h2').text() == "Edit"
+	if $('h2').text().indexOf "Update" > -1
 		$('#memo_word_list').focus()
 
 		if $('#memo_accepted_words').text() == ""
@@ -87,7 +87,7 @@ ready = ->
 
 	# Show page
 	timer = new Timer('#memo-timer')
-	if $('h2').text() == 'Revise'
+	if $('h2').text().indexOf "Revise" > -1
 		$('#box-hints').hide()
 		$('#box-practice').hide()
 		$('#btn-practice').focus()
@@ -133,7 +133,7 @@ ready = ->
 
 	# Results page
 
-	if $('h2').text() == 'Results'
+	if $('h2').text().indexOf "Results" > -1
 		$('#btn-overview').focus()
 
 		max = 620

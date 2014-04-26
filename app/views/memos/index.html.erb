@@ -1,8 +1,6 @@
 <% provide(:title, 'Memos') %>
 <div id="memo-overview" class="hero-unit">
-  <h1>Memo</h1>
-  <h2>Overview</h2>
-  <hr/>
+  <%= heading 'Memos', 'Overview' %>
   <div class="row">
     <% if @memos.blank? %>
       <div class="span11 center">
@@ -13,7 +11,7 @@
           <p>
             Start by creating your first memo.
           </p>
-          <%= link_to 'Create memo', new_memo_path, class: "btn btn-primary" %>
+          <%= link_to 'Create a memo', new_memo_path, class: "btn btn-primary" %>
         </div>
         <div class="hidden-desktop">
           <p>
@@ -23,7 +21,7 @@
       </div>
     <% else %>
       <div class="memo-table">
-        <%= render 'overview_buttons' %>
+        <%= render 'memo_overview_buttons' %>
         <table class="table table-striped table-hover">
           <% @memos.each do |memo| %>
             <tr class=<%= color_memo_row(memo) %>>
@@ -50,26 +48,6 @@
         <div class="memo-status">
           <div class="well">
             <%= render 'memo_overview_status' %>
-            <div class="center"><span class="icon-book"></span></div>
-            <p>
-              The health bars decrease over time and can be replenished by revising.
-            </p>
-            <div class="clearfix progress-info-box">
-              <div class="pull-left">
-                <div class='progress progress-success progress-striped active progress-short'><div class='bar' style='width: 85%;'></div></div>
-                <div class='progress progress-warning progress-striped active progress-short'><div class='bar' style='width: 50%;'></div></div>
-                <div class='progress progress-danger progress-striped active progress-short'><div class='bar' style='width: 25%;'></div></div>
-                <div class='progress progress-disabled progress-short'><div class='bar' style='width: 100%;'></div></div>
-              </div>
-              <div class="pull-right">
-                <div class="progress-info">
-                <p>Pretty good</p>
-                <p>Time to revise</p>
-                <p>Overdue</p>
-                <p>Disabled</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

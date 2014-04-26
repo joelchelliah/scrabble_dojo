@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def heading(h1, h2)
+    "<h1>#{h1}</h1><h2>#{h2}</h2><hr/>".html_safe
+  end
+
 	def sort_list_correctly_by_field(list, field)
   	list.sort do |x,y|
     	# hack for correctly sorting lists by fields that have æ ø å in them

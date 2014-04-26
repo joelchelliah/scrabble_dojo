@@ -1,8 +1,6 @@
 <% provide(:title, 'Log in') %>
 <div class="hero-unit">
-	<h1>Account</h1>
-	<h2>Log in</h2>
-	<hr/>
+  <%= heading 'Account', 'Log in' %>
   <%= form_for(:session, url: sessions_path) do |f| %>
   	<fieldset>
 	    <div class="row"><div class="span5 offset3"><%= f.text_field :email, placeholder: "Email" %></div></div>

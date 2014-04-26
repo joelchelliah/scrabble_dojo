@@ -1,0 +1,8 @@
+<div class="btn-toolbar">
+  <span class="btn-group">
+    <%= link_to 'Back', memos_path, class: "btn" %>
+    <%= link_to 'Show hints', '#', id: "btn-hints", class: "btn"%>
+    <%= link_to 'Hide words', '#', id: "btn-words", class: "btn"%>
+    <%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold visible-desktop" unless disabled %>
+  </span>
+</div>

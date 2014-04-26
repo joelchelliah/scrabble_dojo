@@ -1,8 +1,6 @@
 <% provide(:title, "Remove #{@word_entry.word}") %>
 <div id="word-entries-edit" class="hero-unit">
-  <h1>Words</h1>
-  <h2>Remove <%= @word_entry.word %>?</h2>
-  <hr/>
+  <%= heading 'Words', "Remove #{@word_entry.word}?" %>
   <div class="row">
     <div class="span11 center">
     	<p> The word <strong><%= @word_entry.word %></strong> was found. Do you want to remove it? </p>

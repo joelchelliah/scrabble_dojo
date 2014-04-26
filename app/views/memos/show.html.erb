@@ -1,19 +1,9 @@
-<% provide(:title, @memo.name) %>
+<% provide(:title, "Revise #{@memo.name}") %>
 <div id="memo-revise" class="hero-unit">
-	<h1>Memo</h1>
-  <h2>Revise</h2>
-	<hr/>
+	<%= heading 'Memos', "Revise #{@memo.name}" %>
 	<div class="row">
     <div class="span8">
-      <div class="btn-toolbar">
-				<span class="btn-group">
-					<%= link_to 'Back', memos_path, class: "btn" %>
-					<%= link_to 'Show hints', '#', id: "btn-hints", class: "btn"%>
-					<%= link_to 'Hide words', '#', id: "btn-words", class: "btn"%>
-					<%= link_to 'Practice', '#', id: "btn-practice", class: "btn btn-primary btn-bold visible-desktop" unless @memo.practice_disabled %>
-				</span>
-			</div>
-			
+    	<%= render 'memo_buttons', disabled: @memo.practice_disabled %>
 			<div class="row">
 				<div id="box-hints" class="span4">
 			  	<div class="word-box">
@@ -56,17 +46,6 @@
 			<div class="memo-status">
 				<div class="well">
 					<%= render 'memo_status' %>
-					<div class="center"><span class="icon-book"></span></div>
-					<% if @memo.practice_disabled %>
-						<p> <strong>Practice</strong> mode has been disabled for this Memo. </p>
-					<% else %>
-						<p> Once you are done revising, choose <strong>Practice</strong> mode to:</p>
-						<ul>
-							<li> Test your skills</li>
-							<li> Replenish your health</li>
-							<li> Set a new time record</li>
-						</ul>
-					<% end %>
 				</div>
 			</div>
 		</div>

@@ -1,8 +1,6 @@
-<% provide(:title, 'Results') %>
+<% provide(:title, "Results #{@memo.name}") %>
 <div id="memo-results" class="hero-unit">
-	<h1>Memo</h1>
-  <h2>Results</h2>
-	<hr/>
+	<%= heading 'Memos', "Results #{@memo.name}" %>
 	<div class="row">
     <div class="span8">
 			<div class="row">
@@ -63,15 +61,14 @@
 
 		<div class="offset8">
 			<div class="memo-status">
-			
-			<div class="well">
-				<%= render 'memo_status' %>
-				<div class="center"><span class="icon-book"></span></div>
-				<p>Health is replenished according to the results of the practice session.</p>
-				<p>Making fewer mistakes will fill up a bigger portion of the health bar.</p>
-				<p>Find all the words in a shorter amount of time to set a new record.</p>
+				<div class="well">
+					<%= render 'memo_status' %>
+					<div class="center"><span class="icon-book"></span></div>
+					<p>Health is replenished according to the results of the practice session.</p>
+					<p>Making fewer mistakes will fill up a bigger portion of the health bar.</p>
+					<p>Find all the words in a shorter amount of time to set a new record.</p>
+				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 </div>

@@ -1,0 +1,16 @@
+<div class="form-group">
+  <%= form_tag("/stems", method: "get") do %>
+    <%= text_field_tag(:word, word, placeholder: ". . .") %>
+    <div>
+    <%= select_tag :option,
+        options_for_select([['Prefix', :prefix], ['Suffix', :suffix], ['Prefix or suffix', :both], ['Contains', :contains]], option) %>
+    </div>
+    <div>
+    <%= select_tag :max_length,
+        options_for_select([['5 letters', 5], ['6 letters', 6], ['7 letters', 7], ['8 letters', 8], ['9 letters', 9], ['10 letters', 10], 
+                            ['11 letters', 11], ['12 letters', 12], ['13 letters', 13], ['14 letters', 14],['Maximum word length', 15]],
+                            max_length) %>
+    </div>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+</div>

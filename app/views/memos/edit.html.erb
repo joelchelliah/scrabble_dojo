@@ -1,8 +1,6 @@
-<% provide(:title, 'Edit memo') %>
+<% provide(:title, "Update #{@memo.name}") %>
 <div id="memo-form" class="hero-unit">
-	<h1>Memo</h1>
-	<h2>Edit</h2>
-	<hr/>
+	<%= heading 'Memos', "Update #{@memo.name}" %>
 	<%= form_for(@memo) do |f| %>
 	  <fieldset>
 			<%= render 'fields', f: f %>
