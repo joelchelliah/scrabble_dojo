@@ -1,7 +1,17 @@
-# Scrabble dojo #
+# Scrabble Dojo #
 
 #### Webapp for improving scrabble skills! ####
 
-**Language:** Norwegian
+**Features:**
+* Short words list
+* Word search
+  * Anagram search
+  * Word stems
+* Memos
+  * List
+  * Status
+  * Practice mode
 
-url: **scrabbledojo.herokuapp.com**
+**Supported languages:** Norwegian
+
+**URL:** [Scrabble Dojo](scrabbledojo.herokuapp.com)
