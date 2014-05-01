@@ -18,16 +18,14 @@ class BingoChallengesController < ApplicationController
       guess = params[:guess]
       guess = guess.upcase.tr("å-ü", "Å-Ü") unless guess.blank?
 
-      solutions      = WordEntry.where(letters: @tiles.split(//).sort.join).map{ |w| w.word }
+      solutions      = WordEntry.where(letters: @tiles).map{ |w| w.word }
       @num_solutions = solutions.count
 
       guess_is_correct = solutions.include?(guess)
       guess_is_unique  = !@found.include?(guess)
 
-      if params[:shuffle]
-        @tiles = @tiles.split(//).shuffle.join
-      elsif params[:skip]
-        flash.now[:notice] = "Skipped #{@tiles}. Missed bingos: #{(solutions - @found).join(', ')}"
+      if params[:skip]
+        flash.now[:notice] = "Skipped <strong>#{@tiles.split(//).join(' ')}</strong> <br/>Missed bingos: #{(solutions - @found).join(', ')}".html_safe
         @lives = @lives - 1
         next_random_level
       elsif params[:restart]
