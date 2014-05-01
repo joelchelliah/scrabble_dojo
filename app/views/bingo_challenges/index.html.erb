@@ -1,0 +1,14 @@
+<% provide(:title, 'Bingo challenges') %>
+<div id="bingo-challenges-overview" class="hero-unit">
+  <%= heading 'Bingo', 'Challenges overview' %>
+  <div class="row">
+    <div class="span11 center">
+      <p>The ordered challenge will consist of bingos from an ordered list of anagrams, sorted by the probability of drawing them from a full bag. </p>
+      <p>The random challenge will consist of bingos from randomly chosen anagrams.</p>
+
+      <%= link_to "Challenge: Random", random_bingo_challenge_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  
+</div>

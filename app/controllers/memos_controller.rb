@@ -4,6 +4,9 @@ class MemosController < ApplicationController
 
   include MemosHelper
 
+  # Memos overview #
+  ##################
+
   def index
     @memos = sort_list_correctly_by_field(current_user.memos, :name)
   end
@@ -22,25 +25,12 @@ class MemosController < ApplicationController
     redirect_to ordered_by_health().first
   end
 
+
+  # New memo #
+  ############
+
   def new
     @memo = current_user.memos.build
-  end
-
-  def show
-    if flash[:from_practice]
-      @form_words   = flash[:form_words]
-      @missed_words = flash[:missed_words]
-      @wrong_words  = flash[:wrong_words]
-      @prev_health  = flash[:prev_health]
-      @prac_time    = flash[:prac_time]
-      @prev_time    = flash[:prev_time]
-      render 'results'
-    else
-      render 'show'
-    end
-  end
-
-  def edit
   end
 
   def create
@@ -51,6 +41,13 @@ class MemosController < ApplicationController
     else
       render 'new'
     end
+  end
+
+
+  # Edit memo #
+  #############
+
+  def edit
   end
 
   def update
@@ -66,6 +63,24 @@ class MemosController < ApplicationController
   def destroy
     @memo.destroy
     redirect_to memos_url
+  end
+
+
+  # Revise memo #
+  ###############
+
+  def show
+    if flash[:from_practice]
+      @form_words   = flash[:form_words]
+      @missed_words = flash[:missed_words]
+      @wrong_words  = flash[:wrong_words]
+      @prev_health  = flash[:prev_health]
+      @prac_time    = flash[:prac_time]
+      @prev_time    = flash[:prev_time]
+      render 'results'
+    else
+      render 'show'
+    end
   end
 
   def practice
@@ -105,6 +120,7 @@ class MemosController < ApplicationController
   end
 
 
+
   private
 
     def parse_form_words()
@@ -137,5 +153,4 @@ class MemosController < ApplicationController
     def ordered_by_health()
       current_user.memos.sort_by { |m| if m.practice_disabled then 101 else health m end }
     end
-
 end

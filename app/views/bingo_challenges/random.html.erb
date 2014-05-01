@@ -1,0 +1,47 @@
+<% provide(:title, 'Bingo challenge: Random') %>
+<div id="bingo-challenge" class="hero-unit">
+  <%= heading 'Bingo', 'Challenge: Random' %>
+  <div class="row">
+    <div class="span11 center">
+      <p>Find all possible bingos in each level. How far can you get?</p>
+      <p>You can skip up to 3 turns <span class='icon icon-heart'></span> &#10142; <span class='icon icon-remove'></span></p>
+      <div id="bingo-challenge-box">
+        <div id="lives-bar">
+          <strong class="hidden-phone">Chances remaining:</strong>
+          <%= challenge_lives %>
+        </div>
+        <div id="level-bar">
+          <strong>Level <%= @level %> </strong>
+        </div>
+        <div id="tiles-bar">
+          <%= @tiles.split(//).join(' ') %>
+        </div>
+        <div id="challenge-form">
+          <%= form_tag("/random_bingo_challenge", method: "get") do %>
+            <div>
+              <%= hidden_field_tag :from_form, "true" %>
+              <%= hidden_field_tag :level, @level %>
+              <%= hidden_field_tag :lives, @lives %>
+              <%= hidden_field_tag :tiles, @tiles %>
+              <%= hidden_field_tag :found, @found.join(" ") %>
+              <%= text_field_tag :guess, "", placeholder: ". . ." %>
+            </div>
+            <div class="btn-group">
+              <%= submit_tag "Submit", class: "btn btn-primary" %>
+              <%= submit_tag "Shuffle", name: "shuffle", class: "btn" %>
+              <%= submit_tag "Skip", name: "skip", class: "btn btn-danger" %>
+            </div>
+            <div id="concede">
+              <%= submit_tag "Yield  /  Restart challenge", name: "restart", class: "btn btn-inverse" %>
+            </div>
+          <% end %>
+        </div>
+        <div id="challenge-results">
+          <p>Found <strong><%= @found.count %> / <%= @num_solutions %></strong> bingos</p>
+          <p><strong><%= @found.join(", ") %></strong></p>
+        </div>
+      </div>
+      <p><%= link_to "Back to Bingo Challenges Overview", bingo_challenges_path %></p>
+    </div>
+  </div>
+</div>

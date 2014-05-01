@@ -131,6 +131,7 @@ class WordEntriesController < ApplicationController
   end
 
 
+
   private
 
     def set_word_entry

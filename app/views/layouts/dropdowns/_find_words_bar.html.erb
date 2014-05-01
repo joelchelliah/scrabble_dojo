@@ -1,11 +1,9 @@
-<% if logged_in? %>
-  <li id="fat-menu" class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class='icon-search icon-white'></i> Find words <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-      <li><%= link_to "Word search", search_path %></li>
-      <li><%= link_to "Word stems", stems_path %></li>
-    </ul>
-  </li>
-<% end %>
+<li id="fat-menu" class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class='icon-search icon-white'></i> Find words <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to "Word search", search_path %></li>
+    <li><%= link_to "Word stems", stems_path %></li>
+  </ul>
+</li>
