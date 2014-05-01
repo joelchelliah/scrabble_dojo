@@ -3,19 +3,15 @@
   <%= heading 'Bingo', 'Challenge: Random' %>
   <div class="row">
     <div class="span11 center">
-      <p>Find all possible bingos in each level. How far can you get?</p>
+      <p>Find all bingos in each level.</p>
       <p>You can skip up to 3 turns <span class='icon icon-heart'></span> &#10142; <span class='icon icon-remove'></span></p>
       <div id="bingo-challenge-box">
         <div id="lives-bar">
           <strong class="hidden-phone">Chances remaining:</strong>
           <%= challenge_lives %>
         </div>
-        <div id="level-bar">
-          <strong>Level <%= @level %> </strong>
-        </div>
-        <div id="tiles-bar">
-          <%= @tiles.split(//).join(' ') %>
-        </div>
+        <div id="level-bar"> Level <%= @level %> </div>
+        <div id="tiles-bar"> <%= @tiles.split(//).join(' ') %></div>
         <div id="challenge-form">
           <%= form_tag("/random_bingo_challenge", method: "get") do %>
             <div>

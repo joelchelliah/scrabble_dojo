@@ -1,18 +1,21 @@
-@mixin well {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+@mixin well_border {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
+}
+@mixin well {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
   background-color: #eed;
+  @include well_border
 }
 
 @mixin dark_well {
   background-color: #ddd !important;
-  @include well;
+  @include well_border
 }
 
 
@@ -26,23 +29,24 @@
 
 #bingo-challenge {
   #bingo-challenge-box {
-    margin-top: 15px;
+    margin: 15px -40px 20px;
     padding: 10px;
-    margin-bottom: 20px;
 
     @include dark_well;
     #lives-bar {
       clear: both;
       float: right;
-      padding-right: 10px;
+      padding-right: 5px;
       .icon { margin-top: 5px; }
     }
     #level-bar {
       float: left;
+      font-size: 1.4em;
+      font-weight: bold;
     }
     #tiles-bar {
       clear: both;
-      margin: 50px auto 15px;
+      margin: 55px auto 20px;
       padding: 5px 0;
       width: 194px;
       font-weight: bold;
@@ -55,9 +59,9 @@
       input[type="text"] { 
         width: 194px !important;
         padding-bottom: 0;
-        margin-bottom: 15px;
+        margin-bottom: 25px;
       }
-      #concede { padding-top: 10px }
+      #concede { padding-top: 20px }
     }
     #challenge-results {
       padding-top: 10px;

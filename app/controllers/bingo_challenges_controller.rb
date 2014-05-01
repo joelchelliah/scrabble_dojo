@@ -18,25 +18,24 @@ class BingoChallengesController < ApplicationController
       guess = params[:guess]
       guess = guess.upcase.tr("å-ü", "Å-Ü") unless guess.blank?
 
-      solutions      = WordEntry.where(letters: @tiles.split(//).sort.join)
+      solutions      = WordEntry.where(letters: @tiles.split(//).sort.join).map{ |w| w.word }
       @num_solutions = solutions.count
 
-      guess_is_correct = solutions.any? { |s| s.word == guess }
+      guess_is_correct = solutions.include?(guess)
       guess_is_unique  = !@found.include?(guess)
 
       if params[:shuffle]
         @tiles = @tiles.split(//).shuffle.join
       elsif params[:skip]
-        flash.now[:notice] = "Skipped #{@tiles}. Missed solutions: #{(solutions - @found).map{ |w| w.word}.join(', ')}"
-        @found = []
+        flash.now[:notice] = "Skipped #{@tiles}. Missed bingos: #{(solutions - @found).join(', ')}"
         @lives = @lives - 1
-        @tiles, @num_solutions = find_random_tiles_and_num_solutions
+        next_random_level
       elsif params[:restart]
           flash.now[:success] = "Awesome! You made it to level #{@level}"
           new_random_game
       elsif guess_is_correct and guess_is_unique and @num_solutions == @found.count + 1
         flash.now[:success] = "#{guess} is correct. Next level!"
-        next_random_level(@level)
+        next_random_level
       else
         if !guess_is_correct
           flash.now[:error] = "#{guess} is incorrect" unless guess.blank?
@@ -64,8 +63,8 @@ class BingoChallengesController < ApplicationController
       @tiles, @num_solutions  = find_random_tiles_and_num_solutions
     end
 
-    def next_random_level(level)
-      @level = level + 1
+    def next_random_level()
+      @level = @level + 1
       @found = []
       @tiles, @num_solutions = find_random_tiles_and_num_solutions
     end
