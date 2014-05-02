@@ -54,6 +54,7 @@
       color: #733;
       @include well;
     }
+
     #challenge-form {
       clear: both;
       input[type="text"] { 
@@ -61,10 +62,28 @@
         padding-bottom: 0;
         margin-bottom: 25px;
       }
+      #challenge-feedback {
+        font-weight: bold;
+        font-size: 1.5em;
+        position: relative;
+        text-align: center;
+        top: -5px;
+        height: 0px;
+      }
       #concede { padding-top: 20px }
+    }
+    #challenge-loading {
+      font-weight: bold;
+      font-size: 1.7em;
+      padding: 25px 0px;
     }
     #challenge-results {
       padding-top: 10px;
+      font-size: 1em;
+      #challenge-solutions {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
     }
   }
 }

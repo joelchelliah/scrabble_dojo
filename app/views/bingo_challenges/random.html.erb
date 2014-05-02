@@ -14,7 +14,8 @@
         <div id="tiles-bar"> <%= @tiles.split(//).join(' ') %></div>
         <div id="challenge-form">
           <%= form_tag("/random_bingo_challenge", method: "get") do %>
-            <div>
+            <div id="challenge-feedback" style="display:none;"></div>
+            <div id="challenge-field">
               <%= hidden_field_tag :from_form, "true" %>
               <%= hidden_field_tag :level, @level %>
               <%= hidden_field_tag :lives, @lives %>
@@ -23,18 +24,24 @@
               <%= text_field_tag :guess, "", placeholder: ". . ." %>
             </div>
             <div class="btn-group">
-              <%= submit_tag "Submit", class: "btn btn-primary" %>
+              <%= submit_tag "Submit", id: "submit-guess", class: "btn btn-primary" %>
               <%= link_to "Shuffle", "#", id: "shuffle", class: "btn" %>
-              <%= submit_tag "Skip", name: "skip", class: "btn btn-danger" %>
+              <%= submit_tag "Skip", id: "skip-challenge", name: "skip", class: "btn btn-danger" %>
             </div>
             <div id="concede">
               <%= submit_tag "Yield  /  Restart challenge", name: "restart", class: "btn btn-inverse" %>
             </div>
           <% end %>
         </div>
+        <div id="challenge-loading" style="display:none;">
+          <p>Advancing to</p>
+          <p>Level <%= @level + 1 %>!</p>
+        </div>
         <div id="challenge-results">
-          <p>Found <strong><%= @found.count %> / <%= @num_solutions %></strong> bingos</p>
-          <p><strong><%= @found.join(", ") %></strong></p>
+          <p>Found <strong><span id="challenge-solutions-found">0</span> / <%= @solutions.count %></strong> bingos</p>
+          <p id="challenge-solutions">
+            <%= @solutions.map { |s| "<span id='s-#{s}' style='display:none;'>#{s}</span>"}.join(" ").html_safe %>
+          </p>
         </div>
       </div>
       <p><%= link_to "Back to Bingo Challenges Overview", bingo_challenges_path %></p>

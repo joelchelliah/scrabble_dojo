@@ -15,34 +15,17 @@ class BingoChallengesController < ApplicationController
       @tiles = params[:tiles]
       @found = params[:found].split(" ") 
 
-      guess = params[:guess]
-      guess = guess.upcase.tr("å-ü", "Å-Ü") unless guess.blank?
-
-      solutions      = WordEntry.where(letters: @tiles).map{ |w| w.word }
-      @num_solutions = solutions.count
-
-      guess_is_correct = solutions.include?(guess)
-      guess_is_unique  = !@found.include?(guess)
+      @solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
 
       if params[:skip]
-        flash.now[:notice] = "Skipped <strong>#{@tiles.split(//).join(' ')}</strong> <br/>Missed bingos: #{(solutions - @found).join(', ')}".html_safe
+        flash.now[:notice] = "Skipped <strong>#{@tiles.split(//).join(' ')}</strong> <br/>Missed bingos: #{(@solutions - @found).join(', ')}".html_safe
         @lives = @lives - 1
         next_random_level
       elsif params[:restart]
-          flash.now[:success] = "Awesome! You made it to level #{@level}"
+          flash.now[:notice] = "Missed bingos: #{(@solutions - @found).join(', ')}".html_safe
           new_random_game
-      elsif guess_is_correct and guess_is_unique and @num_solutions == @found.count + 1
-        flash.now[:success] = "#{guess} is correct. Next level!"
-        next_random_level
       else
-        if !guess_is_correct
-          flash.now[:error] = "#{guess} is incorrect" unless guess.blank?
-        elsif !guess_is_unique
-          flash.now[:notice] = "#{guess} has already been found"
-        else
-          flash.now[:success] = "#{guess} is correct"
-          @found << guess
-        end
+        next_random_level
       end
     else
       new_random_game
@@ -58,18 +41,18 @@ class BingoChallengesController < ApplicationController
       @level = 1
       @lives = 3
       @found = []
-      @tiles, @num_solutions  = find_random_tiles_and_num_solutions
+      @tiles, @solutions  = find_random_tiles_and_solutions
     end
 
     def next_random_level()
       @level = @level + 1
       @found = []
-      @tiles, @num_solutions = find_random_tiles_and_num_solutions
+      @tiles, @solutions = find_random_tiles_and_solutions
     end
 
-    def find_random_tiles_and_num_solutions
-      tiles         = WordEntry.where(length: 7).sample.letters
-      num_solutions = WordEntry.where(letters: tiles).count
-      return tiles, num_solutions
+    def find_random_tiles_and_solutions
+      tiles     = WordEntry.where(length: 7).sample.letters
+      solutions = WordEntry.where(letters: tiles).map{ |w| w.word }
+      return tiles, solutions
     end
 end
