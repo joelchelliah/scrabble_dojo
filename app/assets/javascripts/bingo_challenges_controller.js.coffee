@@ -9,10 +9,11 @@ shuffle = (a) ->
 
 shuffleTiles = (e) ->
   e.preventDefault()
-  tiles = $('#tiles-bar').text().split(' ')
-  $('#tiles-bar').text(shuffle(tiles).join(" "))
-
-
+  rack = $('#tiles-bar')
+  tiles = []
+  tiles.push($(tile).text()) for tile in rack.children()  
+  rack.empty()
+  rack.append("<span class='tile'>" + tile + "<span>") for tile in shuffle(tiles)
 
 
 guessFeedbackAnimtaion = (guess, isCorrectGuess) ->
@@ -25,8 +26,8 @@ guessFeedbackAnimtaion = (guess, isCorrectGuess) ->
 
   $('#challenge-feedback').text(guess)
   $('#challenge-feedback').animate({display: "show"}, 1)
-  $('#challenge-feedback').animate({top: "-100", opacity: "toggle"}, 1500)
-  $('#challenge-feedback').css('top', '-5px')
+  $('#challenge-feedback').animate({top: "-200", opacity: "toggle"}, 1500)
+  $('#challenge-feedback').css('top', '-80px')
 
 
 updateScore = (found, solved) ->
@@ -68,25 +69,23 @@ returnToFirstLevel = (missed) ->
 
 
 processGuess = () ->
-  guess = $('#guess').val().toUpperCase()
-  if guess.length > 0
-    $('#s-'+guess).show('500')
-    $('#guess').val('')
+  guess = $('#tiles-bar').text().trim()
+  $('#s-'+guess).show('500')
 
-    solved = 0
-    remaining = 0
-    found = []
-    for solution in $('#challenge-solutions').children()
-      do (solution) ->
-        if $(solution).is(":visible")
-          found.push($(solution).text())
-          solved++
-        else remaining++
+  solved = 0
+  remaining = 0
+  found = []
+  for solution in $('#challenge-solutions').children()
+    do (solution) ->
+      if $(solution).is(":visible")
+        found.push($(solution).text())
+        solved++
+      else remaining++
 
-    isCorrectGuess = solved - $('#challenge-solutions-found').text() > 0
-    updateScore(found, solved)
-    if remaining != 0 then guessFeedbackAnimtaion(guess, isCorrectGuess)
-    if remaining == 0 then advanceToNextLevel()
+  isCorrectGuess = solved - $('#challenge-solutions-found').text() > 0
+  updateScore(found, solved)
+  guessFeedbackAnimtaion(guess, isCorrectGuess)
+  if remaining == 0 then advanceToNextLevel()
 
 
 
@@ -110,7 +109,8 @@ ready = ->
   # Random challenge
 
   if $('h2').text().indexOf "Random" > -1
-    $('#guess').focus()
+    $('#tiles-bar').sortable({ containment: "parent", axis: "x", cursor: "move", appendTo: "parent" })
+    $('#tiles-bar').disableSelection()
     if $('input#lives').val() < 1
       $('input.btn.btn-danger').prop("disabled", true)
     $('#shuffle').click (e) ->
@@ -124,10 +124,6 @@ ready = ->
     $('#concede-challenge').click (e) ->
       e.preventDefault()
       processConcede()
-
-
-
-
 
 
 
