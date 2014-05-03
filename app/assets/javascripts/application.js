@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery.ui.all
+//= require jquery.ui.touch-punch
 //= require jquery_ujs
 //= require bootstrap
 //= require turbolinks
