@@ -1,3 +1,10 @@
+$.fn.scrollView = ->
+  @each ->
+    $("html, body").animate
+      scrollTop: $(this).offset().top
+    , 0
+
+
 shuffle = (a) ->
   i = a.length
   while --i > 0
@@ -109,6 +116,7 @@ ready = ->
   # Random challenge
 
   if $('h2').text().indexOf "Random" > -1
+    $('#bingo-challenge-box').scrollView()
     $('#tiles-bar').sortable({ containment: "parent", axis: "x", cursor: "move", appendTo: "parent" })
     $('#tiles-bar').disableSelection()
     if $('input#lives').val() < 1

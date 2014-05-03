@@ -47,25 +47,28 @@
       float: right;
       padding-right: 5px;
     }
+
     #level-bar {
       float: left;
       font-size: 1.4em;
       font-weight: bold;
     }
+
     #tiles-bar {
       clear: both;
       margin: 55px auto 25px;
-      padding: 10px 0;
+      padding: 12px 0 10px;
       width: 250px;
       background-color: #363;
       @include well;
       @include tile_border;
+
       .tile {
-        padding: 3px 6px 2px;
-        margin: 2px;
+        padding: 3px 6px 1px;
+        margin: 0;
         color: #733;
         background-color: #eed;
-        font-size: 1.2em;
+        font-size: 1.6em;
         font-weight: bold;
         font-family: "Courier New", Courier, monospace;
         -webkit-border-radius: 4px;
