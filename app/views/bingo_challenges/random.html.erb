@@ -3,8 +3,8 @@
   <%= heading 'Bingo', 'Challenge: Random' %>
   <div class="row">
     <div class="span11 center">
-      <p>Find all bingos in each level.</p>
-      <p>You can skip up to 3 turns <span class='icon icon-heart'></span> &#10142; <span class='icon icon-remove'></span></p>
+      <p>Find all possible bingos to advance to the next level.</p>
+      <p>You can skip a level up to 3 times <span class='icon icon-heart'></span> &#10142; <span class='icon icon-remove'></span></p>
       <div id="bingo-challenge-box">
         <div id="lives-bar">
           <strong class="hidden-phone">Chances remaining:</strong>
@@ -21,21 +21,23 @@
               <%= hidden_field_tag :lives, @lives %>
               <%= hidden_field_tag :tiles, @tiles %>
               <%= hidden_field_tag :found, @found.join(" ") %>
+              <%= hidden_field_tag :failed, "" %>
               <%= text_field_tag :guess, "", placeholder: ". . ." %>
             </div>
             <div class="btn-group">
-              <%= submit_tag "Submit", id: "submit-guess", class: "btn btn-primary" %>
-              <%= link_to "Shuffle", "#", id: "shuffle", class: "btn" %>
-              <%= submit_tag "Skip", id: "skip-challenge", name: "skip", class: "btn btn-danger" %>
+              <%= submit_tag "Submit", id: "submit-guess", class: "btn btn-primary btn-large" %>
+              <%= link_to "Shuffle", "#", id: "shuffle", class: "btn btn-large" %>
             </div>
-            <div id="concede">
-              <%= submit_tag "Yield  /  Restart challenge", name: "restart", class: "btn btn-inverse" %>
+            <div id="bottom-btns" class="btn-group">
+              <%= submit_tag " Skip ", id: "skip-challenge", class: "btn btn-danger btn-large" %>
+              <%= submit_tag "Concede", id: "concede-challenge", class: "btn btn-inverse btn-large" %>
             </div>
           <% end %>
         </div>
         <div id="challenge-loading" style="display:none;">
-          <p>Advancing to</p>
-          <p>Level <%= @level + 1 %>!</p>
+          <p id="challenge-loading-pretext"></p>
+          <p id="challenge-loading-level">Level <%= @level + 1 %>!</p>
+          <p id="challenge-loading-missed"></p>
         </div>
         <div id="challenge-results">
           <p>Found <strong><span id="challenge-solutions-found">0</span> / <%= @solutions.count %></strong> bingos</p>

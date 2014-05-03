@@ -28,16 +28,17 @@
 // Bingo challenge
 
 #bingo-challenge {
+.icon { margin-top: 2px; }
+
   #bingo-challenge-box {
     margin: 15px -40px 20px;
     padding: 10px;
-
     @include dark_well;
+
     #lives-bar {
       clear: both;
       float: right;
       padding-right: 5px;
-      .icon { margin-top: 5px; }
     }
     #level-bar {
       float: left;
@@ -70,18 +71,23 @@
         top: -5px;
         height: 0px;
       }
-      #concede { padding-top: 20px }
+      #bottom-btns {
+        padding-top: 25px;
+        margin-left: 0px;
+        display: block;
+      }
     }
     #challenge-loading {
       font-weight: bold;
       font-size: 1.7em;
-      padding: 25px 0px;
+      padding: 15px 0px;
+      #challenge-loading-missed { font-size: 0.6em; }
     }
     #challenge-results {
       padding-top: 10px;
       font-size: 1em;
       #challenge-solutions {
-        font-size: 1.2em;
+        font-size: 0.75em;
         font-weight: bold;
       }
     }

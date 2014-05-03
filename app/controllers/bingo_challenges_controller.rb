@@ -12,19 +12,13 @@ class BingoChallengesController < ApplicationController
     if params[:from_form]
       @level = params[:level].to_i
       @lives = params[:lives].to_i
-      @tiles = params[:tiles]
-      @found = params[:found].split(" ") 
+      #@tiles = params[:tiles]
+      #@solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
 
-      @solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
-
-      if params[:skip]
-        flash.now[:notice] = "Skipped <strong>#{@tiles.split(//).join(' ')}</strong> <br/>Missed bingos: #{(@solutions - @found).join(', ')}".html_safe
-        @lives = @lives - 1
-        next_random_level
-      elsif params[:restart]
-          flash.now[:notice] = "Missed bingos: #{(@solutions - @found).join(', ')}".html_safe
+      if params[:failed] == "concede"
           new_random_game
       else
+        @lives -= 1 if params[:failed] == "skip"
         next_random_level
       end
     else
@@ -45,7 +39,7 @@ class BingoChallengesController < ApplicationController
     end
 
     def next_random_level()
-      @level = @level + 1
+      @level += 1
       @found = []
       @tiles, @solutions = find_random_tiles_and_solutions
     end
