@@ -14,8 +14,7 @@ shuffle = (a) ->
       a[i] = t
   a
 
-shuffleTiles = (e) ->
-  e.preventDefault()
+shuffleTiles = () ->
   rack = $('#tiles-bar')
   tiles = []
   tiles.push($(tile).text()) for tile in rack.children()  
@@ -101,7 +100,7 @@ ready = ->
   # Random challenge
 
   if $('h2').text().indexOf "Random" > -1
-    $('h1').scrollView()
+    $('h2').scrollView()
     $('#tiles-bar').sortable({ containment: "parent", axis: "x", cursor: "move", appendTo: "parent" })
     $('#tiles-bar').disableSelection()
     if $('input#lives').val() < 1
@@ -109,7 +108,8 @@ ready = ->
       $('#skip-or-yield').addClass("btn-inverse")
       $('#skip-or-yield').val("Yield")
     $('#shuffle').click (e) ->
-      shuffleTiles(e)
+      e.preventDefault()
+      shuffleTiles()
     $('#submit-guess').click (e) ->
       e.preventDefault()
       processGuess()
