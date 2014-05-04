@@ -10,11 +10,11 @@
           <%= challenge_lives %>
         </div>
         <div id="level-bar"> Level <%= @level %> </div>
-        <div id="tiles-bar">
-          <%= @tiles.split(//).map {|t| "<span class='tile'>#{t}</span>"}.join().html_safe %>
-        </div>
         <div id="challenge-feedback" style='display:none;'></div>
         <div id="challenge-form">
+          <div id="tiles-bar">
+            <%= @tiles.split(//).map {|t| "<span class='tile'>#{t}</span>"}.join().html_safe %>
+          </div>
           <%= form_tag("/random_bingo_challenge", method: "get") do %>
             <div id="challenge-field">
               <%= hidden_field_tag :from_form, "true" %>
@@ -23,19 +23,14 @@
               <%= hidden_field_tag :tiles, @tiles %>
               <%= hidden_field_tag :failed, "" %>
             </div>
-            <div class="btn-group">
-              <%= submit_tag "  Submit  ", id: "submit-guess", class: "btn btn-primary btn-large" %>
-              <%= link_to " &nbsp; Shuffle &nbsp; ".html_safe, "#", id: "shuffle", class: "btn btn-large" %>
-            </div>
-            <div id="bottom-btns" class="btn-group">
-              <%= submit_tag "   Skip   ", id: "skip-challenge", class: "btn btn-danger btn-large" %>
-              <%= submit_tag "  Concede  ", id: "concede-challenge", class: "btn btn-inverse btn-large" %>
+            <div id="btn-challenge" class="btn-group">
+              <%= submit_tag "Submit", id: "submit-guess", class: "btn btn-primary btn-large" %>
+              <%= link_to "Shuffle".html_safe, "#", id: "shuffle", class: "btn btn-info btn-large" %>
+              <%= submit_tag " Skip", id: "skip-or-yield", class: "btn btn-danger btn-large" %>
             </div>
           <% end %>
         </div>
         <div id="challenge-loading" style="display:none;">
-          <p id="challenge-loading-pretext"></p>
-          <p id="challenge-loading-level">Level <%= @level + 1 %>!</p>
           <p id="challenge-loading-missed"></p>
         </div>
         <div id="challenge-results">

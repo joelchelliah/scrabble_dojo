@@ -53,30 +53,6 @@
       font-size: 1.4em;
       font-weight: bold;
     }
-
-    #tiles-bar {
-      clear: both;
-      margin: 55px auto 25px;
-      padding: 12px 0 10px;
-      width: 250px;
-      background-color: #363;
-      @include well;
-      @include tile_border;
-
-      .tile {
-        padding: 3px 6px 1px;
-        margin: 0;
-        color: #733;
-        background-color: #eed;
-        font-size: 1.6em;
-        font-weight: bold;
-        font-family: "Courier New", Courier, monospace;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
-        @include tile_border;
-      }
-    }
     
     #challenge-feedback {
       font-weight: bold;
@@ -84,29 +60,50 @@
       letter-spacing: 3px;
       position: relative;
       text-align: center;
-      top: -80px;
+      top: -10px;
       height: 0px;
     }
 
     #challenge-form {
       clear: both;
-      input[type="text"] { 
-        width: 194px !important;
-        padding-bottom: 0;
-        margin-bottom: 25px;
+      margin-top: 55px;
+
+      #tiles-bar {
+        margin: 0 auto 25px;
+        padding: 14px 0 12px;
+        width: 262px;
+        background-color: #363;
+        @include well;
+        @include tile_border;
+
+        .tile {
+          padding: 3px 6px 1px;
+          margin: 0;
+          color: #733;
+          background-color: #eed;
+          font-size: 1.8em;
+          font-weight: bold;
+          font-family: "Courier New", Courier, monospace;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          @include tile_border;
+        }
       }
-      #bottom-btns {
-        padding-top: 25px;
-        margin-left: 0px;
-        display: block;
+
+      #btn-challenge {
+        padding-top: 20px;
+        .btn { font-size: 16px !important; }
       }
     }
+
     #challenge-loading {
+      clear: both;
       font-weight: bold;
-      font-size: 1.7em;
-      padding: 15px 0px;
-      #challenge-loading-missed { font-size: 0.6em; }
+      font-size: 1.2em;
+      padding: 25px 0px 10px;
     }
+    
     #challenge-results {
       padding-top: 10px;
       font-size: 1em;

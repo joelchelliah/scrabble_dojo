@@ -33,8 +33,8 @@ guessFeedbackAnimtaion = (guess, isCorrectGuess) ->
 
   $('#challenge-feedback').text(guess)
   $('#challenge-feedback').animate({display: "show"}, 1)
-  $('#challenge-feedback').animate({top: "-200", opacity: "toggle"}, 1500)
-  $('#challenge-feedback').css('top', '-80px')
+  $('#challenge-feedback').animate({top: "-120", opacity: "toggle"}, 1500)
+  $('#challenge-feedback').css('top', '-10px')
 
 
 updateScore = (found, solved) ->
@@ -48,31 +48,11 @@ nextLevelAnimation = ->
   $('#challenge-form').slideUp('slow')
 
 advanceToNextLevel = ->
-  $('#challenge-loading-pretext').text("Advancing to")
+  phrases = ["Excellent!", "Correct!", "Perfect!", "Not bad!", "Awesome!"]
+  $('#challenge-loading').html("<p>" + shuffle(phrases)[0] + "</p>")
   $('#challenge-results').addClass("text-success")
   nextLevelAnimation()
   $('form').submit()
-
-
-delaySubmitWhileShowingMissedBingos = (missed) ->
-  $('#challenge-loading-missed').html("Missed: <br/>" + missed.join(" "))
-  $('#challenge-loading-missed').addClass("text-error")
-  $('#challenge-results').addClass("text-warning")
-  setTimeout ( -> $('form').submit()), 500 * missed.length
-
-skipToNextLevel = (missed) ->
-  $('#challenge-loading-pretext').text("Skipping to")
-  $('input#failed').val("skip")
-  delaySubmitWhileShowingMissedBingos(missed)
-  nextLevelAnimation()
-  
-returnToFirstLevel = (missed) ->  
-  $('#challenge-loading-pretext').text("Conceding")
-  $('#challenge-loading-level').text("")
-  $('input#failed').val("concede")
-  delaySubmitWhileShowingMissedBingos(missed)
-  nextLevelAnimation()
-  
 
 
 processGuess = () ->
@@ -96,19 +76,24 @@ processGuess = () ->
 
 
 
-getMissedBingos = () ->
+delaySubmitWhileShowingMissedBingos = () ->
   missed = []
   for solution in $('#challenge-solutions').children()
-    do (solution) ->
-      if $(solution).is(":hidden") then missed.push($(solution).text())
-  missed
+    do (solution) -> if $(solution).is(":hidden") then missed.push($(solution).text()) 
 
+  $('#challenge-loading-missed').html("Missed: <br/>" + missed.join(" "))
+  $('#challenge-loading-missed').addClass("text-error")
+  $('#challenge-results').addClass("text-warning")
+  setTimeout ( -> $('form').submit()), 500 * missed.length
+  nextLevelAnimation()
 
 processSkip = () ->
-  skipToNextLevel(getMissedBingos())
-
+  $('input#failed').val("skip")
+  delaySubmitWhileShowingMissedBingos()
+  
 processConcede = () ->
-  returnToFirstLevel(getMissedBingos())
+  $('input#failed').val("concede")
+  delaySubmitWhileShowingMissedBingos()
 
 
 ready = ->
@@ -116,22 +101,22 @@ ready = ->
   # Random challenge
 
   if $('h2').text().indexOf "Random" > -1
-    $('#bingo-challenge-box').scrollView()
+    $('h1').scrollView()
     $('#tiles-bar').sortable({ containment: "parent", axis: "x", cursor: "move", appendTo: "parent" })
     $('#tiles-bar').disableSelection()
     if $('input#lives').val() < 1
-      $('input.btn.btn-danger').prop("disabled", true)
+      $('#skip-or-yield').removeClass("btn-danger")
+      $('#skip-or-yield').addClass("btn-inverse")
+      $('#skip-or-yield').val("Yield")
     $('#shuffle').click (e) ->
       shuffleTiles(e)
     $('#submit-guess').click (e) ->
       e.preventDefault()
       processGuess()
-    $('#skip-challenge').click (e) ->
+    $('#skip-or-yield').click (e) ->
       e.preventDefault()
-      processSkip()
-    $('#concede-challenge').click (e) ->
-      e.preventDefault()
-      processConcede()
+      if $('input#lives').val() < 1 then processConcede()
+      else processSkip()
 
 
 
