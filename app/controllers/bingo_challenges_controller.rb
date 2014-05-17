@@ -42,7 +42,8 @@ class BingoChallengesController < ApplicationController
       if @challenge.ordered?
         @challenge.tiles_list = "to be implemented"
       else
-        @challenge.tiles_list = WordEntry.select(:letters).where(length: 7).uniq.sample(@challenge.size).map { |w| w.letters }.join(" ")
+        # including :word in the select clause to make it work in PG
+        @challenge.tiles_list = WordEntry.select(:letters, :word).where(length: 7).uniq.sample(@challenge.size).map { |w| w.letters }.join(" ")
       end
 
       unless @challenge.save
