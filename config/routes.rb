@@ -29,6 +29,7 @@ ScrabbleDojo::Application.routes.draw do
   end
 
   resources :bingo_challenges, only: [:index, :show]
-  get '/random_bingo_challenge' => 'bingo_challenges#random'
+  get   '/random_bingo_challenge' => 'bingo_challenges#random'
+  patch '/play_bingo_challenge'   => 'bingo_challenges#play'
 
 end

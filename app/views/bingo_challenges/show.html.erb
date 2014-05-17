@@ -1,38 +1,35 @@
-<% provide(:title, 'Bingo challenge: Random') %>
+<% provide(:title, "Bingo challenge: #{@challenge.name}") %>
 <div id="bingo-challenge" class="hero-unit">
-  <%= heading 'Bingo', 'Challenge: Random' %>
+  <%= heading 'Challenge', "#{@challenge.name}" %>
   <div class="row">
     <div class="span11 center">
-      <p>Find all bingos to advance to the next level.</p>
       <div id="bingo-challenge-box">
         <div id="lives-bar">
           <strong class="hidden-phone">Chances remaining:</strong>
-          <%= challenge_lives %>
+          <span id="count" style="display:none;">3</span>
+          <span class='icon icon-heart'></span>
+          <span class='icon icon-heart'></span>
+          <span class='icon icon-heart'></span>
         </div>
-        <div id="level-bar"> Level <%= @level %> </div>
+        <div id="level-bar"> Level <%= @challenge.level %> </div>
         <div id="challenge-feedback" style='display:none;'></div>
         <div id="challenge-form">
           <div id="tiles-bar">
             <%= @tiles.split(//).map {|t| "<span class='tile'>#{t}</span>"}.join().html_safe %>
           </div>
-          <%= form_tag("/random_bingo_challenge", method: "get") do %>
+          <%= form_tag({controller: "bingo_challenges", action: "play"}, method: "patch") do %>
             <div id="challenge-field">
               <%= hidden_field_tag :from_form, "true" %>
-              <%= hidden_field_tag :level, @level %>
-              <%= hidden_field_tag :lives, @lives %>
-              <%= hidden_field_tag :tiles, @tiles %>
-              <%= hidden_field_tag :failed, "" %>
+              <%= hidden_field_tag :id, @challenge.id %>
             </div>
             <div id="btn-challenge" class="btn-group">
               <%= submit_tag "Submit", id: "submit-guess", class: "btn btn-primary btn-large" %>
-              <%= submit_tag "Shuffle", id: "shuffle", class: "btn btn-info btn-large" %>
-              <%= submit_tag " Skip", id: "skip-or-yield", class: "btn btn-danger btn-large" %>
+              <%= submit_tag "Shuffle", id: "shuffle", class: "btn btn-inverse btn-large" %>
+              <%= submit_tag "Yield", id: "yield", class: "btn btn-danger btn-large" %>
             </div>
           <% end %>
         </div>
-        <div id="challenge-loading" style="display:none;">
-          <p id="challenge-loading-missed"></p>
-        </div>
+        <div id="challenge-loading" style="display:none;"><p><%= image_tag 'loading.gif' %></p></div>
         <div id="challenge-results">
           <p>Found <strong><span id="challenge-solutions-found">0</span> / <%= @solutions.count %></strong> bingos</p>
           <p id="challenge-solutions">

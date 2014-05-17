@@ -35,7 +35,14 @@
 // Bingo challenge
 
 #bingo-challenge {
-.icon { margin-top: 2px; }
+.icon { 
+  margin-top: 6px;
+  width: 16px;
+}
+.icon-heart {
+  background-image: url("/assets/heart.gif");
+  background-position: 0 0;
+}
 
   #bingo-challenge-box {
     margin: 15px -40px 20px;
@@ -60,7 +67,8 @@
       letter-spacing: 3px;
       position: relative;
       text-align: center;
-      top: -10px;
+      top: 10px;
+      width: 250px;
       height: 0px;
     }
 
@@ -102,6 +110,10 @@
       font-weight: bold;
       font-size: 1.2em;
       padding: 25px 0px 10px;
+      img {
+        opacity:0.35;
+        filter:alpha(opacity=35);
+      }
     }
 
     #challenge-results {

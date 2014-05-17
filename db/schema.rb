@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131005141625) do
+ActiveRecord::Schema.define(version: 20140517100125) do
+
+  create_table "bingo_challenges", force: true do |t|
+    t.string   "mode"
+    t.integer  "order"
+    t.text     "tiles_list"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bingo_challenges", ["mode"], name: "index_bingo_challenges_on_mode"
 
   create_table "memos", force: true do |t|
     t.string   "name"

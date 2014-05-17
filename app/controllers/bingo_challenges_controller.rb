@@ -1,52 +1,70 @@
 class BingoChallengesController < ApplicationController
   before_action :logged_in_user
-
+  before_action :set_bingo_challenge, only: [:show, :play]
 
   def index
+    @random     = BingoChallenge.find_by(mode: "random")
+    @challenges = BingoChallenge.all
   end
 
   def show
+    new_challenge
+    c  = @challenge
+    @tiles     = c.tiles_list.split(" ")[c.level - 1]
+    @solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
   end
 
-  def random
-    if params[:from_form]
-      @level = params[:level].to_i
-      @lives = params[:lives].to_i
-      #@tiles = params[:tiles]
-      #@solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
+  def play
+    form_request = params[:from_form]
 
-      if params[:failed] == "concede"
-          new_random_game
-      else
-        @lives -= 1 if params[:failed] == "skip"
-        next_random_level
-      end
-    else
-      new_random_game
+    if form_request == "yield"
+      new_challenge
+    elsif form_request == "next"
+      next_level
+    elsif form_request == "win"
+      reset_challenge
+      redirect_to challenges_path
     end
+
+    redirect_to @challenge
   end
 
-
-
+  
 
   private
 
-    def new_random_game
-      @level = 1
-      @lives = 3
-      @found = []
-      @tiles, @solutions  = find_random_tiles_and_solutions
+    def set_bingo_challenge
+        @challenge = BingoChallenge.find(params[:id])
     end
 
-    def next_random_level()
-      @level += 1
-      @found = []
-      @tiles, @solutions = find_random_tiles_and_solutions
+    def new_challenge
+      @challenge.level = 1
+      if @challenge.ordered?
+        @challenge.tiles_list = "to be implemented"
+      else
+        @challenge.tiles_list = WordEntry.select(:letters).where(length: 7).uniq.sample(@challenge.size).map { |w| w.letters }.join(" ")
+      end
+
+      unless @challenge.save
+        flash[:error] = "Could not initiate challenge."
+        redirect_to challenges_path 
+      end
     end
 
-    def find_random_tiles_and_solutions
-      tiles     = WordEntry.where(length: 7).sample.letters
-      solutions = WordEntry.where(letters: tiles).map{ |w| w.word }
-      return tiles, solutions
+    def next_level
+      @challenge.level += 1
+
+      unless @challenge.save
+        flash[:error] = "Could not proceed to next level."
+        redirect_to challenges_path 
+      end
+    end
+
+    def reset_challenge
+      if @challenge.reset!
+        flash[:success] = "Challenge: #{@name} completed!"
+      else
+        flash[:error] = "Could not reset challenge."
+      end
     end
 end
