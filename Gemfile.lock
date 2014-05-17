@@ -141,6 +141,9 @@ GEM
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
+    rails_on_heroku (0.0.2)
+      rails_serve_static_assets
+      rails_stdout_logging
     rails_serve_static_assets (0.0.1)
     rails_stdout_logging (0.0.2)
     railties (4.0.0)
@@ -244,6 +247,7 @@ DEPENDENCIES
   pg (= 0.15.1)
   rails (= 4.0.0)
   rails_12factor (= 0.0.2)
+  rails_on_heroku
   rspec-rails (= 2.13.1)
   sass-rails (= 4.0.0)
   sdoc (= 0.3.20)
