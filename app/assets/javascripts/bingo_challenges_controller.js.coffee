@@ -44,8 +44,9 @@ loseHeart = ->
   count.text(count.text() - 1)
 
   for child in $('#lives-bar').children()
-    if $(child).hasClass('icon-heart')
-      $(child).removeClass('icon-heart')
+    if $(child).hasClass('heart-ph')
+      $(child).removeClass('heart-ph')
+      $(child).text("")
       $(child).addClass('icon-remove')
       break
 

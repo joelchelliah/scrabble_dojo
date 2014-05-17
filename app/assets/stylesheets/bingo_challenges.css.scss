@@ -34,20 +34,20 @@
 
 // Bingo challenge
 
-#bingo-challenge {
-.icon { 
-  margin-top: 6px;
-  width: 16px;
-}
-.icon-heart {
-  background-image: url("/assets/heart.gif");
-  background-position: 0 0;
-}
-
+#bingo-challenge {  
   #bingo-challenge-box {
     margin: 15px -40px 20px;
     padding: 10px;
     @include dark_well;
+
+    .icon { 
+      margin-top: 6px;
+      width: 16px;
+      img {
+        margin-top: 0;
+        margin-left: 0;
+      }
+    }
 
     #lives-bar {
       clear: both;
@@ -67,8 +67,9 @@
       letter-spacing: 3px;
       position: relative;
       text-align: center;
+      margin: 0 auto;
       top: 10px;
-      width: 250px;
+      width: 262px;
       height: 0px;
     }
 
@@ -126,3 +127,4 @@
     }
   }
 }
+
