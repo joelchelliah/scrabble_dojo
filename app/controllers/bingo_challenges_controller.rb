@@ -3,15 +3,13 @@ class BingoChallengesController < ApplicationController
   before_action :set_bingo_challenge, only: [:show, :play]
 
   def index
-    @random     = BingoChallenge.find_by(mode: "random")
-    @challenges = BingoChallenge.all
+    @random  = BingoChallenge.random
+    @ordered = BingoChallenge.ordered
   end
 
   def show
     new_challenge
-    c  = @challenge
-    @tiles     = c.tiles_list.split(" ")[c.level - 1]
-    @solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
+    prepare_level
   end
 
   def play
@@ -23,10 +21,21 @@ class BingoChallengesController < ApplicationController
       next_level
     elsif form_request == "win"
       reset_challenge
-      redirect_to challenges_path
+      redirect_to bingo_challenges_path
     end
+    prepare_level
+    render 'show'
+  end
 
-    redirect_to @challenge
+  def new
+    last = BingoChallenge.last_order || 0
+    challenge = BingoChallenge.new(mode: "ordered", order: (last + 1), tiles_list: "", level: 0)
+    if challenge.save
+      flash[:success] = "Ordered challenge #{challenge.name} created!"
+    else
+      flash[:error] = "Could not create challenge."
+    end
+    redirect_to bingo_challenges_path
   end
 
   
@@ -40,15 +49,14 @@ class BingoChallengesController < ApplicationController
     def new_challenge
       @challenge.level = 1
       if @challenge.ordered?
-        @challenge.tiles_list = "to be implemented"
+        @challenge.tiles_list = WordEntry.tiles_for_ordered_bingo_challenge(@challenge.min, @challenge.max).join(" ")
       else
-        # including :word in the select clause to make it work in PG
-        @challenge.tiles_list = WordEntry.select(:letters, :word).where(length: 7).uniq.sample(@challenge.size).map { |w| w.letters }.join(" ")
+        @challenge.tiles_list = WordEntry.tiles_for_random_bingo_challenge(@challenge.size).join(" ")
       end
 
       unless @challenge.save
         flash[:error] = "Could not initiate challenge."
-        redirect_to challenges_path 
+        redirect_to bingo_challenges_path 
       end
     end
 
@@ -57,7 +65,7 @@ class BingoChallengesController < ApplicationController
 
       unless @challenge.save
         flash[:error] = "Could not proceed to next level."
-        redirect_to challenges_path 
+        redirect_to bingo_challenges_path 
       end
     end
 
@@ -67,5 +75,10 @@ class BingoChallengesController < ApplicationController
       else
         flash[:error] = "Could not reset challenge."
       end
+    end
+
+    def prepare_level
+      @tiles     = @challenge.tiles_list.split(" ")[@challenge.level - 1]
+      @solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
     end
 end

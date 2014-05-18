@@ -68,13 +68,42 @@ describe "BingoChallenge:" do
     context "and order is 1 then" do
       before { @challenge.order = 1 }
 
-      its(:name) { should eq "Ordered (1 - 50)" }
+      its(:name) { should eq "(1 - 50)" }
+      its(:min)  { should eq 0}
+      its(:max)  { should eq 49}
     end
 
     context "and order is 3 then" do
       before { @challenge.order = 3 }
 
-      its(:name) { should eq "Ordered (101 - 150)" }
+      its(:name) { should eq "(101 - 150)" }
+      its(:min)  { should eq 100}
+      its(:max)  { should eq 149}
+    end
+  end
+
+  describe "when retrieving challenges" do
+    let!(:w1) { FactoryGirl.create(:bingo_challenge, mode: "random") }
+    let!(:w2) { FactoryGirl.create(:bingo_challenge, order: 1) }
+    let!(:w3) { FactoryGirl.create(:bingo_challenge, order: 2) }
+    let!(:w4) { FactoryGirl.create(:bingo_challenge, order: 3) }
+
+    context "with mode random" do
+      it "Should retrieve the single random challenge" do
+        expect(BingoChallenge.random).to eq w1
+      end
+    end
+
+    context "with mode ordered" do
+      it "Should retrieve all ordered challenge" do
+        expect(BingoChallenge.ordered).to eq [w2, w3, w4]
+      end
+    end
+
+    context "and looking for the order of the last ordered challenge" do
+      it "Should retrieve the biggest one" do
+        expect(BingoChallenge.last_order).to eq w4.order
+      end
     end
   end
 end

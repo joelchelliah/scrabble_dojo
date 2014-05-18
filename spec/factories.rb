@@ -25,4 +25,11 @@ FactoryGirl.define do
     length          5
     first_letter    "a"
   end
+
+  factory :bingo_challenge do
+    sequence(:order) { |n| n }
+    mode "ordered"
+    level "1"
+    tiles_list "ABC DEF GHI"
+  end
 end

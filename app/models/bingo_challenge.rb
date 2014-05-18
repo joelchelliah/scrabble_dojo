@@ -1,17 +1,25 @@
 class BingoChallenge < ActiveRecord::Base
 
+  scope :random,     -> { where(mode: "random").first }
+  scope :ordered,    -> { where(mode: "ordered").order("'order' ASC") }
+  scope :last_order, -> { ordered.maximum(:order) }
+
   validates :mode, presence: true
   validates :order, :numericality => { greater_than_or_equal_to: 0 }, presence: true
 
 
-  def name
-    s = self.size
-    o = self.order
-
-    name = mode.capitalize
-    name << " (#{s})" if self.random?
-    name << " (#{s * (o - 1) + 1} - #{s * o})" if self.ordered?
+  def name 
+    name = "#{mode.capitalize} (#{self.size})" if self.random?
+    name = "(#{self.min + 1} - #{self.max + 1})" if self.ordered?
     name
+  end
+
+  def min
+    self.size * (self.order - 1)
+  end
+
+  def max
+    self.size * self.order - 1
   end
 
   def random?

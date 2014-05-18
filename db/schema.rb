@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140517100125) do
+ActiveRecord::Schema.define(version: 20140517182940) do
 
   create_table "bingo_challenges", force: true do |t|
     t.string   "mode"
@@ -70,9 +70,11 @@ ActiveRecord::Schema.define(version: 20140517100125) do
     t.string   "first_letter"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "probability",  default: 0.0
   end
 
   add_index "word_entries", ["letters"], name: "index_word_entries_on_letters"
+  add_index "word_entries", ["probability"], name: "index_word_entries_on_probability"
   add_index "word_entries", ["word"], name: "index_word_entries_on_word", unique: true
 
 end

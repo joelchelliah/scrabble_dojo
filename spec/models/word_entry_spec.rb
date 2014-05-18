@@ -59,11 +59,6 @@ describe WordEntry do
     let!(:w5) { FactoryGirl.create(:word_entry, word: "WOK", length: 3) }
     let!(:w6) { FactoryGirl.create(:word_entry, word: "ECRU", length: 4) }
     let!(:w7) { FactoryGirl.create(:word_entry, word: "TELEFONER", length: 9, first_letter: "T") }
-    before(:each) do
-      w1.save
-      w2.save
-      w3.save
-    end
 
     it "should be ordered alphabetically" do
       expect(WordEntry.all).to eq [w3, w6, w1, w7, w4, w5, w2]
@@ -91,6 +86,44 @@ describe WordEntry do
 
     it "should retrieve all seven to nine letter words starting with T" do
       expect(WordEntry.bingos_from_letter("T")).to eq [w7]
+    end
+  end
+
+  describe "when retrieving letters for bingo challenge" do
+    let!(:w1) { FactoryGirl.create(:word_entry, length: 7, letters: "ABC", probability: 0.00015) }
+    let!(:w2) { FactoryGirl.create(:word_entry, length: 7, letters: "ABC", probability: 0.00015) }
+    let!(:w3) { FactoryGirl.create(:word_entry, length: 7, letters: "DEF", probability: 0.00014) }
+    let!(:w4) { FactoryGirl.create(:word_entry, length: 7, letters: "GHI", probability: 0.000095) }
+    let!(:w5) { FactoryGirl.create(:word_entry, length: 6, letters: "JKL", probability: 0.00039) }
+    let!(:w6) { FactoryGirl.create(:word_entry, length: 8, letters: "MNO", probability: 0.000112) }
+
+    context "(random)" do
+      it "should retrieve 2 unique sets of 7 letter words" do
+        expect(WordEntry.tiles_for_random_bingo_challenge(2).count).to eq 2
+        expect(WordEntry.tiles_for_random_bingo_challenge(2).all? {|ls| %w(ABC DEF GHI).include? ls}).to be_true
+      end
+
+      it "should retrieve 3 unique sets of 7 letter words" do
+        expect(WordEntry.tiles_for_random_bingo_challenge(3).count).to eq 3
+        expect(WordEntry.tiles_for_random_bingo_challenge(3).all? {|ls| %w(ABC DEF GHI).include? ls}).to be_true
+      end
+    end
+
+    context "(ordered)" do
+      it "should retrieve all unique sets of 7 letter words within range [0..1]" do
+        expect(WordEntry.tiles_for_ordered_bingo_challenge(0, 1).count).to eq 2
+        expect(WordEntry.tiles_for_ordered_bingo_challenge(0, 1)).to eq %w(ABC DEF)
+      end
+
+      it "should retrieve all unique sets of 7 letter words within range [1..2]" do
+        expect(WordEntry.tiles_for_ordered_bingo_challenge(1, 2).count).to eq 2
+        expect(WordEntry.tiles_for_ordered_bingo_challenge(1, 2)).to eq %w(DEF GHI)
+      end
+
+      it "should retrieve all unique sets of 7 letter words within range [0..2]" do
+        expect(WordEntry.tiles_for_ordered_bingo_challenge(0, 2).count).to eq 3
+        expect(WordEntry.tiles_for_ordered_bingo_challenge(0, 2)).to eq %w(ABC DEF GHI)
+      end
     end
   end
 end

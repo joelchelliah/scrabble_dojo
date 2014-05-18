@@ -2,7 +2,9 @@ $.fn.scrollView = ->
   @each ->
     $("html, body").animate
       scrollTop: $(this).offset().top
-    , 1
+    , 500
+
+
 
 
 shuffle = (a) ->
@@ -22,19 +24,6 @@ shuffleTiles = () ->
   rack.append("<span class='tile'>" + tile + "<span>") for tile in shuffle(tiles)
 
 
-guessAnimtaion = (guess, isCorrectGuess) ->
-  if (isCorrectGuess)
-    $('#challenge-feedback').addClass("text-success").removeClass("text-error")
-    $('#challenge-results').slideUp('fast')
-    $('#challenge-results').slideDown('1000')
-  else
-    $('#challenge-feedback').addClass("text-error").removeClass("text-success")
-
-  $('#challenge-feedback').text(guess)
-  $('#challenge-feedback').animate({top: "10"}, 0)
-                          .animate({display: "show"}, 0)
-                          .animate({top: "-120", opacity: "toggle"}, 1000)  
-
 
 
 numHearts = -> $('#lives-bar > #count').text()
@@ -49,6 +38,7 @@ loseHeart = ->
       $(child).text("")
       $(child).addClass('icon-remove')
       break
+
 
 
 
@@ -78,6 +68,22 @@ processYield = () ->
   setTimeout ( -> $('form').submit()), 500 + 750 * missed.length
   nextLevelAnimation()
 
+
+
+
+guessAnimtaion = (guess, isCorrectGuess) ->
+  if (isCorrectGuess)
+    $('#challenge-feedback').addClass("text-success").removeClass("text-error")
+    $('#challenge-results').slideUp('fast')
+    $('#challenge-results').slideDown('1000')
+  else
+    $('#challenge-feedback').addClass("text-error").removeClass("text-success")
+
+  $('#challenge-feedback').text(guess)
+  $('#challenge-feedback').animate({top: "10"}, 0)
+                          .animate({display: "show"}, 0)
+                          .animate({top: "-120", opacity: "toggle"}, 1000)
+
 processCorrectGuess = () ->
   solved    = 0
   remaining = 0
@@ -106,19 +112,16 @@ processGuess = () ->
     
 
 
+
 makeTilesSortable = () ->
   $('#tiles-bar').sortable({ containment: "#challenge-form", axis: "x", cursor: "move", appendTo: "parent" })
   $('#tiles-bar').disableSelection()
 
-replaceSkipWithYield = () ->
-  $('#skip-or-yield').removeClass("btn-danger")
-  $('#skip-or-yield').addClass("btn-inverse")
-  $('#skip-or-yield').val("Yield")
 
 
 ready = ->
 
-  # Random challenge
+  # Show
   if $('#bingo-challenge').length > 0
     $('h2').scrollView()
     makeTilesSortable()

@@ -3,7 +3,15 @@
   <%= heading 'Challenges', 'Overview' %>
   <div class="row">
     <div class="span11 center">
-      <%= link_to "Challenge: Random", @random, class: "btn btn-primary" %>
+      <%= link_to "#{@random.name}", @random, class: "btn btn-large btn-primary" %>
+      <hr/>
+      <h4>Ordered</h4>
+      <% @ordered.each do |challenge| %>
+        <%= link_to "#{challenge.name}", challenge, class: "btn btn-large ordered" %>
+      <% end %>
+      <br/><br/>
+      <%= link_to "Next challenge", new_bingo_challenge_path,
+          class: "btn btn-large btn-primary ordered" %>
       <hr/>
     </div>
   </div>
