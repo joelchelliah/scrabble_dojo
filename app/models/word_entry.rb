@@ -1,5 +1,5 @@
 class WordEntry < ActiveRecord::Base
-	default_scope 						 -> 			{ order('word ASC') }
+	#default_scope 						 -> 			{ order('word ASC') }
 	scope :word_length,				 -> (num) { where("length = ?", num).order('word ASC') }
 	scope :short_words, 			 -> 			{ where("length < 6").order('word ASC') }
 	scope :bingos, 						 -> 			{ where("length > 6 and length < 10") }
