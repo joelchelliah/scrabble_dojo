@@ -65,7 +65,7 @@ processYield = () ->
   $('#challenge-loading-missed').append(missed.join(" "))
   $('#challenge-loading-missed').addClass("text-error")
   $('#challenge-results').addClass("text-warning")
-  setTimeout ( -> $('form').submit()), 500 + 750 * missed.length
+  setTimeout ( -> $('form').submit()), 500 + 1000 * missed.length
   nextLevelAnimation()
 
 

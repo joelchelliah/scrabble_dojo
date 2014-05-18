@@ -29,7 +29,7 @@ class BingoChallengesController < ApplicationController
 
   def new
     last = BingoChallenge.last_order || 0
-    challenge = BingoChallenge.new(mode: "ordered", order: (last + 1), tiles_list: "", level: 0)
+    challenge = BingoChallenge.new(mode: "ordered", order_id: (last + 1), tiles_list: "", level: 0)
     if challenge.save
       flash[:success] = "Ordered challenge #{challenge.name} created!"
     else

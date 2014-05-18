@@ -27,7 +27,7 @@ FactoryGirl.define do
   end
 
   factory :bingo_challenge do
-    sequence(:order) { |n| n }
+    sequence(:order_id) { |n| n }
     mode "ordered"
     level "1"
     tiles_list "ABC DEF GHI"

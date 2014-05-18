@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe "BingoChallenge:" do
-  before { @challenge = BingoChallenge.new(mode: "random", order: 0, tiles_list: "QWE ASD ZXC", level: 1) }
+  before { @challenge = BingoChallenge.new(mode: "random", order_id: 0, tiles_list: "QWE ASD ZXC", level: 1) }
   subject { @challenge }
 
   it { should respond_to :mode }
-  it { should respond_to :order }
+  it { should respond_to :order_id }
   it { should respond_to :tiles_list }
   it { should respond_to :level }
 
@@ -20,7 +20,7 @@ describe "BingoChallenge:" do
   end
 
   context "when order is negative" do
-    before { @challenge.order = -1 }
+    before { @challenge.order_id = -1 }
 
     it { should_not be_valid }
   end
@@ -66,7 +66,7 @@ describe "BingoChallenge:" do
     its (:ordered?) { should be_true }
 
     context "and order is 1 then" do
-      before { @challenge.order = 1 }
+      before { @challenge.order_id = 1 }
 
       its(:name) { should eq "(1 - 50)" }
       its(:min)  { should eq 0}
@@ -74,7 +74,7 @@ describe "BingoChallenge:" do
     end
 
     context "and order is 3 then" do
-      before { @challenge.order = 3 }
+      before { @challenge.order_id = 3 }
 
       its(:name) { should eq "(101 - 150)" }
       its(:min)  { should eq 100}
@@ -84,9 +84,9 @@ describe "BingoChallenge:" do
 
   describe "when retrieving challenges" do
     let!(:w1) { FactoryGirl.create(:bingo_challenge, mode: "random") }
-    let!(:w2) { FactoryGirl.create(:bingo_challenge, order: 1) }
-    let!(:w3) { FactoryGirl.create(:bingo_challenge, order: 2) }
-    let!(:w4) { FactoryGirl.create(:bingo_challenge, order: 3) }
+    let!(:w2) { FactoryGirl.create(:bingo_challenge, order_id: 1) }
+    let!(:w3) { FactoryGirl.create(:bingo_challenge, order_id: 2) }
+    let!(:w4) { FactoryGirl.create(:bingo_challenge, order_id: 3) }
 
     context "with mode random" do
       it "Should retrieve the single random challenge" do
@@ -102,7 +102,7 @@ describe "BingoChallenge:" do
 
     context "and looking for the order of the last ordered challenge" do
       it "Should retrieve the biggest one" do
-        expect(BingoChallenge.last_order).to eq w4.order
+        expect(BingoChallenge.last_order).to eq w4.order_id
       end
     end
   end

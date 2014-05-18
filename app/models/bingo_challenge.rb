@@ -1,11 +1,11 @@
 class BingoChallenge < ActiveRecord::Base
 
   scope :random,     -> { where(mode: "random").first }
-  scope :ordered,    -> { where(mode: "ordered").order("'order' ASC") }
-  scope :last_order, -> { ordered.maximum(:order) }
+  scope :ordered,    -> { where(mode: "ordered").order("order_id ASC") }
+  scope :last_order, -> { ordered.maximum(:order_id) }
 
   validates :mode, presence: true
-  validates :order, :numericality => { greater_than_or_equal_to: 0 }, presence: true
+  validates :order_id, :numericality => { greater_than_or_equal_to: 0 }, presence: true
 
 
   def name 
@@ -15,11 +15,11 @@ class BingoChallenge < ActiveRecord::Base
   end
 
   def min
-    self.size * (self.order - 1)
+    self.size * (self.order_id - 1)
   end
 
   def max
-    self.size * self.order - 1
+    self.size * self.order_id - 1
   end
 
   def random?

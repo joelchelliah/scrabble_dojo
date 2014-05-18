@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140517182940) do
+ActiveRecord::Schema.define(version: 20140518194738) do
 
   create_table "bingo_challenges", force: true do |t|
     t.string   "mode"
-    t.integer  "order"
+    t.integer  "order_id"
     t.text     "tiles_list"
     t.integer  "level"
     t.datetime "created_at"
