@@ -10,7 +10,10 @@ class WordEntry < ActiveRecord::Base
   end
 
   scope :tiles_for_ordered_bingo_challenge, -> (min, max) do
-    select(:letters, :probability).where(length: 7).distinct.order('probability DESC')[min..max].map { |w| w.letters }
+    select(:letters, :probability).where(length: 7)
+                                  .distinct
+                                  .order('probability DESC')[(min-1)...max]
+                                  .map { |w| w.letters }
   end
 
 

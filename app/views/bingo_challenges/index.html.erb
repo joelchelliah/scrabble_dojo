@@ -3,15 +3,18 @@
   <%= heading 'Challenges', 'Overview' %>
   <div class="row">
     <div class="span11 center">
-      <%= link_to "#{@random.name}", @random, class: "btn btn-large btn-primary" %>
+      <%= link_to "Random #{@random.name}", @random, class: "btn btn-primary" %>
       <hr/>
       <h4>Ordered</h4>
       <% @ordered.each do |challenge| %>
-        <%= link_to "#{challenge.name}", challenge, class: "btn btn-large ordered" %>
+        <span class="btn-group">
+          <%= link_to "#{challenge.name}", challenge, class: "btn ordered" %>
+          <%= link_to '<i class="icon-remove"></i>'.html_safe, challenge, method: :delete, data: { confirm: 'Delete this challenge?' }, class: "btn btn-danger" %>
+        </span>
       <% end %>
       <br/><br/>
-      <%= link_to "Next challenge", new_bingo_challenge_path,
-          class: "btn btn-large btn-primary ordered" %>
+      <%= link_to "New challenge", new_bingo_challenge_path,
+          class: "btn btn-primary ordered" %>
       <hr/>
     </div>
   </div>

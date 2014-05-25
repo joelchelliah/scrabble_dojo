@@ -1,0 +1,15 @@
+<% provide(:title, 'Create challenge') %>
+<div id="bingo-challenge-form" class="hero-unit">
+  <%= heading 'Chalenge', 'Create' %>
+  <%= form_for(@challenge) do |f| %>
+    <fieldset>
+      <%= render 'fields', f: f %>
+      <div class="row">
+        <div class="span3">
+          <%= f.submit "Create", id: "bingo-form-submit", class: "btn btn-primary" %>
+          <%= link_to 'Back', bingo_challenges_path, class: "btn" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

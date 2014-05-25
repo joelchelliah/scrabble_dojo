@@ -28,8 +28,7 @@ ScrabbleDojo::Application.routes.draw do
     end
   end
 
-  resources :bingo_challenges, only: [:index, :show, :new]
-  get   '/random_bingo_challenge' => 'bingo_challenges#random'
-  patch '/play_bingo_challenge'   => 'bingo_challenges#play'
+  resources :bingo_challenges, only: [:index, :new, :create, :destroy]
+  match "bingo_challenges/:id" => "bingo_challenges#show", via: [:get, :patch]
 
 end

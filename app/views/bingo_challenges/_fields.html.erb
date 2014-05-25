@@ -1,0 +1,14 @@
+<%= render 'shared/error_messages', object: f.object %>
+<div class="row">
+  <div class="span4">
+    <%= f.label "Minimum range" %>
+    <%= f.text_field :min_range, placeholder: "Greater than 0" %>
+  </div>
+  <div class="span4">
+    <%= f.label "Maximum range" %>
+    <%= f.text_field :max_range, placeholder: "Greater than minimun range" %>
+  </div>
+</div>
+<%= f.hidden_field :mode, value: "ordered" %>
+<hr />
+    

@@ -27,9 +27,11 @@ FactoryGirl.define do
   end
 
   factory :bingo_challenge do
-    sequence(:order_id) { |n| n }
+    sequence(:min_range) { |n| n * 10 }
+    sequence(:max_range) { |n| (n + 1) * 10 }
     mode "ordered"
     level "1"
     tiles_list "ABC DEF GHI"
+    user
   end
 end

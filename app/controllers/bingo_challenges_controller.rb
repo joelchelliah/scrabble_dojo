@@ -1,55 +1,56 @@
 class BingoChallengesController < ApplicationController
   before_action :logged_in_user
-  before_action :set_bingo_challenge, only: [:show, :play]
+  before_action :correct_user, only: [:show, :destroy]
 
   def index
-    @random  = BingoChallenge.random
-    @ordered = BingoChallenge.ordered
+    @random  = current_user.bingo_challenges.random || create_random_challenge
+    @ordered = current_user.bingo_challenges.ordered
   end
 
   def show
-    new_challenge
-    prepare_level
-  end
-
-  def play
     form_request = params[:from_form]
 
-    if form_request == "yield"
-      new_challenge
-    elsif form_request == "next"
-      next_level
-    elsif form_request == "win"
-      reset_challenge
-      redirect_to bingo_challenges_path
+    if params[:from_form]
+      end_challenge     if form_request == "next" and @challenge.level == @challenge.size
+      next_level        if form_request == "next"
+      restart_challenge if form_request == "yield"
+    else
+      restart_challenge
     end
+
     prepare_level
-    render 'show'
   end
 
   def new
-    last = BingoChallenge.last_order || 0
-    challenge = BingoChallenge.new(mode: "ordered", order_id: (last + 1), tiles_list: "", level: 0)
-    if challenge.save
-      flash[:success] = "Ordered challenge #{challenge.name} created!"
+    @challenge = current_user.bingo_challenges.build
+  end
+
+  def create
+    @challenge = current_user.bingo_challenges.build(challenge_params)
+    if @challenge.save
+      flash[:success] = "Created ordered challenge: #{@challenge.name}."
+      redirect_to bingo_challenges_path
     else
-      flash[:error] = "Could not create challenge."
+      render 'new'
     end
-    redirect_to bingo_challenges_path
   end
 
   
-
   private
 
-    def set_bingo_challenge
-        @challenge = BingoChallenge.find(params[:id])
+    def create_random_challenge
+      if current_user.bingo_challenges.build(mode: "random", min_range: 1, max_range: 50).save
+        current_user.bingo_challenges.random
+      else
+        flash[:error] = "Could not create default challenge."
+        redirect_to root_url
+      end
     end
 
-    def new_challenge
+    def restart_challenge
       @challenge.level = 1
       if @challenge.ordered?
-        @challenge.tiles_list = WordEntry.tiles_for_ordered_bingo_challenge(@challenge.min, @challenge.max).join(" ")
+        @challenge.tiles_list = WordEntry.tiles_for_ordered_bingo_challenge(@challenge.min_range, @challenge.max_range).join(" ")
       else
         @challenge.tiles_list = WordEntry.tiles_for_random_bingo_challenge(@challenge.size).join(" ")
       end
@@ -62,23 +63,29 @@ class BingoChallengesController < ApplicationController
 
     def next_level
       @challenge.level += 1
-
-      unless @challenge.save
-        flash[:error] = "Could not proceed to next level."
-        redirect_to bingo_challenges_path 
-      end
+      flash[:error] = "Could not proceed to next level." unless @challenge.save
     end
 
-    def reset_challenge
-      if @challenge.reset!
-        flash[:success] = "Challenge: #{@name} completed!"
-      else
-        flash[:error] = "Could not reset challenge."
-      end
+    def end_challenge
+      flash[:success] = "Challenge: #{@challenge.name} completed!"
+      redirect_to bingo_challenges_path
     end
 
     def prepare_level
       @tiles     = @challenge.tiles_list.split(" ")[@challenge.level - 1]
       @solutions = WordEntry.where(letters: @tiles).map{ |w| w.word }
+    end
+
+
+    def correct_user
+      @challenge = current_user.bingo_challenges.find(params[:id])
+      if @challenge.nil?
+        flash[:error] = "Could not find challenge"
+        redirect_to root_url
+      end
+    end
+
+    def challenge_params
+      params.require(:bingo_challenge).permit(:mode, :min_range, :max_range)
     end
 end

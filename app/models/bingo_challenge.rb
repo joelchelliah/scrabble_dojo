@@ -1,25 +1,19 @@
 class BingoChallenge < ActiveRecord::Base
 
+  belongs_to :user
+
   scope :random,     -> { where(mode: "random").first }
-  scope :ordered,    -> { where(mode: "ordered").order("order_id ASC") }
-  scope :last_order, -> { ordered.maximum(:order_id) }
+  scope :ordered,    -> { where(mode: "ordered").order("min_range ASC").order("max_range ASC") }
 
   validates :mode, presence: true
-  validates :order_id, :numericality => { greater_than_or_equal_to: 0 }, presence: true
+  validates :min_range, :numericality => { greater_than_or_equal_to: 1 }, presence: true
+  validates :max_range, :numericality => { greater_than: :min_range }, presence: true
 
 
   def name 
-    name = "#{mode.capitalize} (#{self.size})" if self.random?
-    name = "(#{self.min + 1} - #{self.max + 1})" if self.ordered?
+    name = "(#{self.size})" if self.random?
+    name = "#{self.min_range} - #{self.max_range}" if self.ordered?
     name
-  end
-
-  def min
-    self.size * (self.order_id - 1)
-  end
-
-  def max
-    self.size * self.order_id - 1
   end
 
   def random?
@@ -31,16 +25,7 @@ class BingoChallenge < ActiveRecord::Base
   end
 
   def size
-    50
+    self.max_range - self.min_range + 1
   end
 
-  def reset?
-    self.tiles_list.blank? or self.level.zero?
-  end
-
-  def reset!
-    self.tiles_list = ""
-    self.level = 0
-    self.save
-  end
 end

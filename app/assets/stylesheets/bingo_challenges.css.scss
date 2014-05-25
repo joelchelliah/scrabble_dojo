@@ -29,8 +29,13 @@
 // Bingo challenges overview
 
 #bingo-challenges-overview {
+  .icon-remove { margin-top: 2px; }
+  .btn-group {
+    margin-left: 0;
+    margin: 4px 4px;
+  }
   .ordered {
-    margin: 4px 0;
+    width: 140px;
   }
 }
 

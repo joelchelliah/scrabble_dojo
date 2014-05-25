@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
  
   has_many :memos, dependent: :destroy
+  has_many :bingo_challenges, dependent: :destroy
 
   before_create :create_remember_token
 	before_save { self.email.downcase! }

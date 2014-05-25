@@ -51,7 +51,7 @@ processNextLevel = ->
   phrases = ["Excellent!", "Correct!", "Perfect!", "Not bad!", "Awesome!", "Yup!", "Great!", "Yeah!", "Nice!"]
   $('#challenge-loading').prepend("<p>" + shuffle(phrases)[0] + "</p>")
   $('#challenge-results').addClass("text-success")
-  setTimeout ( -> $('form').submit()), 500
+  setTimeout ( -> $('form').submit()), 1000
   nextLevelAnimation()
 
 processYield = () ->
@@ -114,8 +114,9 @@ processGuess = () ->
 
 
 makeTilesSortable = () ->
-  $('#tiles-bar').sortable({ containment: "#challenge-form", axis: "x", cursor: "move", appendTo: "parent" })
+  $('#tiles-bar').sortable({ containment: "parent", axis: "x", cursor: "move", appendTo: "parent" })
   $('#tiles-bar').disableSelection()
+
 
 
 
@@ -124,6 +125,7 @@ ready = ->
   # Show
   if $('#bingo-challenge').length > 0
     $('h2').scrollView()
+    shuffleTiles()
     makeTilesSortable()
 
     $('#shuffle').click (e) ->
@@ -135,6 +137,10 @@ ready = ->
     $('#yield').click (e) ->
       e.preventDefault()
       processYield()
+
+  # New
+  if $('#bingo-challenge-form').length > 0
+    $('input#bingo_challenge_min_range').focus()
 
 
 

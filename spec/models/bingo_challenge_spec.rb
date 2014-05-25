@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 describe "BingoChallenge:" do
-  before { @challenge = BingoChallenge.new(mode: "random", order_id: 0, tiles_list: "QWE ASD ZXC", level: 1) }
+  before { @challenge = FactoryGirl.create(:bingo_challenge) }
   subject { @challenge }
 
   it { should respond_to :mode }
-  it { should respond_to :order_id }
+  it { should respond_to :min_range }
+  it { should respond_to :max_range }
   it { should respond_to :tiles_list }
   it { should respond_to :level }
-
-  its (:size) { should eq 50 }
 
   it { should be_valid }
 
@@ -19,44 +18,24 @@ describe "BingoChallenge:" do
     it { should_not be_valid }
   end
 
-  context "when order is negative" do
-    before { @challenge.order_id = -1 }
+  context "when min_range is less than 1" do
+    before { @challenge.min_range = 0 }
 
     it { should_not be_valid }
   end
 
-  context "when challenge doesn't contain tiles then" do
-    before { @challenge = BingoChallenge.new(mode: "random", tiles_list: "", level: 1) }
+  context "when max_range is not greater than min range" do
+    before { @challenge.max_range = @challenge.min_range }
 
-    its (:reset?) { should be_true }
-  end
-
-  context "when challenge level is 0 then" do
-    before { @challenge = BingoChallenge.new(mode: "random", tiles_list: "ABC", level: 0) }
-
-    its (:reset?) { should be_true }
-  end
-
-  context "when challenge contains tiles and level is above 0 then" do
-    its (:reset?) { should be_false }
-  end
-
-  describe "challenge.reset!" do
-    before { @challenge.reset! }
-
-    it "should reset and save the challenge" do
-      expect(BingoChallenge.first).to_not eq nil
-      expect(BingoChallenge.first.tiles_list.blank?).to eq true
-      expect(BingoChallenge.first.level).to eq 0
-    end
+    it { should_not be_valid }
   end
 
   context "when mode is random then" do
-    before { @challenge = BingoChallenge.new(mode: "random") }
+    before { @challenge = FactoryGirl.create(:bingo_challenge, mode: "random", min_range: 1, max_range: 50) }
 
     its (:random?) { should be_true }
     its (:ordered?) { should be_false }
-    its(:name) { should eq "Random (50)" }
+    its(:name) { should eq "(50)" }
   end
 
   context "when mode is ordered" do
@@ -65,45 +44,35 @@ describe "BingoChallenge:" do
     its (:random?) { should be_false }
     its (:ordered?) { should be_true }
 
-    context "and order is 1 then" do
-      before { @challenge.order_id = 1 }
+    context "and min range is 23 and max range is 157 then" do
+      before do
+        @challenge.min_range = 23
+        @challenge.max_range = 157
+      end
 
-      its(:name) { should eq "(1 - 50)" }
-      its(:min)  { should eq 0}
-      its(:max)  { should eq 49}
-    end
-
-    context "and order is 3 then" do
-      before { @challenge.order_id = 3 }
-
-      its(:name) { should eq "(101 - 150)" }
-      its(:min)  { should eq 100}
-      its(:max)  { should eq 149}
+      its(:name) { should eq "23 - 157" }
+      its (:size) { should eq 135 }
     end
   end
 
   describe "when retrieving challenges" do
-    let!(:w1) { FactoryGirl.create(:bingo_challenge, mode: "random") }
-    let!(:w2) { FactoryGirl.create(:bingo_challenge, order_id: 1) }
-    let!(:w3) { FactoryGirl.create(:bingo_challenge, order_id: 2) }
-    let!(:w4) { FactoryGirl.create(:bingo_challenge, order_id: 3) }
+    let!(:challenge_user) { FactoryGirl.create(:user, name: "challenge_user") }
+    let!(:c1) { FactoryGirl.create(:bingo_challenge, user: challenge_user, mode: "random") }
+    let!(:c2) { FactoryGirl.create(:bingo_challenge, user: challenge_user) }
+    let!(:c3) { FactoryGirl.create(:bingo_challenge, user: challenge_user, min_range: 500, max_range: 520) }
+    let!(:c4) { FactoryGirl.create(:bingo_challenge, user: challenge_user, min_range: 500, max_range: 510) }
 
     context "with mode random" do
       it "Should retrieve the single random challenge" do
-        expect(BingoChallenge.random).to eq w1
+        expect(challenge_user.bingo_challenges.random).to eq c1
       end
     end
 
     context "with mode ordered" do
-      it "Should retrieve all ordered challenge" do
-        expect(BingoChallenge.ordered).to eq [w2, w3, w4]
+      it "Should retrieve all ordered challenge sorted by min and max" do
+        expect(challenge_user.bingo_challenges.ordered).to eq [c2, c4, c3]
       end
     end
 
-    context "and looking for the order of the last ordered challenge" do
-      it "Should retrieve the biggest one" do
-        expect(BingoChallenge.last_order).to eq w4.order_id
-      end
-    end
   end
 end
