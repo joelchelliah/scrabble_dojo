@@ -65,8 +65,8 @@ ready = ->
 
 
 	# Edit page
-
 	if $('h2').text().indexOf "Update" > -1
+    $('#advanced-options').show()
 		$('#memo_word_list').focus()
 
 		if $('#memo_accepted_words').text() == ""
