@@ -35,6 +35,11 @@ class BingoChallengesController < ApplicationController
     end
   end
 
+  def destroy
+    @challenge.destroy
+    redirect_to bingo_challenges_path
+  end
+
   
   private
 
