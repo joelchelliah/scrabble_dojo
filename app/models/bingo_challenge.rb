@@ -2,7 +2,7 @@ class BingoChallenge < ActiveRecord::Base
 
   belongs_to :user
 
-  scope :random,     -> { find_by(mode: "random") }
+  scope :random,     -> { where(mode: "random") }
   scope :ordered,    -> { where(mode: "ordered").order("min_range ASC").order("max_range ASC") }
 
   validates :mode, presence: true

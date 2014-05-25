@@ -3,7 +3,7 @@ class BingoChallengesController < ApplicationController
   before_action :correct_user, only: [:show, :destroy]
 
   def index
-    @random  = current_user.bingo_challenges.random || create_random_challenge
+    @random  = (current_user.bingo_challenges.random || create_random_challenge).first
     @ordered = current_user.bingo_challenges.ordered
   end
 
