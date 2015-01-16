@@ -4,13 +4,17 @@
 
 **Features:**
 * Short words list
+  * 2, 3, 4 - letter words
+  * C, W - words (up to 5 letters)
 * Word search
   * Anagram search
-  * Word stems
+  * Word stems search (prefix, postfix)
 * Memos
   * List
-  * Status
   * Practice mode
+  * Stats (with decay-based algorithm)
+* Training
+  * Bingo challenges (7 words only)
 
 **Supported languages:** Norwegian
 
