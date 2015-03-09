@@ -64,7 +64,7 @@ describe "BingoChallenge:" do
 
     context "with mode random" do
       it "Should retrieve the single random challenge" do
-        expect(challenge_user.bingo_challenges.random).to eq c1
+        expect(challenge_user.bingo_challenges.random).to eq [c1]
       end
     end
 
