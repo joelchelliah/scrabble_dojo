@@ -33,7 +33,7 @@ module MemosHelper
 	end
 
 	def acceptable_error_margin()
-		2
+		4
 	end
 
 

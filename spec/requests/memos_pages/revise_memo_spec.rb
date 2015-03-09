@@ -21,7 +21,7 @@ describe "Memos revise:" do
 
       describe "and completes practice poorly" do
         before do
-          fill_in :message, with: "ABC wrong incorrect monkey pigeon african duck"
+          fill_in :message, with: "ABC wrong incorrect monkey pigeon african duck asdf fdsa"
           click_button 'Done'
         end
 
@@ -30,7 +30,7 @@ describe "Memos revise:" do
         it { should have_content 'You made too many mistakes.' }
         it { should have_content 'Try again with fewer mistakes...' }
         it { should have_content 'Missed (7)' }
-        it { should have_content 'Wrong (6)' }
+        it { should have_content 'Wrong (8)' }
         it { should have_content 'Solution' }
       end
 
