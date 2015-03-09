@@ -1,4 +1,3 @@
-# After cloning #
 
 - If ruby-2.1.0 is not installed: `rvm install ruby-2.1.0`
 
@@ -21,7 +20,10 @@
   * Run tests: `rspec`
   * Say hi to **NYAN CAT**
 
+ 
+- Make stuff!
 
 
-**Ready for lift off! :D**
-
+- Deploying to Heroku:
+  * Add remote: `heroku git:remote -a scrabbledojo`
+  * Deploy: `git push heroku master`
