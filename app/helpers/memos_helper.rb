@@ -11,7 +11,10 @@ module MemosHelper
 	end
 
 	def health_inc(memo, num_errors)
-		(decay_diff(memo) / (1 + num_errors)).to_i
+		newDecay = Time.now - num_errors.days
+		increase = ((newDecay - memo.health_decay) / 1.day).round
+		increase = 0 if increase < 0
+		increase
 	end
 
 	def health_bar(memo)

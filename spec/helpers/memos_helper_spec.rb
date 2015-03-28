@@ -19,6 +19,19 @@ describe MemosHelper do
 		end
 	end
 
+	describe "health_inc" do
+		it "calculates the amount of days to add to the current health decay" do
+			helper.health_inc(@memo, 0).should == 10
+			helper.health_inc(@memo, 5).should == 5
+			helper.health_inc(@memo, 10).should == 0
+		end
+
+		it "should not give negative value" do
+			helper.health_inc(@memo, 12).should == 0
+			helper.health_inc(@memo, 25).should == 0
+		end
+	end
+
 	describe "health bar" do
 		it "should draw a yellow health bar for health below 75" do
 			helper.health_bar(@memo).should =~ /progress-warning/
