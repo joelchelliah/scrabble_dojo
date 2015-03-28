@@ -1,7 +1,7 @@
 module WordEntriesHelper
 
   def header_text()
-    num = %w(- - Two Three Four)
+    num = %w(- - Two Three Four Five)
     
     return "#{num[@length.to_i]} letter words" if @length
     return "Short #{@letter} words" if @letter

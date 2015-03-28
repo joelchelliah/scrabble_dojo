@@ -8,6 +8,8 @@ ready = ->
 		$('#btn-three-letters').attr('disabled', true)
 	else if $('h2').text() == "Four letter words"
 		$('#btn-four-letters').attr('disabled', true)
+	else if $('h2').text() == "Five letter words"
+		$('#btn-five-letters').attr('disabled', true)
 	else if $('h2').text() == "Short words with C"
 		$('#btn-c-words').attr('disabled', true)
 	else if $('h2').text() == "Short words with W"

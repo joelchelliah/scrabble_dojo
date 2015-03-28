@@ -8,7 +8,7 @@ class WordEntriesController < ApplicationController
 
   def word_length
     @length = params[:len]
-    if %w(2 3 4).include? @length
+    if %w(2 3 4 5).include? @length
       @word_entries = WordEntry.word_length @length
       @word_entries = sort_list_correctly_by_field(@word_entries, :word)
       render 'short_words'
