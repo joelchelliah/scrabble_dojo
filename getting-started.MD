@@ -1,7 +1,9 @@
+Getting started:
+---------------
 
-- If ruby-2.1.0 is not installed: `rvm install ruby-2.1.0`
+- install ruby version specified in `.ruby-version`
 
-- Verify that gemset '**ruby-2.1.0@scrabbledojo**' is created.
+- Verify that gemset according to `.ruby-version` and `.ruby-gemset` is created
 
 - `bundle install --without production`
   * because installing '**pg**' locally is a lot of trouble, and we don't need it
@@ -21,9 +23,15 @@
   * Say hi to **NYAN CAT**
 
  
-- Make stuff!
-
-
 - Deploying to Heroku:
   * Add remote: `heroku git:remote -a scrabbledojo`
   * Deploy: `git push heroku master`
+
+
+- Populate local database:
+  * **Either** : [copy data from heroku's database](http://manuel.manuelles.nl/blog/2012/01/18/convert-postgresql-to-sqlite/)
+  * Or generate data from dictionary:
+    * run `ordliste/gen-db-seeds.rb` to generate seed data
+    * run `rake db:seed` to populate **WordEntry** table with seed data (...Takes a while!)
+    * run `rake db:add_probability` to update **WordEntry** rows' probability column
+    * create new test-user through app
